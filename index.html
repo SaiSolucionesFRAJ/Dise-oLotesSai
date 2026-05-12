@@ -4,7 +4,7 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>División de Lotes — Urbanización</title>
+  <title>Lotes Sai - Navegador</title>
   <style>
     * {
       box-sizing: border-box;
@@ -476,8 +476,6 @@
     #editPanel button.del:hover {
       background: #3d1f1e;
     }
-
-    /* ── PANEL DE ESTADÍSTICAS EN CANVAS ── */
     #statsPanel {
       position: absolute;
       bottom: 12px;
@@ -595,7 +593,6 @@
       transition: width 0.3s;
     }
 
-    /* ── MODAL IMPORTAR DXF ── */
     #importModal {
       display: none;
       position: fixed;
@@ -734,7 +731,6 @@
       line-height: 1.6;
     }
 
-    /* ── EQUIPAMIENTO ── */
     #statsPanel tr.sp-equip td {
       color: #e3b341;
     }
@@ -806,7 +802,7 @@
       "></div>
       <canvas id="mainCanvas" style="position:relative;z-index:1;background:transparent;"></canvas>
 
-      <!-- PANEL FLOTANTE: Controles rápidos en canvas -->
+
       <div id="canvasQuickPanel" style="
         position:absolute;
         top:12px;
@@ -818,7 +814,7 @@
         font-family:'Courier New',monospace;
         pointer-events:auto;
       ">
-        <!-- Fila 1: Lotes + Satélite -->
+
         <div style="display:flex;gap:5px;">
           <label style="
             display:flex;align-items:center;gap:5px;
@@ -857,7 +853,7 @@
           </label>
         </div>
 
-        <!-- Fila 2: Deshacer -->
+
         <button id="btnUndo" onclick="undoAction()" disabled title="Sin acciones para deshacer" style="
             padding:4px 10px;
             border-radius:4px;
@@ -877,7 +873,7 @@
           &#8630; Deshacer
         </button>
 
-        <!-- Fila 3: Generar Lotes -->
+
         <button onclick="applyLots()" title="Generar lotes en todos los manzanos" style="
             padding:4px 10px;
             border-radius:4px;
@@ -896,7 +892,7 @@
           &#9654; Generar Lotes
         </button>
 
-        <!-- Fila 4: Cerrar Parcela (solo visible cuando hay ≥3 vértices) -->
+
         <button id="btnClose" onclick="closePolygon()" style="
             display:none;
             padding:4px 10px;
@@ -917,7 +913,7 @@
         </button>
       </div>
 
-      <!-- PANEL DE ESTADÍSTICAS -->
+
       <div id="statsPanel">
         <div class="sp-title">&#9632; Estadísticas del Proyecto</div>
         <table>
@@ -977,7 +973,6 @@
         style="display:none;background:#1c2128;border:1px solid #d2a8ff;border-radius:4px;padding:8px;margin-bottom:7px;">
         <div style="color:#d2a8ff;font-weight:600;font-size:11px;margin-bottom:6px;">&#9986; Subdivisión Manual</div>
 
-        <!-- FASE A: Selección de manzano base -->
         <div id="slicePhaseA">
           <div style="font-size:10px;color:#8b949e;margin-bottom:4px;">Manzano base</div>
           <select id="sliceMznSel"
@@ -995,7 +990,7 @@
             Paso 1: Definir frente del sub-manzano</button>
         </div>
 
-        <!-- FASE B: Picking de frente -->
+
         <div id="slicePhaseB" style="display:none;">
           <div
             style="padding:5px 7px;background:#0d1117;border:1px solid #d2a8ff;border-radius:3px;font-size:10px;color:#d2a8ff;margin-bottom:6px;">
@@ -1005,7 +1000,6 @@
             Cancelar</button>
         </div>
 
-        <!-- FASE C: Picking de segmento auxiliar -->
         <div id="slicePhaseC" style="display:none;">
           <div
             style="padding:5px 7px;background:#0d1117;border:1px solid #e3b341;border-radius:3px;font-size:10px;color:#e3b341;margin-bottom:6px;">
@@ -1015,7 +1009,7 @@
             Cancelar</button>
         </div>
 
-        <!-- FASE D: Sub-manzano creado → configurar lotes -->
+
         <div id="slicePhaseD" style="display:none;">
           <div id="sliceSubMznInfo"
             style="background:#0d1117;border:1px solid #3fb950;border-radius:3px;padding:5px 6px;font-size:10px;color:#3fb950;margin-bottom:6px;">
@@ -1104,7 +1098,7 @@
     <span id="hintLabel" style="color:#f78166"></span>
   </div>
 
-  <!-- ── CALCULADORA FLOTANTE ── -->
+
   <div id="calcPanel" style="
     display:none;
     position:fixed;
@@ -1133,7 +1127,7 @@
       <button onclick="toggleCalc()"
         style="background:none;border:none;color:#8b949e;cursor:pointer;font-size:13px;line-height:1;padding:0 2px;">&#10005;</button>
     </div>
-    <!-- Display -->
+
     <div style="padding:8px 10px 4px;">
       <div id="calcExpr" style="
         font-size:9px;color:#8b949e;
@@ -1155,29 +1149,25 @@
         text-overflow:ellipsis;
       ">0</div>
     </div>
-    <!-- Botones -->
+
     <div style="padding:6px 8px 10px;display:grid;grid-template-columns:repeat(4,1fr);gap:5px;">
-      <!-- Fila 1 -->
+
       <button class="cbtn cbtn-fn" onclick="calcFn('clear')">C</button>
       <button class="cbtn cbtn-fn" onclick="calcFn('sign')">+/-</button>
       <button class="cbtn cbtn-fn" onclick="calcFn('pct')">%</button>
       <button class="cbtn cbtn-op" onclick="calcOp('/')">÷</button>
-      <!-- Fila 2 -->
       <button class="cbtn" onclick="calcNum('7')">7</button>
       <button class="cbtn" onclick="calcNum('8')">8</button>
       <button class="cbtn" onclick="calcNum('9')">9</button>
       <button class="cbtn cbtn-op" onclick="calcOp('*')">×</button>
-      <!-- Fila 3 -->
       <button class="cbtn" onclick="calcNum('4')">4</button>
       <button class="cbtn" onclick="calcNum('5')">5</button>
       <button class="cbtn" onclick="calcNum('6')">6</button>
       <button class="cbtn cbtn-op" onclick="calcOp('-')">−</button>
-      <!-- Fila 4 -->
       <button class="cbtn" onclick="calcNum('1')">1</button>
       <button class="cbtn" onclick="calcNum('2')">2</button>
       <button class="cbtn" onclick="calcNum('3')">3</button>
       <button class="cbtn cbtn-op" onclick="calcOp('+')">+</button>
-      <!-- Fila 5 -->
       <button class="cbtn" onclick="calcNum('0')" style="grid-column:span 2;">0</button>
       <button class="cbtn" onclick="calcDot()">.</button>
       <button class="cbtn cbtn-eq" onclick="calcEq()">=</button>
@@ -1241,7 +1231,6 @@
     }
   </style>
 
-  <!-- ── MODAL IMPORTAR DXF ── -->
   <div id="importModal">
     <div id="importModalBox">
       <h2>&#8593; IMPORTAR PARCELA DESDE DXF</h2>
@@ -1284,18 +1273,15 @@
   </div>
 
   <script>
-    // ─── CONSTANTS & STATE ────────────────────────────────────────────────────────
     const canvas = document.getElementById('mainCanvas');
     const ctx = canvas.getContext('2d');
     const wrap = document.getElementById('canvasWrap');
     const MPP = 0.1; // 1 unidad mundo = 0.1 metros → 10 u.m. = 1 metro
 
-    // ─── SISTEMA DE LICENCIA ───────────────────────────────────────────────────
     const LICENSE_HASH = '7aeadf1cd0dc90f37204fdd77fce7309a04be580b546dc0df010ce6890effd2a'; // tu hash va aquí
     const LICENSE_STORAGE_KEY = 'lsai_license_v1';
     let _licenseValid = false;
 
-    // ── Fingerprint del equipo ─────────────────────────────────────────────────
     async function _getDeviceFingerprint() {
       const raw = [
         navigator.userAgent || '',
@@ -1315,7 +1301,6 @@
         .map(b => b.toString(16).padStart(2, '0')).join('');
     }
 
-    // ── Hash de la clave ingresada ─────────────────────────────────────────────
     async function _checkHash(input) {
       const buf = await crypto.subtle.digest(
         'SHA-256', new TextEncoder().encode(input)
@@ -1324,7 +1309,6 @@
         .map(b => b.toString(16).padStart(2, '0')).join('');
     }
 
-    // ── Guardar activación en localStorage ────────────────────────────────────
     async function _saveLicense() {
       const fp = await _getDeviceFingerprint();
       const record = {
@@ -1334,7 +1318,6 @@
       localStorage.setItem(LICENSE_STORAGE_KEY, JSON.stringify(record));
     }
 
-    // ── Verificar si ya está activado en este equipo ──────────────────────────
     async function _checkStoredLicense() {
       try {
         const stored = localStorage.getItem(LICENSE_STORAGE_KEY);
@@ -1348,7 +1331,7 @@
       }
     }
 
-    // ── Inicialización automática al cargar la página ─────────────────────────
+
     async function _initLicense() {
       const alreadyActivated = await _checkStoredLicense();
       if (alreadyActivated) {
@@ -1358,13 +1341,11 @@
       }
     }
 
-    // ── Verificar clave ingresada ──────────────────────────────────────────────
     async function _verifyLicense(key) {
       const hash = await _checkHash(key);
       return hash === LICENSE_HASH;
     }
 
-    // ── Modal de licencia ──────────────────────────────────────────────────────
     function _showLicenseModal(onSuccess) {
       let modal = document.getElementById('licenseModal');
       if (!modal) {
@@ -1547,9 +1528,6 @@
       if (_licenseValid) { fn(); return; }
       _showLicenseModal(fn);
     }
-    // ─── FIN SISTEMA DE LICENCIA ───────────────────────────────────────────────
-
-
 
     const MZN_COLORS = ['#1f6feb', '#3fb950', '#ff7b72', '#d2a8ff', '#ffa657', '#79c0ff', '#56d364', '#f78166', '#e3b341', '#a5d6ff'];
 
@@ -1575,7 +1553,6 @@
     let mznSegments = {};       // {mznIdx: {ax,ay,p1,p2}} eje por manzano
     let pickingSegForMzn = -1;  // índice del manzano para el que se está eligiendo segmento
 
-    // ─── ESTADO DEL MODO SLICE ────────────────────────────────────────────────
     let sliceMznIdx = -1;           // manzano base seleccionado
     // Sub-fases: 'none','pickFrente','pickAux','pickDir','ready'
     let sliceSubPhase = 'none';
@@ -1590,7 +1567,7 @@
     let sliceFrenteMidY = null;
     let sliceLots = [];             // [{mznIdx, subMznPts, lots:[...]}]
 
-    // ─── HISTORIAL DESHACER (Ctrl+Z) ──────────────────────────────────────────
+
     const HISTORY_MAX = 30;         // máximo de pasos guardados
     let _history = [];              // pila de snapshots
     let _historyPaused = false;     // evita guardar durante restauración
@@ -1683,8 +1660,6 @@
         ? 'Sin acciones para deshacer'
         : `Deshacer (${_history.length} paso${_history.length !== 1 ? 's' : ''} guardado${_history.length !== 1 ? 's' : ''})`;
     }
-
-    // ─── INIT ──────────────────────────────────────────────────────────────────
     function resize() {
       canvas.width = wrap.clientWidth;
       canvas.height = wrap.clientHeight;
@@ -1694,16 +1669,12 @@
     }
     window.addEventListener('resize', resize);
     resize();
-
-    // ─── COORD UTILS ───────────────────────────────────────────────────────────
     function toC(wx, wy) { return { x: wx * zoom + pan.x, y: wy * zoom + pan.y }; }
     function toW(cx, cy) { return { x: (cx - pan.x) / zoom, y: (cy - pan.y) / zoom }; }
     function wm(d) { return d * MPP; }
     function mw(m) { return m / MPP; }
     function ptWM(p) { return { x: wm(p.x), y: -wm(p.y) }; }
     function ptMW(p) { return { x: mw(p.x), y: -mw(p.y) }; }
-
-    // ─── PARAMS UI ─────────────────────────────────────────────────────────────
     function updateLpCalc() {
       const area = parseFloat(document.getElementById('lpArea').value) || 250;
       const front = parseFloat(document.getElementById('lpFront').value) || 12;
@@ -1752,7 +1723,6 @@
       render();
     }
 
-    // ─── MODE ──────────────────────────────────────────────────────────────────
     function setMode(m) {
       if (m === 'street' && !polyClosed) return;
       if (m === 'slice' && !polyClosed) return;
@@ -1783,7 +1753,6 @@
       }
     }
 
-    // ─── EVENTS ────────────────────────────────────────────────────────────────
     function getCP(e) {
       const r = canvas.getBoundingClientRect();
       return { x: e.clientX - r.left, y: e.clientY - r.top };
@@ -1844,12 +1813,10 @@
               const SNAP_AXIS = mw(1.5);
 
               if (perpDist < SNAP_AXIS) {
-                // ── MODO ESTIRO: proyectar sobre el eje original ──────────────
                 const dot = (wp.x - fixed.x) * ux + (wp.y - fixed.y) * uy;
                 s[dragHandle.which] = { x: fixed.x + dot * ux, y: fixed.y + dot * uy };
                 dragHandle.freeMode = false;
               } else {
-                // ── MODO LIBRE: posición exacta del mouse ────────────────────
                 s[dragHandle.which] = { x: wp.x, y: wp.y };
                 dragHandle.freeMode = true;
               }
@@ -1941,8 +1908,6 @@
     function onClick(e) {
       if (e.button !== 0 || isPanning || dragHandle) return;
       const cp = getCP(e), wp = toW(cp.x, cp.y);
-
-      // ── SLICE FASE B: picking de segmento FRENTE ─────────────────────────
       if (sliceSubPhase === 'pickFrente') {
         const mzn = manzanos[sliceMznIdx];
         if (!mzn) { sliceSubPhase = 'none'; return; }
@@ -1968,8 +1933,6 @@
         }
         return;
       }
-
-      // ── SLICE FASE C: picking de segmento AUXILIAR ────────────────────────
       if (sliceSubPhase === 'pickAux') {
         const mzn = manzanos[sliceMznIdx];
         if (!mzn) { sliceSubPhase = 'none'; return; }
@@ -1989,7 +1952,6 @@
         return;
       }
 
-      // ── SLICE: picking de dirección de lotes ──────────────────────────────
       if (slicePickingSeg) {
         if (!sliceSubMzn) { slicePickingSeg = false; return; }
         const pts = sliceSubMzn.pts, n = pts.length;
@@ -2015,7 +1977,6 @@
         return;
       }
 
-      // ── POLYGON ──────────────────────────────────────────────────────────
       if (mode === 'polygon' && !polyClosed) {
         if (polyPts.length >= 3) {
           const fc = toC(polyPts[0].x, polyPts[0].y);
@@ -2027,7 +1988,6 @@
         render(); return;
       }
 
-      // ── PICKING DE EJE DE MANZANO (modo automático) ───────────────────────
       if (pickingSegForMzn >= 0 && polyClosed && manzanos.length > 0) {
         const mzn = manzanos[pickingSegForMzn];
         if (mzn) {
@@ -2054,7 +2014,6 @@
         return;
       }
 
-      // ── STREET ───────────────────────────────────────────────────────────
       if (mode === 'street' && polyClosed) {
         const snapped = snapTarget || wp;
         if (!streetStart) {
@@ -2070,7 +2029,6 @@
         render(); return;
       }
 
-      // ── EDIT ─────────────────────────────────────────────────────────────
       if (mode === 'edit') {
         for (const s of streets) {
           const sc = toC(s.start.x, s.start.y), ec = toC(s.end.x, s.end.y);
@@ -2140,7 +2098,6 @@
       for (const mzn of manzanos) {
         const pts = mzn.pts, n = pts.length;
 
-        // ── 1. Snap a vértices ────────────────────────────────────────────────
         for (const p of pts) {
           const d = Math.hypot(wp.x - p.x, wp.y - p.y);
           if (d < SNAP_RADIUS && d < bestVertexDist) {
@@ -2148,8 +2105,6 @@
             bestVertex = { x: p.x, y: p.y, type: 'vertex', segA: null, segB: null };
           }
         }
-
-        // ── 2. Snap perpendicular (solo cuando hay streetStart activo) ────────
         if (!streetStart) continue;
 
         for (let i = 0; i < n; i++) {
@@ -2200,7 +2155,6 @@
       return null;
     }
 
-    // ─── POLYGON CLOSE ─────────────────────────────────────────────────────────
     function closePolygon() {
       if (polyPts.length < 3) return;
       _snapshot();
@@ -2214,7 +2168,6 @@
       updateSidebar(); updateInstr(); updateStatsPanel(); render();
     }
 
-    // ─── CORE GEOMETRY ─────────────────────────────────────────────────────────
     function polyArea(pts) {
       let a = 0; const n = pts.length;
       for (let i = 0; i < n; i++) { const j = (i + 1) % n; a += pts[i].x * pts[j].y - pts[j].x * pts[i].y; }
@@ -2270,8 +2223,6 @@
       return true;
     }
 
-    // ── Solapamiento aproximado entre dos polígonos (área de intersección estimada) ──
-    // Usa el centroide y bounding-box del polígono clipeado para una estimación rápida.
     function approxOverlapArea(polyA, polyB) {
       // Clipear polyA contra cada semiplano de polyB
       let clipped = polyA.map(p => ({ ...p }));
@@ -2289,7 +2240,6 @@
       return polyArea(clipped);
     }
 
-    // ── Clipear un polígono al interior de un manzano (intersección) ──────────
     function clipPolyToManzano(polyPtsIn, mznPts) {
       if (!polyPtsIn || polyPtsIn.length < 3 || !mznPts || mznPts.length < 3) return null;
       let clipped = polyPtsIn.map(p => ({ ...p }));
@@ -2401,16 +2351,11 @@
         .filter(l => polyAreaM2(l.pts) >= MIN_MZN_M2)
         .map((l, i) => ({ ...l, colorIdx: i % MZN_COLORS.length }));
 
-      // ── Remap de sliceLots al nuevo conjunto de manzanos ─────────────────
-      // Para cada slice existente, buscar en los nuevos manzanos el que mejor
-      // contiene el centroide del sub-manzano slice. Si no hay coincidencia
-      // suficiente, el slice se descarta.
       const remappedSliceLots = [];
       for (const sd of prevSliceLots) {
         if (!sd.subMznPts || sd.subMznPts.length < 3) continue;
         const subCen = centroid(sd.subMznPts);
 
-        // Buscar nuevo manzano que contenga el centroide del sub-manzano
         let bestNewIdx = -1;
         let bestOverlap = -1;
         for (let ni = 0; ni < manzanos.length; ni++) {
@@ -2424,7 +2369,6 @@
           }
         }
 
-        // Si el centroide no cayó en ningún manzano, buscar el más cercano
         if (bestNewIdx < 0) {
           let bestDist = Infinity;
           for (let ni = 0; ni < manzanos.length; ni++) {
@@ -2432,25 +2376,20 @@
             const d = Math.hypot(cen.x - subCen.x, cen.y - subCen.y);
             if (d < bestDist) { bestDist = d; bestNewIdx = ni; }
           }
-          // Verificar que el sub-manzano tiene solapamiento real con el manzano encontrado
+
           if (bestNewIdx >= 0) {
             const overlap = approxOverlapArea(sd.subMznPts, manzanos[bestNewIdx].pts);
             const subArea = polyArea(sd.subMznPts);
-            // Si el solapamiento es menor al 30% del sub-manzano, descartar
             if (subArea > 0 && overlap / subArea < 0.30) bestNewIdx = -1;
           }
         }
 
-        if (bestNewIdx < 0) continue; // Sub-manzano ya no es válido → descartar
-
-        // Recortar el sub-manzano al nuevo manzano (por si la calle lo partió)
+        if (bestNewIdx < 0) continue; 
         const clipped = clipPolyToManzano(sd.subMznPts, manzanos[bestNewIdx].pts);
         if (!clipped || clipped.length < 3) continue;
 
         const clippedAreaM2 = polyAreaM2(clipped);
-        if (clippedAreaM2 < 1) continue; // Demasiado pequeño, descartar
-
-        // Recortar también los lotes individuales al nuevo manzano
+        if (clippedAreaM2 < 1) continue; 
         const reclippedLots = [];
         for (const lt of sd.lots) {
           const ltClipped = clipPolyToManzano(lt.pts, manzanos[bestNewIdx].pts);
@@ -2475,17 +2414,12 @@
         });
       }
       sliceLots = remappedSliceLots;
-
-      // ── Remap de lotSubdivisions automáticos ─────────────────────────────
-      // Solo conservar los que tenían lotes y reasignar al nuevo índice de manzano
       const remappedLotSubdivs = [];
       for (const sub of prevLotSubdivs) {
         if (!sub.lots || sub.lots.length === 0) continue;
-        // Usar el centroide del primer lote para ubicar el manzano nuevo
         const firstLot = sub.lots[0];
         if (!firstLot || !firstLot.pts || firstLot.pts.length < 3) continue;
         const lotCen = centroid(firstLot.pts);
-
         let bestNewIdx = -1;
         let bestDist = Infinity;
         for (let ni = 0; ni < manzanos.length; ni++) {
@@ -2497,8 +2431,6 @@
           if (d < bestDist) { bestDist = d; bestNewIdx = ni; }
         }
         if (bestNewIdx < 0) continue;
-
-        // Recortar cada lote al nuevo manzano
         const reclipped = [];
         for (const lt of sub.lots) {
           const cl = clipPolyToManzano(lt.pts, manzanos[bestNewIdx].pts);
@@ -2508,21 +2440,17 @@
           reclipped.push({ ...lt, pts: cl, areaM2: a });
         }
         if (reclipped.length === 0) continue;
-        // Evitar duplicar el mismo manzano
         if (!remappedLotSubdivs.find(r => r.mznIdx === bestNewIdx)) {
           remappedLotSubdivs.push({ mznIdx: bestNewIdx, lots: reclipped });
         }
       }
 
-      // Asegurar que exista una entrada por cada manzano (vacía si no había lotes)
       for (let ni = 0; ni < manzanos.length; ni++) {
         if (!remappedLotSubdivs.find(r => r.mznIdx === ni)) {
           remappedLotSubdivs.push({ mznIdx: ni, lots: [] });
         }
       }
       lotSubdivisions = remappedLotSubdivs;
-
-      // ── Resetear solo el estado de interacción del slice (no los datos) ──
       sliceSubMzn = null;
       sliceSubPhase = 'none';
       sliceSelectingFrente = null; sliceSelectingAux = null;
@@ -2530,22 +2458,18 @@
       slicePickingSeg = false;
       sliceCutDirX = null; sliceCutDirY = null;
       sliceFrenteMidX = null; sliceFrenteMidY = null;
-
       document.getElementById('slicePhaseA').style.display = '';
       document.getElementById('slicePhaseB').style.display = 'none';
       document.getElementById('slicePhaseC').style.display = 'none';
       document.getElementById('slicePhaseD').style.display = 'none';
       document.getElementById('sliceSegHint').style.display = 'none';
       document.getElementById('sliceSegInfo').style.display = 'none';
-      // Limpiar equipamiento de manzanos que ya no existen
       const validIdxs = new Set(manzanos.map((_, i) => i));
       for (const k of Object.keys(mznEquipamiento)) {
         if (!validIdxs.has(parseInt(k))) delete mznEquipamiento[k];
       }
       updateStatsPanel();
     }
-
-    // ─── PRINCIPAL AXIS (PCA/OBB) ──────────────────────────────────────────────
     function principalAxis(pts) {
       const n = pts.length;
       let mx = 0, my = 0;
@@ -2560,7 +2484,6 @@
       if (Math.abs(cxy) > 1e-10) { ex = l1 - cyy; ey = cxy; }
       else { ex = cxx >= cyy ? 1 : 0; ey = cxx >= cyy ? 0 : 1; }
       const len = Math.sqrt(ex * ex + ey * ey) || 1;
-      // Normalize and ensure ex>=0 for consistency
       let ux = ex / len, uy = ey / len;
       if (ux < 0 || (Math.abs(ux) < 1e-9 && uy < 0)) { ux = -ux; uy = -uy; }
       return { ux, uy };
@@ -2572,19 +2495,8 @@
       return { min: mn, max: mx };
     }
 
-
-
-
-
-
-    // ─── LOT SUBDIVISION ALGORITHM ────────────────────────────────────────────
     const NARROW_RATIO = 1.6;
     const N_SAMPLES = 5;
-
-    // Métodos de subdivisión disponibles por manzano:
-    // 'auto'   → algoritmo original (dos franjas con cortes alineados)
-    // 'exact'  → nuevo algoritmo (cada franja independiente, bisección más precisa)
-    // mznMethods[i] = 'auto' | 'exact'
     let mznMethods = {};
     let mznEquipamiento = {};
     let _satMap = null;
@@ -2611,7 +2523,6 @@
       return narrowCount > N_SAMPLES / 2;
     }
 
-    // ── MÉTODO "EXACT": cada mitad se subdivide independientemente ─────────────
     function subdivideManzanoExact(mznPts, targetAreaM2, frontMinM, dirPref) {
       if (mznPts.length < 3) return [];
       const totalArea = polyAreaM2(mznPts);
@@ -2635,14 +2546,12 @@
       const allLots = [];
 
       if (globalNarrow) {
-        // Manzano angosto: una sola franja, subdivide directamente
         subdivideHalf(mznPts, lx, ly, sx, sy, extL,
           targetAreaM2, frontMinM, false, allLots);
       } else {
         const sMid = (extS.min + extS.max) / 2;
         const halfBot = clipToStrip(mznPts, sx, sy, extS.min, sMid);
         const halfTop = clipToStrip(mznPts, sx, sy, sMid, extS.max);
-
         const halfBotOk = halfBot && halfBot.length >= 3 && polyAreaM2(halfBot) >= targetAreaM2 * 0.1;
         const halfTopOk = halfTop && halfTop.length >= 3 && polyAreaM2(halfTop) >= targetAreaM2 * 0.1;
 
@@ -2658,8 +2567,6 @@
           subdivideHalf(halfBot, lx, ly, sx, sy, extLBot,
             targetAreaM2, frontMinM, false, allLots);
         } else {
-          // Ambas mitades válidas: cada una se subdivide independientemente
-          // para lograr áreas exactas en cada franja
           const extLBot = projectExtents(halfBot, lx, ly);
           subdivideHalf(halfBot, lx, ly, sx, sy, extLBot,
             targetAreaM2, frontMinM, false, allLots);
@@ -2675,26 +2582,21 @@
       targetAreaM2, frontMinM, isRemnant, out) {
       let t = extL.min;
       let lotCount = 0;
-
       const extSH = projectExtents(poly, sx, sy);
       const halfDepthM = Math.max(wm(extSH.max - extSH.min), 0.001);
-      // nomFrontM0 se calcula pero el frente real se recalcula por franja en el loop
       const nomFrontM0 = Math.max(frontMinM, targetAreaM2 / halfDepthM);
-
       while (t < extL.max - 1e-9) {
         const remaining = extL.max - t;
         const restPoly = clipToStrip(poly, lx, ly, t, extL.max);
         if (!restPoly || restPoly.length < 3) break;
         const restArea = polyAreaM2(restPoly);
-
-        // Sondear profundidad local usando una franja angosta centrada en t
         const probeWidth = Math.min(mw(frontMinM) * 0.5, remaining * 0.1);
         const colProbe = clipToStrip(poly, lx, ly, t, t + Math.max(probeWidth, mw(0.5)));
         let depthLocal = halfDepthM;
         if (colProbe && colProbe.length >= 3) {
           const eP = projectExtents(colProbe, sx, sy);
           const d = wm(eP.max - eP.min);
-          if (d > 0.5) depthLocal = d; // solo actualizar si es un valor razonable
+          if (d > 0.5) depthLocal = d; 
         }
         const nomFrontM = Math.max(frontMinM, targetAreaM2 / depthLocal);
         const nomFrontW = mw(nomFrontM);
@@ -2711,8 +2613,6 @@
           });
           break;
         }
-
-        // ── Bisección de alta precisión (tolerancia 1e-6 m², 160 iteraciones) ──
         let lo = mw(frontMinM) * 0.1;
         let hi = remaining * 0.9999;
         let bestF = nomFrontW;
@@ -2724,20 +2624,17 @@
           if (!test || test.length < 3) { lo = mid; continue; }
           const area = polyAreaM2(test);
           const err = area - targetAreaM2;
-          // Guardar SIEMPRE el mid con menor error absoluto
           if (Math.abs(err) < Math.abs(bestErr)) {
             bestErr = err;
             bestF = mid;
           }
-          if (Math.abs(err) <= 1e-6) break;   // ← umbral: 0.000001 m²
+          if (Math.abs(err) <= 1e-6) break; 
           if (err < 0) lo = mid; else hi = mid;
         }
 
         if (wm(bestF) < frontMinM * 0.99) bestF = mw(frontMinM);
-
         const lotPoly = clipToStrip(poly, lx, ly, t, t + bestF);
         if (!lotPoly || lotPoly.length < 3 || polyArea(lotPoly) < 0.5) break;
-
         const areaM2 = polyAreaM2(lotPoly);
         const extSL = projectExtents(lotPoly, sx, sy);
         out.push({
@@ -2755,7 +2652,6 @@
       if (mznPts.length < 3) return [];
       const totalArea = polyAreaM2(mznPts);
       if (totalArea < targetAreaM2 * 0.15) return [];
-
       let lx, ly;
       if (dirPref && dirPref.ax !== undefined) {
         lx = dirPref.ax; ly = dirPref.ay;
@@ -2764,28 +2660,21 @@
         lx = pa.ux; ly = pa.uy;
       }
       const sx = -ly, sy = lx;
-
       const extS = projectExtents(mznPts, sx, sy);
       const extL = projectExtents(mznPts, lx, ly);
       const totalShortM = wm(extS.max - extS.min);
       const nomDepthM = targetAreaM2 / Math.max(frontMinM, 1);
       const isNarrow = totalShortM < NARROW_RATIO * nomDepthM;
-
       if (isNarrow) {
         return computeLotsOnHalf(mznPts, extL, extS, lx, ly, sx, sy,
           targetAreaM2, frontMinM);
       }
 
       const sMid = (extS.min + extS.max) / 2;
-
-      // Recortar cada mitad y verificar que sean válidas
       const halfBot = clipToStrip(mznPts, sx, sy, extS.min, sMid);
       const halfTop = clipToStrip(mznPts, sx, sy, sMid, extS.max);
-
       const halfBotOk = halfBot && halfBot.length >= 3 && polyAreaM2(halfBot) >= targetAreaM2 * 0.1;
       const halfTopOk = halfTop && halfTop.length >= 3 && polyAreaM2(halfTop) >= targetAreaM2 * 0.1;
-
-      // Si alguna mitad es inválida, procesar solo la válida
       if (!halfBotOk && !halfTopOk) {
         return computeLotsOnHalf(mznPts, extL, extS, lx, ly, sx, sy,
           targetAreaM2, frontMinM);
@@ -2803,25 +2692,17 @@
           targetAreaM2, frontMinM);
       }
 
-      // Ambas mitades válidas: cada una se subdivide con sus propios cortes alineados
-      // MÉTODO AUTO: los cortes de la mitad "maestra" (mayor extensión longitudinal)
-      // se replican en la otra mitad para mantener el alineamiento visual entre franjas.
       const extLBot = projectExtents(halfBot, lx, ly);
       const extLTop = projectExtents(halfTop, lx, ly);
-
-      // Elegir la mitad con mayor extensión longitudinal como maestra
       const spanBot = extLBot.max - extLBot.min;
       const spanTop = extLTop.max - extLTop.min;
       const masterIdx = spanTop > spanBot ? 1 : 0;
       const masterPoly = masterIdx === 0 ? halfBot : halfTop;
       const masterExt = masterIdx === 0 ? extLBot : extLTop;
-
-      // Calcular cortes sobre la mitad maestra
       const extSMaster = projectExtents(masterPoly, sx, sy);
       const masterCuts = computeCuts(masterPoly, masterExt, lx, ly, sx, sy,
         targetAreaM2, frontMinM);
 
-      // Si no hay cortes válidos, subdividir cada mitad independientemente
       if (!masterCuts || masterCuts.length === 0) {
         const allLots = [];
         const extSBot2 = projectExtents(halfBot, sx, sy);
@@ -2830,8 +2711,6 @@
         allLots.push(...computeLotsOnHalf(halfTop, extLTop, extSTop2, lx, ly, sx, sy, targetAreaM2, frontMinM));
         return allLots;
       }
-
-      // Aplicar los cortes maestros a AMBAS mitades para alineamiento
       const allLots = [];
       for (const halfInfo of [
         { poly: halfBot, extL: extLBot },
@@ -2862,7 +2741,6 @@
           if (actualEnd >= myMax - 1e-6) break;
         }
 
-        // Remanente al final de esta mitad
         if (prevT < myMax - 1e-6) {
           const remPoly = clipToStrip(halfPoly, lx, ly, prevT, myMax);
           if (remPoly && remPoly.length >= 3) {
@@ -2882,8 +2760,6 @@
       }
       return allLots;
     }
-
-    // ── DISPATCHER: elige el método según mznMethods[i] ───────────────────────
     function subdivideManzano(mznPts, targetAreaM2, frontMinM, dirPref, mznIdx) {
       const method = mznMethods[mznIdx] || 'auto';
       if (method === 'exact') {
@@ -2900,7 +2776,6 @@
       const nomFrontM = Math.max(frontMinM, targetAreaM2 / realDepthM);
       const cuts = [];
       let t = halfExt.min, lotCount = 0;
-
       while (t < halfExt.max - 1e-9) {
         const remaining = halfExt.max - t;
         const restPoly = clipToStrip(halfPoly, lx, ly, t, halfExt.max);
@@ -2913,7 +2788,6 @@
           cuts.push({ t: halfExt.max, isRemnant: restAreaM2 < targetAreaM2 * 0.5 }); break;
         }
 
-        // ── Bisección de alta precisión (tolerancia 1e-6 m², 120 iteraciones) ──
         let lo = mw(frontMinM), hi = remaining * 0.999;
         let bestF = nomFrontW;
         let bestErr = Infinity;
@@ -2928,7 +2802,7 @@
             bestErr = err;
             bestF = mid;
           }
-          if (Math.abs(err) <= 1e-6) break;   // ← umbral: 0.000001 m²
+          if (Math.abs(err) <= 1e-6) break; 
           if (err < 0) lo = mid; else hi = mid;
         }
 
@@ -2980,7 +2854,6 @@
       return lots;
     }
 
-    // ─── MÉTODO POR MANZANO ────────────────────────────────────────────────────
     function setMznMethod(mznIdx, method) {
       _snapshot();
       mznMethods[mznIdx] = method;
@@ -2992,7 +2865,6 @@
         const segDir = (dir === 'seg' && mznSegments[mznIdx]) ? mznSegments[mznIdx] : null;
         const sliceSubs = sliceLots.filter(sd => sd.mznIdx === mznIdx);
         let basePoly = manzanos[mznIdx].pts;
-
         if (sliceSubs.length > 0) {
           const subtracted = subtractSliceSubMznos(manzanos[mznIdx].pts, sliceSubs);
           if (!subtracted || subtracted.length < 3) {
@@ -3012,22 +2884,11 @@
 
     function subtractSliceSubMznos(basePts, sliceSubs) {
       if (!sliceSubs || sliceSubs.length === 0) return basePts;
-
       let remaining = basePts.map(p => ({ ...p }));
-
       for (const sliceSub of sliceSubs) {
         const subPoly = sliceSub.subMznPts;
         if (!subPoly || subPoly.length < 3) continue;
         if (!polysOverlap(remaining, subPoly)) continue;
-
-        // Calcular el complemento correcto:
-        // El sub-manzano fue creado bisectando el manzano base con una línea de corte.
-        // El residuo es el fragmento de `remaining` cuyo centroide NO está dentro de subPoly.
-        //
-        // Estrategia: iterar sobre cada arista del sub-manzano y quedarnos con el
-        // half-plane que contiene el centroide del residuo actual Y cuyo fragmento
-        // resultante NO está dentro del sub-manzano.
-
         const cenSub = centroid(subPoly);
         let best = null;
         let bestArea = -1;
@@ -3036,21 +2897,12 @@
         for (let e = 0; e < n; e++) {
           const a = subPoly[e];
           const b = subPoly[(e + 1) % n];
-
-          // Probar ambos lados del half-plane para esta arista
           for (const keepSide of [+1, -1]) {
             const frag = clipHalfPlane(remaining, a, b, keepSide);
             if (!frag || frag.length < 3) continue;
-
             const cenFrag = centroid(frag);
-
-            // Descartar si el centroide del fragmento está dentro del sub-manzano
             if (slicePtInPoly(cenFrag.x, cenFrag.y, subPoly)) continue;
-
-            // Descartar si el centroide del sub-manzano está dentro del fragmento
-            // (significaría que nos quedamos con el lado equivocado)
             if (slicePtInPoly(cenSub.x, cenSub.y, frag)) continue;
-
             const fa = polyArea(frag);
             if (fa > bestArea) {
               bestArea = fa;
@@ -3060,8 +2912,6 @@
         }
 
         if (!best || best.length < 3) {
-          // Fallback: buscar el fragmento más grande de todos los half-planes
-          // cuyo centroide no esté dentro del sub-manzano
           for (let e = 0; e < n && !best; e++) {
             const a = subPoly[e];
             const b = subPoly[(e + 1) % n];
@@ -3084,7 +2934,6 @@
       return remaining && remaining.length >= 3 ? remaining : null;
     }
 
-    // ─── APPLY LOTS ────────────────────────────────────────────────────────────
     function applyLots() {
       _snapshot();
       const targetArea = parseFloat(document.getElementById('lpArea').value) || 250;
@@ -3096,13 +2945,11 @@
         const mzn = manzanos[i];
         const mznArea = polyAreaM2(mzn.pts);
 
-        // Saltar manzanos demasiado pequeños (calles, artefactos)
         if (mznArea < 1.0) {
           lotSubdivisions.push({ mznIdx: i, lots: [] });
           continue;
         }
 
-        // ── Respetar manzanos de equipamiento: no generar lotes en ellos ──
         if (mznEquipamiento[i]) {
           lotSubdivisions.push({ mznIdx: i, lots: [] });
           continue;
@@ -3142,7 +2989,6 @@
       mznSegments = {}; mznMethods = {}; pickingSegForMzn = -1;
       document.getElementById('segHint').style.display = 'none';
       document.getElementById('lpDir').value = 'auto';
-      // Resetear paneles slice a fase A
       document.getElementById('slicePhaseA').style.display = '';
       document.getElementById('slicePhaseB').style.display = 'none';
       document.getElementById('slicePhaseC').style.display = 'none';
@@ -3155,7 +3001,6 @@
       render();
     }
 
-    // ─── SIDEBAR ───────────────────────────────────────────────────────────────
     function toggleLotList(id) {
       const list = document.getElementById(id);
       const mznIdx = id.replace('lotlist-', '');
@@ -3165,9 +3010,6 @@
       list.style.display = isOpen ? 'none' : 'block';
       if (arrow) arrow.style.transform = isOpen ? '' : 'rotate(90deg)';
     }
-
-
-
 
     function updateSidebar() {
       const lp = document.getElementById('lotsPanel');
@@ -3181,8 +3023,6 @@
         const hasSeg = mznSegments[i] !== undefined;
         const isPickingThis = pickingSegForMzn === i;
         const curMethod = mznMethods[i] || 'auto';
-
-        // ── Botón de equipamiento ─────────────────────────────────────────
         const equipColor = isEquip ? '#e3b341' : '#30363d';
         const equipBg = isEquip ? '#2d2200' : 'transparent';
         const equipTxt = isEquip ? '#e3b341' : '#8b949e';
@@ -3197,14 +3037,12 @@
         </button>
       </div>`;
 
-        // ── Ícono y descripción de equipamiento ───────────────────────────
         let equipBadgeHtml = '';
         if (isEquip) {
           const { icon, label } = getEquipamientoInfo(am);
           equipBadgeHtml = `<div class="equip-badge">${icon} ${label}</div>`;
         }
 
-        // ── Método de división (solo si NO es equipamiento) ───────────────
         const methodHtml = isEquip ? '' : `
       <div style="margin-top:5px;">
         <div style="font-size:9px;color:#8b949e;margin-bottom:2px;">Método de división</div>
@@ -3234,7 +3072,6 @@
         ${hasSeg ? `<button onclick="clearMznSegment(${i})" style="padding:3px 6px;border-radius:3px;border:1px solid #f85149;background:transparent;cursor:pointer;font-size:9px;font-family:'Courier New',monospace;color:#f85149;">✕</button>` : ''}
       </div>` : '';
 
-        // ── Lotes unificados (solo si NO es equipamiento) ─────────────────
         const allLotsForMzn = [];
         if (!isEquip) {
           if (sub && sub.lots.length > 0) {
@@ -3246,7 +3083,6 @@
           });
         }
 
-        // ── Botones de eliminar sub-manzanos slice ────────────────────────
         const sliceSubsForCard = sliceLots.filter(sd => sd.mznIdx === i);
         let sliceSubBtnsHtml = '';
         if (!isEquip && sliceSubsForCard.length > 0) {
@@ -3275,10 +3111,7 @@
 
         const nNormalAll = allLotsForMzn.filter(lt => !lt.isRemnant).length;
         const nRemAll = allLotsForMzn.filter(lt => lt.isRemnant).length;
-
-        // Color de borde de la tarjeta: dorado si es equipamiento
         const cardBorderColor = isEquip ? '#e3b341' : c;
-
         let html = `<div class="card mzn" style="border-left-color:${cardBorderColor};${isEquip ? 'background:#1c1800;' : ''}">
       <div class="cn"><span class="lc" style="background:${cardBorderColor}"></span>Mzo. ${i + 1}${isEquip ? ' <span style="color:#e3b341;font-size:9px;">★ EQUIP.</span>' : ''}</div>
       <div class="ca">${am.toFixed(1)} m²  ·  ${(am / 10000).toFixed(4)} ha</div>
@@ -3339,7 +3172,6 @@ ${segBtnHtml}
       updateSidebar(); render();
     }
 
-    // ─── EDIT PANEL ────────────────────────────────────────────────────────────
     function fillPanel(s) {
       const i = streets.indexOf(s) + 1;
       document.getElementById('epTitle').textContent = `Calle ${i}`;
@@ -3355,7 +3187,6 @@ ${segBtnHtml}
     }
     function closePanel() { document.getElementById('editPanel').style.display = 'none'; }
     function closeEditPanel() { closePanel(); }
-
     function applyEditPanel() {
       const s = streets.find(s => s.id === selStreetId); if (!s) return;
       _snapshot();
@@ -3365,16 +3196,11 @@ ${segBtnHtml}
       const ey = parseFloat(document.getElementById('epEY').value) || 0;
       const w = Math.max(1, parseFloat(document.getElementById('epW').value) || s.width);
       const lenInput = parseFloat(document.getElementById('epLen').value);
-
-      // Calcular dirección ORIGINAL de la calle (antes de tocar nada)
       const origDx = s.end.x - s.start.x, origDy = s.end.y - s.start.y;
       const origLen = Math.sqrt(origDx * origDx + origDy * origDy) || 1;
       const origUx = origDx / origLen, origUy = origDy / origLen;
-
       s.start = ptMW({ x: sx, y: sy }); s.width = w;
-
       if (!isNaN(lenInput) && lenInput > 0) {
-        // Mantener dirección original: el fin se proyecta desde el nuevo inicio
         const newLenW = mw(lenInput);
         s.end = { x: s.start.x + origUx * newLenW, y: s.start.y + origUy * newLenW };
       } else {
@@ -3392,10 +3218,6 @@ ${segBtnHtml}
       recomputeManzanos(); updateSidebar(); render();
     }
 
-
-    // ─── DIBUJO DE EQUIPAMIENTO / ÁREA VERDE ──────────────────────────────────
-
-    // Genera una semilla determinista basada en el índice del manzano
     function eqRand(seed) {
       let s = seed;
       return function () {
@@ -3404,13 +3226,10 @@ ${segBtnHtml}
       };
     }
 
-    // Clipea un punto al interior del polígono (retorna true si está dentro)
-    // Usa el mismo slicePtInPoly que ya existe en el código
     function eqPtInMzn(x, y, mznPts) {
       return slicePtInPoly(x, y, mznPts);
     }
 
-    // Calcula el bounding box del polígono del manzano en coords canvas
     function eqBBox(mznPts) {
       const cp = mznPts.map(p => toC(p.x, p.y));
       let minX = Infinity, maxX = -Infinity, minY = Infinity, maxY = -Infinity;
@@ -3421,31 +3240,25 @@ ${segBtnHtml}
       return { minX, maxX, minY, maxY, w: maxX - minX, h: maxY - minY };
     }
 
-    // Dibuja un árbol estilizado en coordenadas canvas (x,y) con radio r
     function drawTree(x, y, r, colorTronco, colorCopa1, colorCopa2) {
-      // Copa exterior (sombra/variación)
       ctx.beginPath();
       ctx.arc(x, y, r, 0, Math.PI * 2);
       ctx.fillStyle = colorCopa2;
       ctx.fill();
-      // Copa interior
       ctx.beginPath();
       ctx.arc(x - r * 0.15, y - r * 0.15, r * 0.72, 0, Math.PI * 2);
       ctx.fillStyle = colorCopa1;
       ctx.fill();
-      // Reflejo / luz
       ctx.beginPath();
       ctx.arc(x - r * 0.28, y - r * 0.28, r * 0.28, 0, Math.PI * 2);
       ctx.fillStyle = 'rgba(255,255,255,0.13)';
       ctx.fill();
-      // Tronco (pequeño punto)
       ctx.beginPath();
       ctx.arc(x, y + r * 0.3, r * 0.18, 0, Math.PI * 2);
       ctx.fillStyle = colorTronco;
       ctx.fill();
     }
 
-    // Dibuja una mata/arbusto pequeño
     function drawShrub(x, y, r, color) {
       for (let k = 0; k < 3; k++) {
         const ox = [-r * 0.4, r * 0.4, 0][k];
@@ -3457,7 +3270,6 @@ ${segBtnHtml}
       }
     }
 
-    // Dibuja una flor simple
     function drawFlower(x, y, r, color) {
       const petals = 5;
       for (let k = 0; k < petals; k++) {
@@ -3473,7 +3285,6 @@ ${segBtnHtml}
       ctx.fill();
     }
 
-    // Dibuja una cancha de fútbol/básquet dentro del manzano
     function drawCanchaDentro(mznPts, mznIdx) {
       const cen = centroid(mznPts);
       const cc = toC(cen.x, cen.y);
@@ -3482,14 +3293,10 @@ ${segBtnHtml}
       const extS = projectExtents(mznPts, -pa.uy, pa.ux);
       const largo = wm(extL.max - extL.min) * 0.55 * zoom;
       const ancho = wm(extS.max - extS.min) * 0.50 * zoom;
-
       ctx.save();
       ctx.translate(cc.x, cc.y);
-      // Eje de orientación del manzano
       const angle = Math.atan2(pa.uy, pa.ux);
       ctx.rotate(angle);
-
-      // Relleno cancha (pasto sintético)
       ctx.beginPath();
       ctx.rect(-largo / 2, -ancho / 2, largo, ancho);
       ctx.fillStyle = 'rgba(34,100,40,0.55)';
@@ -3497,23 +3304,17 @@ ${segBtnHtml}
       ctx.strokeStyle = 'rgba(255,255,255,0.7)';
       ctx.lineWidth = Math.max(0.8, 1.2 * zoom);
       ctx.stroke();
-
-      // Línea central
       ctx.beginPath();
       ctx.moveTo(0, -ancho / 2);
       ctx.lineTo(0, ancho / 2);
       ctx.strokeStyle = 'rgba(255,255,255,0.6)';
       ctx.lineWidth = Math.max(0.5, 0.8 * zoom);
       ctx.stroke();
-
-      // Círculo central
       const cr = Math.min(largo, ancho) * 0.18;
       ctx.beginPath();
       ctx.arc(0, 0, cr, 0, Math.PI * 2);
       ctx.strokeStyle = 'rgba(255,255,255,0.6)';
       ctx.stroke();
-
-      // Áreas (arcos en los extremos)
       const ar = Math.min(largo, ancho) * 0.28;
       ctx.beginPath();
       ctx.rect(-largo / 2, -ar / 2, ar * 0.6, ar);
@@ -3523,23 +3324,19 @@ ${segBtnHtml}
       ctx.beginPath();
       ctx.rect(largo / 2 - ar * 0.6, -ar / 2, ar * 0.6, ar);
       ctx.stroke();
-
       ctx.restore();
     }
 
-    // Dibuja un sendero/camino diagonal dentro del manzano
     function drawSendero(mznPts, rand, color) {
       const cen = centroid(mznPts);
       const bb = eqBBox(mznPts);
       const cc = toC(cen.x, cen.y);
-      // 2-3 senderos que parten del centroide hacia bordes
       const nSend = 2 + Math.floor(rand() * 2);
       for (let s = 0; s < nSend; s++) {
         const angle = rand() * Math.PI * 2;
         const len = (bb.w + bb.h) / 2 * 0.6;
         const ex = cc.x + Math.cos(angle) * len;
         const ey = cc.y + Math.sin(angle) * len;
-        // Clipear visualmente con gradiente de transparencia
         const grad = ctx.createLinearGradient(cc.x, cc.y, ex, ey);
         grad.addColorStop(0, color + 'cc');
         grad.addColorStop(1, color + '00');
@@ -3554,22 +3351,14 @@ ${segBtnHtml}
       }
     }
 
-    // Función principal: dibuja el contenido de un manzano de equipamiento
-    // adaptado a su geometría irregular
     function drawEquipamientoContent(mznPts, mznIdx, tipo) {
       const rand = eqRand(mznIdx * 7919 + 13);
       const cen = centroid(mznPts);
       const cc = toC(cen.x, cen.y);
       const bb = eqBBox(mznPts);
       const areaM2 = polyAreaM2(mznPts);
-
-      // Escala adaptativa: 1 unidad = min(bb.w, bb.h) / 10
       const baseR = Math.max(4, Math.min(bb.w, bb.h) / 10);
-      // Solo dibujar contenido si el manzano es suficientemente grande en pantalla
       if (bb.w < 20 || bb.h < 20) return;
-
-      // Función auxiliar: distribuir N puntos dentro del manzano (en coords mundo)
-      // con muestreo por rechazo usando la geometría real
       function samplePoints(n, margin) {
         const pts = [];
         const marg = margin || 0;
@@ -3577,15 +3366,12 @@ ${segBtnHtml}
         const wx1 = mznPts.reduce((a, p) => Math.max(a, p.x), -Infinity);
         const wy0 = mznPts.reduce((a, p) => Math.min(a, p.y), Infinity);
         const wy1 = mznPts.reduce((a, p) => Math.max(a, p.y), -Infinity);
-        // Máximo intentos para no bloquear si el polígono es muy complejo
         let tries = 0;
         while (pts.length < n && tries < n * 40) {
           tries++;
           const wx = wx0 + margin + rand() * (wx1 - wx0 - margin * 2);
           const wy = wy0 + margin + rand() * (wy1 - wy0 - margin * 2);
-          // Erosionar el polígono: comprobar con un margen interior
           if (eqPtInMzn(wx, wy, mznPts)) {
-            // Verificar que esté suficientemente lejos del borde
             let minDist = Infinity;
             const np = mznPts.length;
             for (let i = 0; i < np; i++) {
@@ -3599,21 +3385,16 @@ ${segBtnHtml}
         return pts;
       }
 
-      // ── PASTO BASE (ya dibujado como fondo, aquí añadimos textura fina) ──
-      // Líneas de pasto muy sutiles (como césped)
       if (zoom > 0.3 && bb.w > 40 && bb.h > 40) {
         const nLines = Math.min(18, Math.floor((bb.w + bb.h) / 12));
         for (let l = 0; l < nLines; l++) {
           const t = (l + 0.5) / nLines;
-          // Alternar dirección para efecto de siega
           const wx0b = mznPts.reduce((a, p) => Math.min(a, p.x), Infinity);
           const wx1b = mznPts.reduce((a, p) => Math.max(a, p.x), -Infinity);
           const wy0b = mznPts.reduce((a, p) => Math.min(a, p.y), Infinity);
           const wy1b = mznPts.reduce((a, p) => Math.max(a, p.y), -Infinity);
-          // Franjas horizontales (en coords mundo)
           const yw = wy0b + t * (wy1b - wy0b);
           const ca = toC(wx0b, yw), cb = toC(wx1b, yw);
-          // Clipear visualmente con la forma del manzano
           ctx.save();
           const clipPath = new Path2D();
           const cp2 = mznPts.map(p => toC(p.x, p.y));
@@ -3631,10 +3412,7 @@ ${segBtnHtml}
           ctx.restore();
         }
       }
-
-      // ── CONTENIDO SEGÚN TIPO ────────────────────────────────────────────────
       ctx.save();
-      // Clipear todo el contenido al polígono del manzano
       const clipPath2 = new Path2D();
       const cp3 = mznPts.map(p => toC(p.x, p.y));
       clipPath2.moveTo(cp3[0].x, cp3[0].y);
@@ -3643,7 +3421,6 @@ ${segBtnHtml}
       ctx.clip(clipPath2);
 
       if (tipo === 'jardin') {
-        // ── JARDÍN: flores y arbustos pequeños ─────────────────────────────
         const margin = mw(0.8);
         const shrubPts = samplePoints(Math.min(6, Math.floor(areaM2 / 25)), margin);
         for (const p of shrubPts) {
@@ -3660,7 +3437,6 @@ ${segBtnHtml}
         }
 
       } else if (tipo === 'cancha') {
-        // ── CANCHA: campo de juego + árboles en bordes ─────────────────────
         drawCanchaDentro(mznPts, mznIdx);
         const margin = mw(1.5);
         const treePts = samplePoints(Math.min(4, Math.floor(areaM2 / 80)), margin);
@@ -3671,7 +3447,6 @@ ${segBtnHtml}
         }
 
       } else if (tipo === 'parque') {
-        // ── PARQUE: árboles, arbustos, senderos ────────────────────────────
         drawSendero(mznPts, rand, '#c8a86b');
         const margin = mw(1.5);
         const nArboles = Math.min(12, Math.max(3, Math.floor(areaM2 / 80)));
@@ -3695,8 +3470,6 @@ ${segBtnHtml}
         }
 
       } else if (tipo === 'educativo') {
-        // ── EDUCATIVO: edificio central + árboles perimetrales ─────────────
-        // Edificio simplificado (rectángulo centrado, orientado al eje mayor)
         const pa2 = principalAxis(mznPts);
         const extL2 = projectExtents(mznPts, pa2.ux, pa2.uy);
         const extS2 = projectExtents(mznPts, -pa2.uy, pa2.ux);
@@ -3705,12 +3478,10 @@ ${segBtnHtml}
         ctx.save();
         ctx.translate(cc.x, cc.y);
         ctx.rotate(Math.atan2(pa2.uy, pa2.ux));
-        // Sombra del edificio
         ctx.beginPath();
         ctx.rect(-largo2 / 2 + 3, -ancho2 / 2 + 3, largo2, ancho2);
         ctx.fillStyle = 'rgba(0,0,0,0.18)';
         ctx.fill();
-        // Edificio
         ctx.beginPath();
         ctx.rect(-largo2 / 2, -ancho2 / 2, largo2, ancho2);
         ctx.fillStyle = 'rgba(220,200,160,0.82)';
@@ -3718,7 +3489,6 @@ ${segBtnHtml}
         ctx.strokeStyle = 'rgba(160,130,80,0.9)';
         ctx.lineWidth = Math.max(0.8, 1.2 * zoom);
         ctx.stroke();
-        // Líneas de ventanas
         const nVentanas = Math.max(2, Math.floor(largo2 / (12 * zoom)));
         for (let v = 1; v < nVentanas; v++) {
           const vx = -largo2 / 2 + (v / nVentanas) * largo2;
@@ -3730,7 +3500,6 @@ ${segBtnHtml}
           ctx.stroke();
         }
         ctx.restore();
-        // Árboles alrededor
         const margin3 = mw(2.0);
         const treePts2 = samplePoints(Math.min(10, Math.floor(areaM2 / 200)), margin3);
         for (const p of treePts2) {
@@ -3740,7 +3509,6 @@ ${segBtnHtml}
         }
 
       } else {
-        // ── SALUD / INSTITUCIONAL: edificio grande + vegetación mínima ──────
         const pa3 = principalAxis(mznPts);
         const extL3 = projectExtents(mznPts, pa3.ux, pa3.uy);
         const extS3 = projectExtents(mznPts, -pa3.uy, pa3.ux);
@@ -3749,12 +3517,10 @@ ${segBtnHtml}
         ctx.save();
         ctx.translate(cc.x, cc.y);
         ctx.rotate(Math.atan2(pa3.uy, pa3.ux));
-        // Sombra
         ctx.beginPath();
         ctx.rect(-largo3 / 2 + 4, -ancho3 / 2 + 4, largo3, ancho3);
         ctx.fillStyle = 'rgba(0,0,0,0.15)';
         ctx.fill();
-        // Edificio principal
         ctx.beginPath();
         ctx.rect(-largo3 / 2, -ancho3 / 2, largo3, ancho3);
         ctx.fillStyle = 'rgba(200,215,235,0.80)';
@@ -3762,13 +3528,11 @@ ${segBtnHtml}
         ctx.strokeStyle = 'rgba(120,150,190,0.85)';
         ctx.lineWidth = Math.max(0.8, 1.2 * zoom);
         ctx.stroke();
-        // Cruz (símbolo salud o institucional)
         const cs = Math.min(largo3, ancho3) * 0.22;
         ctx.fillStyle = tipo === 'salud' ? 'rgba(220,50,50,0.75)' : 'rgba(50,80,180,0.65)';
         ctx.fillRect(-cs * 0.18, -cs * 0.55, cs * 0.36, cs * 1.1);
         ctx.fillRect(-cs * 0.55, -cs * 0.18, cs * 1.1, cs * 0.36);
         ctx.restore();
-        // Árboles perimetrales
         const margin4 = mw(2.5);
         const treePts3 = samplePoints(Math.min(8, Math.floor(areaM2 / 500)), margin4);
         for (const p of treePts3) {
@@ -3780,8 +3544,6 @@ ${segBtnHtml}
       ctx.restore();
     }
 
-
-    // ─── RENDER ────────────────────────────────────────────────────────────────
     function render() {
       ctx.clearRect(0, 0, canvas.width, canvas.height);
       if (showGrid) drawGrid();
@@ -3790,8 +3552,6 @@ ${segBtnHtml}
         const l = manzanos[i], c = MZN_COLORS[l.colorIdx];
         const sub = showLots ? lotSubdivisions.find(s => s.mznIdx === i) : null;
         const hasLots = sub && sub.lots.length > 0;
-
-        // Construir lista unificada de lotes para este manzano
         const unifiedLots = [];
         if (showLots) {
           if (sub && sub.lots.length > 0) {
@@ -3803,7 +3563,6 @@ ${segBtnHtml}
         }
 
         if (unifiedLots.length > 0) {
-          // Dibujar todos los lotes del manzano con numeración unificada
           for (let j = 0; j < unifiedLots.length; j++) {
             const lt = unifiedLots[j];
             const lcp = lt.pts.map(p => toC(p.x, p.y));
@@ -3819,7 +3578,7 @@ ${segBtnHtml}
               ctx.fillStyle = lt._color + (lt._type === 'slice' ? '30' : '20'); ctx.fill();
               ctx.strokeStyle = lt._color + (lt._type === 'slice' ? 'cc' : 'aa'); ctx.lineWidth = 0.8; ctx.stroke();
             }
-            // Etiqueta unificada L1, L2, L3...
+
             const lcen = centroid(lt.pts), lcc = toC(lcen.x, lcen.y);
             const la = lt.areaM2 !== undefined ? lt.areaM2 : polyAreaM2(lt.pts);
             const fs2 = Math.max(10, Math.min(14, 11 * zoom));
@@ -3848,13 +3607,10 @@ ${segBtnHtml}
             }
             ctx.restore();
           }
-          // Borde del manzano encima
           const cp = l.pts.map(p => toC(p.x, p.y));
           ctx.beginPath(); ctx.moveTo(cp[0].x, cp[0].y);
           for (let j = 1; j < cp.length; j++) ctx.lineTo(cp[j].x, cp[j].y);
           ctx.closePath(); ctx.strokeStyle = c; ctx.lineWidth = 2.5; ctx.stroke();
-
-          // Bordes de sub-manzanos slice (para distinguir la zona)
           sliceLots.filter(sd => sd.mznIdx === i).forEach(sd => {
             if (sd.subMznPts && sd.subMznPts.length >= 3) {
               const scp = sd.subMznPts.map(p => toC(p.x, p.y));
@@ -3866,10 +3622,6 @@ ${segBtnHtml}
             }
           });
 
-
-
-
-          // ── Borde Vereda cuando hay lotes ───────────────────────────────────
           if (zoom > 0.15) {
             const swPath = buildSidewalkPath(l.pts);
             if (swPath) {
@@ -3884,18 +3636,13 @@ ${segBtnHtml}
           }
 
         } else if (mznEquipamiento[i]) {
-          // ── Manzano de equipamiento ──────────────────────────────────────
           const cp = l.pts.map(p => toC(p.x, p.y));
           const { type: equipType } = getEquipamientoInfo(polyAreaM2(l.pts));
-
-          // 1. Relleno base verde (clipeado al polígono real)
           ctx.save();
           ctx.beginPath(); ctx.moveTo(cp[0].x, cp[0].y);
           for (let j = 1; j < cp.length; j++) ctx.lineTo(cp[j].x, cp[j].y);
           ctx.closePath();
           ctx.clip();
-
-          // Gradiente radial de pasto
           const ccen = toC(centroid(l.pts).x, centroid(l.pts).y);
           const bb2 = eqBBox(l.pts);
           const gradR = Math.max(bb2.w, bb2.h) * 0.65;
@@ -3906,18 +3653,12 @@ ${segBtnHtml}
           ctx.fillStyle = grad;
           ctx.fillRect(bb2.minX, bb2.minY, bb2.w, bb2.h);
           ctx.restore();
-
-          // 2. Contenido gráfico adaptado al tipo y geometría
           drawEquipamientoContent(l.pts, i, equipType);
-
-          // 3. Borde dorado con dash
           ctx.beginPath(); ctx.moveTo(cp[0].x, cp[0].y);
           for (let j = 1; j < cp.length; j++) ctx.lineTo(cp[j].x, cp[j].y);
           ctx.closePath();
           ctx.strokeStyle = '#e3b341'; ctx.lineWidth = 2.5;
           ctx.setLineDash([6, 3]); ctx.stroke(); ctx.setLineDash([]);
-
-          // 4. Vereda exterior
           if (zoom > 0.15) {
             const swPath = buildSidewalkPath(l.pts);
             if (swPath) {
@@ -3931,7 +3672,6 @@ ${segBtnHtml}
             }
           }
         } else {
-          // Sin lotes: manzano vacío
           const cp = l.pts.map(p => toC(p.x, p.y));
           ctx.beginPath(); ctx.moveTo(cp[0].x, cp[0].y);
           for (let j = 1; j < cp.length; j++) ctx.lineTo(cp[j].x, cp[j].y);
@@ -3939,9 +3679,6 @@ ${segBtnHtml}
           ctx.strokeStyle = c; ctx.lineWidth = 2; ctx.stroke();
         }
 
-
-
-        // ── Dimensiones de segmentos del manzano ──────────────────────────
         if (zoom > 0.12) {
           const segPts = l.pts;
           const segN = segPts.length;
@@ -3950,42 +3687,25 @@ ${segBtnHtml}
           for (let si = 0; si < segN; si++) {
             const pA = segPts[si];
             const pB = segPts[(si + 1) % segN];
-
-            // Longitud en metros
             const dxW = pB.x - pA.x, dyW = pB.y - pA.y;
             const lenM = Math.sqrt(dxW * dxW + dyW * dyW) * MPP;
             if (lenM < 0.5) continue; // omitir segmentos degenerados
-
-            // Punto medio del segmento en canvas
             const midW = { x: (pA.x + pB.x) / 2, y: (pA.y + pB.y) / 2 };
             const midC = toC(midW.x, midW.y);
-
-            // Ángulo del segmento (para alinear el texto)
             let ang = Math.atan2(dyW, dxW);
-            // Mantener texto siempre legible (nunca boca abajo)
             if (ang > Math.PI / 2 || ang < -Math.PI / 2) ang += Math.PI;
-
-            // Desplazar el texto hacia AFUERA del manzano
-            // Vector normal al segmento apuntando hacia afuera
             const segLen = Math.sqrt(dxW * dxW + dyW * dyW) || 1;
             const nxSeg = -dyW / segLen, nySeg = dxW / segLen;
             const dotOut = (midW.x - mznCen.x) * nxSeg + (midW.y - mznCen.y) * nySeg;
             const outX = dotOut >= 0 ? nxSeg : -nxSeg;
             const outY = dotOut >= 0 ? nySeg : -nySeg;
-
-            // Offset en píxeles (perpendicular al segmento, hacia afuera)
             const offsetPx = Math.max(10, 13 * zoom);
             const txC = midC.x + outX * offsetPx;
             const tyC = midC.y + outY * offsetPx;
-
-            // Tamaño de fuente adaptativo
             const fsSeg = Math.max(10, Math.min(15, 11 * zoom));
-
             ctx.save();
             ctx.translate(txC, tyC);
             ctx.rotate(ang);
-
-            // Fondo semitransparente para legibilidad
             const label = lenM >= 100
               ? lenM.toFixed(1) + ' m'
               : lenM.toFixed(2) + ' m';
@@ -3995,9 +3715,6 @@ ${segBtnHtml}
             const tw = ctx.measureText(label).width;
             ctx.fillStyle = 'rgba(13,17,23,0.72)';
             ctx.fillRect(-tw / 2 - 2, -fsSeg / 2 - 1, tw + 4, fsSeg + 2);
-
-            // Texto de dimensión
-            // Color según tipo de manzano
             if (mznEquipamiento[i]) {
               ctx.fillStyle = '#e3b341ee';
             } else {
@@ -4009,10 +3726,7 @@ ${segBtnHtml}
           }
         }
 
-        // Manzano label
 const cen = centroid(l.pts), cc = toC(cen.x, cen.y);
-
-// === FUENTE UN POQUITO MÁS GRANDE ===
 const fs = Math.max(11, Math.min(17, 11.5 * zoom));     // Principal
 
 if (mznEquipamiento[i]) {
@@ -4022,13 +3736,10 @@ if (mznEquipamiento[i]) {
   ctx.font = `bold ${fs}px Courier New`;
   ctx.textAlign = 'center'; 
   ctx.textBaseline = 'middle';
-  
   ctx.fillText(`Mzo.${i + 1} ★`, cc.x, cc.y - fs * 0.75);
-
   if (zoom > 0.18) {
     ctx.font = `${Math.max(10, Math.min(14.5, 11.3 * zoom))}px Courier New`;
     ctx.fillText('Área de Equipamiento', cc.x, cc.y + fs * 0.15);
-    
     ctx.fillStyle = '#e3b34199';
     ctx.font = `${Math.max(10, Math.min(12.5, 10.3 * zoom))}px Courier New`;
     ctx.fillText(label, cc.x, cc.y + fs * 1.35);
@@ -4039,7 +3750,6 @@ if (mznEquipamiento[i]) {
   ctx.font = `bold ${fs}px Courier New`;
   ctx.textAlign = 'center'; 
   ctx.textBaseline = 'middle';
-  
   ctx.fillText(`Mzo.${i + 1}`, cc.x, cc.y);
   
   if (zoom > 0.28) {
@@ -4050,14 +3760,6 @@ if (mznEquipamiento[i]) {
 }
       }
 
-
-
-
-
-
-
-
-      // ── Highlight slice: sub-manzano calculado ────────────────────────────
       if (sliceSubMzn && sliceSubMzn.pts) {
         const scp = sliceSubMzn.pts.map(p => toC(p.x, p.y));
         ctx.beginPath(); ctx.moveTo(scp[0].x, scp[0].y);
@@ -4066,7 +3768,6 @@ if (mznEquipamiento[i]) {
         ctx.fillStyle = 'rgba(210,168,255,0.12)'; ctx.fill();
         ctx.strokeStyle = '#d2a8ff'; ctx.lineWidth = 2.5; ctx.setLineDash([5, 4]); ctx.stroke(); ctx.setLineDash([]);
       }
-      // ── Highlight slice: picking de frente (fase B) ───────────────────────
       if (sliceSubPhase === 'pickFrente' && sliceMznIdx >= 0 && manzanos[sliceMznIdx]) {
         const mzn = manzanos[sliceMznIdx];
         const mcp = mzn.pts.map(p => toC(p.x, p.y));
@@ -4074,7 +3775,6 @@ if (mznEquipamiento[i]) {
         for (let k = 1; k < mcp.length; k++) ctx.lineTo(mcp[k].x, mcp[k].y);
         ctx.closePath();
         ctx.strokeStyle = '#d2a8ff'; ctx.lineWidth = 2.5; ctx.setLineDash([5, 4]); ctx.stroke(); ctx.setLineDash([]);
-        // Hover: segmento más cercano
         const pts = mzn.pts, n = pts.length;
         let bestDist = Infinity, bestP1 = null, bestP2 = null;
         for (let i = 0; i < n; i++) {
@@ -4088,16 +3788,14 @@ if (mznEquipamiento[i]) {
           ctx.strokeStyle = '#d2a8ffcc'; ctx.lineWidth = 6; ctx.stroke();
         }
       }
-      // ── Highlight slice: picking de auxiliar (fase C) ─────────────────────
+
       if (sliceSubPhase === 'pickAux' && sliceMznIdx >= 0 && manzanos[sliceMznIdx]) {
         const mzn = manzanos[sliceMznIdx];
-        // Resaltar segmentos adyacentes en naranja
         for (const seg of sliceAdjacentSegs) {
           const ac = toC(seg.a.x, seg.a.y), bc = toC(seg.b.x, seg.b.y);
           ctx.beginPath(); ctx.moveTo(ac.x, ac.y); ctx.lineTo(bc.x, bc.y);
           ctx.strokeStyle = '#e3b341'; ctx.lineWidth = 6; ctx.stroke();
         }
-        // Frente elegido en rojo
         if (sliceSelectingFrente) {
           const af = toC(sliceSelectingFrente.a.x, sliceSelectingFrente.a.y);
           const bf = toC(sliceSelectingFrente.b.x, sliceSelectingFrente.b.y);
@@ -4105,7 +3803,6 @@ if (mznEquipamiento[i]) {
           ctx.strokeStyle = '#f85149'; ctx.lineWidth = 5; ctx.stroke();
         }
       }
-      // ── Highlight slice: picking de dirección de lotes ────────────────────
       if (slicePickingSeg && sliceSubMzn) {
         const mcp = sliceSubMzn.pts.map(p => toC(p.x, p.y));
         ctx.beginPath(); ctx.moveTo(mcp[0].x, mcp[0].y);
@@ -4126,7 +3823,6 @@ if (mznEquipamiento[i]) {
         }
       }
 
-      // Streets
       for (const s of streets) {
         const dx = s.end.x - s.start.x, dy = s.end.y - s.start.y, len = Math.sqrt(dx * dx + dy * dy) || 1;
         const ux = dx / len, uy = dy / len, nx = -uy, ny = ux, hw = mw(s.width / 2);
@@ -4135,22 +3831,19 @@ if (mznEquipamiento[i]) {
           toC(s.start.x + nx * hw, s.start.y + ny * hw), toC(s.end.x + nx * hw, s.end.y + ny * hw),
           toC(s.end.x - nx * hw, s.end.y - ny * hw), toC(s.start.x - nx * hw, s.start.y - ny * hw)
         ];
-        // Relleno (sin stroke aún)
+
         ctx.beginPath(); ctx.moveTo(corners[0].x, corners[0].y);
         for (let i = 1; i < 4; i++) ctx.lineTo(corners[i].x, corners[i].y);
         ctx.closePath();
         if (isSel) { ctx.fillStyle = '#f7816618'; ctx.fill(); }
-        // Bordes laterales: visibles solo cuando la calle está seleccionada
         if (isSel) {
           ctx.strokeStyle = '#f78166'; ctx.lineWidth = 2;
           ctx.beginPath(); ctx.moveTo(corners[0].x, corners[0].y); ctx.lineTo(corners[1].x, corners[1].y); ctx.stroke();
           ctx.beginPath(); ctx.moveTo(corners[3].x, corners[3].y); ctx.lineTo(corners[2].x, corners[2].y); ctx.stroke();
         }
-
         const sc = toC(s.start.x, s.start.y), ec = toC(s.end.x, s.end.y);
         ctx.beginPath(); ctx.moveTo(sc.x, sc.y); ctx.lineTo(ec.x, ec.y);
         ctx.setLineDash([7, 5]); ctx.strokeStyle = '#f78166bb'; ctx.lineWidth = 1; ctx.stroke(); ctx.setLineDash([]);
-
         if (zoom > 0.3) {
           const mid = toC((s.start.x + s.end.x) / 2, (s.start.y + s.end.y) / 2), ang = Math.atan2(dy, dx);
           const streetIdx = streets.indexOf(s) + 1;
@@ -4158,18 +3851,15 @@ if (mznEquipamiento[i]) {
           const ejeTexto = 'E    J    E         D    E         V    Í    A';
           ctx.save();
           ctx.translate(mid.x, mid.y);
-          // Mantener texto legible (nunca boca abajo)
           let ang2 = ang;
           if (ang2 > Math.PI / 2 || ang2 < -Math.PI / 2) ang2 += Math.PI;
           ctx.rotate(ang2);
           const fs1 = Math.max(9, Math.min(13, 10 * zoom));
           const fs2 = Math.max(8, Math.min(11, 9 * zoom));
           ctx.textAlign = 'center'; ctx.textBaseline = 'middle';
-          // Fila 1: nombre de la calle
           ctx.fillStyle = '#f78166dd';
           ctx.font = `bold ${fs1}px Courier New`;
           ctx.fillText(nombreCalle, 0, -fs1 * 0.7);
-          // Fila 2: EJE DE VÍA espaciado
           ctx.fillStyle = '#f7816699';
           ctx.font = `${fs2}px Courier New`;
           ctx.fillText(ejeTexto, 0, fs2 * 0.9);
@@ -4184,19 +3874,15 @@ if (mznEquipamiento[i]) {
             ctx.fillText(lbl, pt.x, pt.y + 1);
           });
 
-          // ── Indicador visual durante el arrastre de S o E ─────────────────
           if (dragHandle && (dragHandle.which === 'start' || dragHandle.which === 'end') && dragHandle.id === s.id) {
             const fixedW = dragHandle.which === 'start' ? s.end : s.start;
             const movingW = dragHandle.which === 'start' ? s.start : s.end;
             const fixedC = toC(fixedW.x, fixedW.y);
             const movingC = toC(movingW.x, movingW.y);
-
-            // Eje original (línea punteada gris)
             const odx = dragHandle.origEnd.x - dragHandle.origStart.x;
             const ody = dragHandle.origEnd.y - dragHandle.origStart.y;
             const olen = Math.sqrt(odx * odx + ody * ody) || 1;
             const oux = odx / olen, ouy = ody / olen;
-            // Extender el eje original más allá del extremo fijo para guía visual
             const guideLen = Math.max(canvas.width, canvas.height) / zoom;
             const guideA = toC(fixedW.x - oux * guideLen, fixedW.y - ouy * guideLen);
             const guideB = toC(fixedW.x + oux * guideLen, fixedW.y + ouy * guideLen);
@@ -4206,13 +3892,9 @@ if (mznEquipamiento[i]) {
             ctx.lineWidth = 1;
             ctx.beginPath(); ctx.moveTo(guideA.x, guideA.y); ctx.lineTo(guideB.x, guideB.y); ctx.stroke();
             ctx.setLineDash([]);
-
-            // Línea nueva de la calle (sólida)
             ctx.strokeStyle = dragHandle.freeMode ? '#ffa657' : '#3fb950';
             ctx.lineWidth = 1.5;
             ctx.beginPath(); ctx.moveTo(fixedC.x, fixedC.y); ctx.lineTo(movingC.x, movingC.y); ctx.stroke();
-
-            // Etiqueta modo
             const midC = { x: (fixedC.x + movingC.x) / 2, y: (fixedC.y + movingC.y) / 2 };
             const modeLabel = dragHandle.freeMode ? '↗ LIBRE' : '→ EJE';
             const modeCol = dragHandle.freeMode ? '#ffa657' : '#3fb950';
@@ -4224,7 +3906,6 @@ if (mznEquipamiento[i]) {
           }
         }
       }
-      // Dibujar segmentos de eje definidos por manzano
       for (const [idxStr, seg] of Object.entries(mznSegments)) {
         const sc = toC(seg.p1.x, seg.p1.y), ec = toC(seg.p2.x, seg.p2.y);
         ctx.beginPath(); ctx.moveTo(sc.x, sc.y); ctx.lineTo(ec.x, ec.y);
@@ -4235,17 +3916,14 @@ if (mznEquipamiento[i]) {
         ctx.beginPath(); ctx.arc(ec.x, ec.y, 5, 0, Math.PI * 2);
         ctx.fillStyle = '#e3b341'; ctx.fill();
       }
-      // Resaltar segmento del manzano objetivo al pasar el mouse
       if (pickingSegForMzn >= 0 && manzanos[pickingSegForMzn]) {
         const mzn = manzanos[pickingSegForMzn];
-        // Contorno del manzano activo parpadeante
         const mcp = mzn.pts.map(p => toC(p.x, p.y));
         ctx.beginPath(); ctx.moveTo(mcp[0].x, mcp[0].y);
         for (let k = 1; k < mcp.length; k++) ctx.lineTo(mcp[k].x, mcp[k].y);
         ctx.closePath();
         ctx.strokeStyle = '#f78166'; ctx.lineWidth = 2.5;
         ctx.setLineDash([5, 4]); ctx.stroke(); ctx.setLineDash([]);
-        // Segmento más cercano al mouse
         const wp = toW(mousePos.x, mousePos.y);
         const pts = mzn.pts, n = pts.length;
         let bestDist = Infinity, bestP1 = null, bestP2 = null;
@@ -4261,8 +3939,6 @@ if (mznEquipamiento[i]) {
           ctx.setLineDash([]); ctx.stroke();
         }
       }
-
-      // Polygon in progress
       if (!polyClosed && polyPts.length > 0) {
         const cp = polyPts.map(p => toC(p.x, p.y));
         ctx.beginPath(); ctx.moveTo(cp[0].x, cp[0].y);
@@ -4274,17 +3950,13 @@ if (mznEquipamiento[i]) {
           ctx.beginPath(); ctx.arc(cp[0].x, cp[0].y, 12, 0, Math.PI * 2);
           ctx.strokeStyle = '#3fb950'; ctx.lineWidth = 2; ctx.stroke();
         }
-
-        // ── Distancias de segmentos ya trazados ───────────────────────────
         for (let i = 0; i < polyPts.length; i++) {
           const pA = polyPts[i];
           const pB = (i < polyPts.length - 1) ? polyPts[i + 1] : null;
           if (!pB) continue;
-
           const dxW = pB.x - pA.x, dyW = pB.y - pA.y;
           const lenM = Math.sqrt(dxW * dxW + dyW * dyW) * MPP;
           if (lenM < 0.1) continue;
-
           const midC = {
             x: (cp[i].x + cp[i + 1].x) / 2,
             y: (cp[i].y + cp[i + 1].y) / 2
@@ -4292,13 +3964,11 @@ if (mznEquipamiento[i]) {
 
           let ang = Math.atan2(dyW, dxW);
           if (ang > Math.PI / 2 || ang < -Math.PI / 2) ang += Math.PI;
-
           const segLen = Math.sqrt(dxW * dxW + dyW * dyW) || 1;
           const nxSeg = -dyW / segLen, nySeg = dxW / segLen;
           const offsetPx = 14;
           const label = lenM >= 100 ? lenM.toFixed(1) + ' m' : lenM.toFixed(2) + ' m';
           const fsSeg = Math.max(9, Math.min(13, 10 * zoom));
-
           ctx.save();
           ctx.translate(midC.x + nxSeg * offsetPx, midC.y + nySeg * offsetPx);
           ctx.rotate(ang);
@@ -4313,7 +3983,6 @@ if (mznEquipamiento[i]) {
           ctx.restore();
         }
 
-        // ── Distancia del segmento en curso (último punto → cursor) ───────
         if (polyPts.length >= 1) {
           const lastW = polyPts[polyPts.length - 1];
           const lastC = cp[cp.length - 1];
@@ -4334,7 +4003,6 @@ if (mznEquipamiento[i]) {
             const offsetPx = 14;
             const label = lenM >= 100 ? lenM.toFixed(1) + ' m' : lenM.toFixed(2) + ' m';
             const fsSeg = Math.max(9, Math.min(13, 10 * zoom));
-
             ctx.save();
             ctx.translate(midC.x + nxSeg * offsetPx, midC.y + nySeg * offsetPx);
             ctx.rotate(ang);
@@ -4350,33 +4018,24 @@ if (mznEquipamiento[i]) {
           }
         }
       }
-      // Vértices de snap + perpendiculares (modo trazar calle)
-      if (mode === 'street' && polyClosed) {
 
-        // ── A. Dibujar indicador de perpendicular sobre el segmento activo ──
+      if (mode === 'street' && polyClosed) {
         if (snapTarget && snapTarget.type === 'perp' && snapTarget.segA) {
           const sa = toC(snapTarget.segA.x, snapTarget.segA.y);
           const sb = toC(snapTarget.segB.x, snapTarget.segB.y);
           const sp = toC(snapTarget.x, snapTarget.y);
-
-          // Segmento activo resaltado en cyan
           ctx.beginPath(); ctx.moveTo(sa.x, sa.y); ctx.lineTo(sb.x, sb.y);
           ctx.strokeStyle = '#79c0ff88'; ctx.lineWidth = 3;
           ctx.setLineDash([6, 4]); ctx.stroke(); ctx.setLineDash([]);
-
-          // Línea perpendicular desde el pie hasta el cursor (guía visual)
           ctx.beginPath(); ctx.moveTo(sp.x, sp.y); ctx.lineTo(mousePos.x, mousePos.y);
           ctx.strokeStyle = '#79c0ff55'; ctx.lineWidth = 1;
           ctx.setLineDash([4, 4]); ctx.stroke(); ctx.setLineDash([]);
-
-          // Símbolo de ángulo recto en el pie de la perpendicular
           const dx = snapTarget.segB.x - snapTarget.segA.x;
           const dy = snapTarget.segB.y - snapTarget.segA.y;
           const len = Math.sqrt(dx * dx + dy * dy) || 1;
           const ux = dx / len, uy = dy / len;   // dirección del segmento
           const nx = -uy, ny = ux;               // normal al segmento
           const SQ = 7; // tamaño del cuadradito en px
-          // Los tres vértices del símbolo de 90°
           const sq1 = { x: sp.x + ux * SQ, y: sp.y + uy * SQ };
           const sq2 = { x: sp.x + ux * SQ + nx * SQ, y: sp.y + uy * SQ + ny * SQ };
           const sq3 = { x: sp.x + nx * SQ, y: sp.y + ny * SQ };
@@ -4385,8 +4044,6 @@ if (mznEquipamiento[i]) {
           ctx.strokeStyle = '#79c0ffcc'; ctx.lineWidth = 1.5;
           ctx.setLineDash([]); ctx.stroke();
         }
-
-        // ── B. Dibujar todos los vértices de los manzanos ────────────────────
         for (const mzn of manzanos) {
           for (const p of mzn.pts) {
             const pc = toC(p.x, p.y);
@@ -4400,12 +4057,10 @@ if (mznEquipamiento[i]) {
             ctx.lineWidth = isSnap ? 2 : 1;
             ctx.stroke();
             if (isSnap) {
-              // Cruz interior
               ctx.beginPath();
               ctx.moveTo(pc.x - 4, pc.y); ctx.lineTo(pc.x + 4, pc.y);
               ctx.moveTo(pc.x, pc.y - 4); ctx.lineTo(pc.x, pc.y + 4);
               ctx.strokeStyle = '#0d1117'; ctx.lineWidth = 1.5; ctx.stroke();
-              // Etiqueta de coordenadas
               const mp2 = ptWM(p);
               ctx.fillStyle = '#3fb950';
               ctx.font = '9px Courier New';
@@ -4414,13 +4069,9 @@ if (mznEquipamiento[i]) {
             }
           }
         }
-
-        // ── C. Dibujar el punto de snap perpendicular ────────────────────────
         if (snapTarget && snapTarget.type === 'perp') {
           const sp = toC(snapTarget.x, snapTarget.y);
           const mp2 = ptWM(snapTarget);
-
-          // Círculo de snap (rombo/diamante en color cyan para distinguirlo del vértice)
           ctx.beginPath();
           ctx.moveTo(sp.x, sp.y - 9);
           ctx.lineTo(sp.x + 9, sp.y);
@@ -4429,14 +4080,10 @@ if (mznEquipamiento[i]) {
           ctx.closePath();
           ctx.fillStyle = '#79c0ff33'; ctx.fill();
           ctx.strokeStyle = '#79c0ffcc'; ctx.lineWidth = 2; ctx.stroke();
-
-          // Cruz interior
           ctx.beginPath();
           ctx.moveTo(sp.x - 4, sp.y); ctx.lineTo(sp.x + 4, sp.y);
           ctx.moveTo(sp.x, sp.y - 4); ctx.lineTo(sp.x, sp.y + 4);
           ctx.strokeStyle = '#0d1117'; ctx.lineWidth = 1.5; ctx.stroke();
-
-          // Etiqueta con coordenadas + indicador "⊥"
           ctx.fillStyle = '#79c0ff';
           ctx.font = '9px Courier New';
           ctx.textAlign = 'left'; ctx.textBaseline = 'bottom';
@@ -4444,7 +4091,6 @@ if (mznEquipamiento[i]) {
         }
       }
 
-      // Street preview
       if (mode === 'street' && streetStart) {
         const snapC = snapTarget ? toC(snapTarget.x, snapTarget.y) : null;
         const mc = snapC || mousePos;
@@ -4466,40 +4112,29 @@ if (mznEquipamiento[i]) {
       }
     }
 
-
-
-    // ─── VEREDA / SIDEWALK OFFSET ──────────────────────────────────────────────
-    // Calcula el offset en unidades-mundo para cada lado del manzano según el
-    // ancho de la calle que lo toca (o 1.2 m de base si no hay calle adyacente).
     function getStreetWidthForSide(mznPts, segA, segB) {
-      // Punto medio del lado del manzano
       const mx = (segA.x + segB.x) / 2, my = (segA.y + segB.y) / 2;
-      // Dirección normal hacia afuera del lado
       const dx = segB.x - segA.x, dy = segB.y - segA.y;
       const len = Math.sqrt(dx * dx + dy * dy) || 1;
       const nx = -dy / len, ny = dx / len;
-      // Verificar que el normal apunta HACIA AFUERA del polígono
       const cen = centroid(mznPts);
       const dot = (mx + nx - cen.x) * nx + (my + ny - cen.y) * ny;
       const outX = dot >= 0 ? nx : -nx, outY = dot >= 0 ? ny : -ny;
-      // Buscar qué calle está más cerca de este lado (en dirección normal exterior)
       let bestW = 0;
       const PROBE = mw(30); // hasta 30 m de búsqueda
       for (const s of streets) {
         const rect = streetRect(s);
         if (!rect) continue;
-        // Punto de prueba: el centro del lado del manzano desplazado 1 u.m. hacia afuera
         const px = mx + outX, py = my + outY;
         if (slicePtInPoly(px, py, rect)) {
           if (s.width > bestW) bestW = s.width;
         }
-        // También probar con un desplazamiento mayor
         const px2 = mx + outX * mw(s.width / 2 + 2), py2 = my + outY * mw(s.width / 2 + 2);
         if (slicePtInPoly(px2, py2, rect)) {
           if (s.width > bestW) bestW = s.width;
         }
       }
-      return bestW; // 0 = sin calle adyacente
+      return bestW;
     }
 
     function streetWidthToOffset(w) {
@@ -4516,7 +4151,6 @@ if (mznEquipamiento[i]) {
     }
 
     function angleBetweenSegs(pPrev, pCur, pNext) {
-      // Ángulo interior en el vértice pCur
       const ax = pPrev.x - pCur.x, ay = pPrev.y - pCur.y;
       const bx = pNext.x - pCur.x, by = pNext.y - pCur.y;
       const la = Math.sqrt(ax * ax + ay * ay) || 1e-9;
@@ -4526,21 +4160,15 @@ if (mznEquipamiento[i]) {
     }
 
     function arcRadiusForAngle(angleDeg) {
-      // < 45° → 2 m, 45°–65° → 3 m, 65°–90° → 4 m, 90°–120° → 5 m, > 120° → 6 m
       if (angleDeg < 45) return 2;
       if (angleDeg < 65) return 3;
       if (angleDeg < 90) return 4;
       if (angleDeg <= 120) return 5;
       return 6;
     }
-
-    // Devuelve el polígono offset de la vereda con arcos en los vértices.
-    // Resultado: array de puntos del canvas (ya en coord canvas) para dibujar con Path2D.
     function buildSidewalkPath(mznPts) {
       const n = mznPts.length;
       if (n < 3) return null;
-
-      // 1. Calcular offset por lado (en metros → unidades mundo)
       const sideOffsets = [];
       for (let i = 0; i < n; i++) {
         const a = mznPts[i], b = mznPts[(i + 1) % n];
@@ -4548,8 +4176,6 @@ if (mznEquipamiento[i]) {
         sideOffsets.push(mw(streetWidthToOffset(sw)));
       }
 
-      // 2. Para cada lado, calcular la línea offset (paralela EXTERIOR)
-      //    La normal exterior apunta ALEJÁNDOSE del centroide
       const cen = centroid(mznPts);
       const offsetLines = [];
       for (let i = 0; i < n; i++) {
@@ -4557,7 +4183,6 @@ if (mznEquipamiento[i]) {
         const dx = b.x - a.x, dy = b.y - a.y;
         const len = Math.sqrt(dx * dx + dy * dy) || 1;
         let nx = -dy / len, ny = dx / len;
-        // Asegurar normal hacia AFUERA (alejándose del centroide)
         const mid = { x: (a.x + b.x) / 2, y: (a.y + b.y) / 2 };
         if ((cen.x - mid.x) * nx + (cen.y - mid.y) * ny > 0) { nx = -nx; ny = -ny; }
         const off = sideOffsets[i];
@@ -4568,7 +4193,6 @@ if (mznEquipamiento[i]) {
         });
       }
 
-      // 3. Intersectar líneas offset consecutivas para obtener vértices del polígono offset
       const corners = [];
       for (let i = 0; i < n; i++) {
         const l1 = offsetLines[i];
@@ -4577,14 +4201,12 @@ if (mznEquipamiento[i]) {
           { x: l1.ax, y: l1.ay }, { x: l1.bx, y: l1.by },
           { x: l2.ax, y: l2.ay }, { x: l2.bx, y: l2.by }
         );
-        // Si no hay intersección (paralelas), usar promedio
         corners.push(pt || {
           x: (l1.bx + l2.ax) / 2,
           y: (l1.by + l2.ay) / 2
         });
       }
 
-      // 4. Construir el Path2D con arcos en los vértices
       const path = new Path2D();
       for (let i = 0; i < n; i++) {
         const pPrev = mznPts[(i - 1 + n) % n];
@@ -4593,24 +4215,15 @@ if (mznEquipamiento[i]) {
         const angleDeg = angleBetweenSegs(pPrev, pCur, pNext);
         const radiusM = arcRadiusForAngle(angleDeg);
         const radiusW = mw(radiusM);
-
-        // Vértice del offset en coordenadas canvas
         const vc = toC(corners[i].x, corners[i].y);
-
-        // Vectores desde el corner offset hacia los corners adyacentes (en canvas)
         const vPrev = toC(corners[(i - 1 + n) % n].x, corners[(i - 1 + n) % n].y);
         const vNext = toC(corners[(i + 1) % n].x, corners[(i + 1) % n].y);
-
         const dPx = vPrev.x - vc.x, dPy = vPrev.y - vc.y;
         const dNx = vNext.x - vc.x, dNy = vNext.y - vc.y;
         const lP = Math.sqrt(dPx * dPx + dPy * dPy) || 1;
         const lN = Math.sqrt(dNx * dNx + dNy * dNy) || 1;
-
-        // Radio en píxeles de canvas
         const radiusPx = radiusW * zoom;
-        // Puntos de tangencia (limitados al 45% del lado para evitar solapamiento)
         const tDist = Math.min(radiusPx, lP * 0.45, lN * 0.45);
-
         const tPx = vc.x + (dPx / lP) * tDist;
         const tPy = vc.y + (dPy / lP) * tDist;
         const tNx = vc.x + (dNx / lN) * tDist;
@@ -4623,7 +4236,6 @@ if (mznEquipamiento[i]) {
         }
         path.quadraticCurveTo(vc.x, vc.y, tNx, tNy);
       }
-      // Cerrar conectando de vuelta al primer punto de tangencia
       {
         const vc = toC(corners[0].x, corners[0].y);
         const vPrev = toC(corners[(n - 1)].x, corners[(n - 1)].y);
@@ -4641,14 +4253,9 @@ if (mznEquipamiento[i]) {
       path.closePath();
       return path;
     }
-
-    // Calcula el polígono offset de vereda en coordenadas MUNDO (no canvas).
-    // Retorna array de {x,y} en unidades mundo, o null si no es posible calcularlo.
     function buildSidewalkWorldPts(mznPts) {
       const n = mznPts.length;
       if (n < 3) return null;
-
-      // 1. Offset por lado (en unidades mundo)
       const sideOffsets = [];
       for (let i = 0; i < n; i++) {
         const a = mznPts[i], b = mznPts[(i + 1) % n];
@@ -4656,7 +4263,6 @@ if (mznEquipamiento[i]) {
         sideOffsets.push(mw(streetWidthToOffset(sw)));
       }
 
-      // 2. Líneas offset (paralelas exteriores)
       const cen = centroid(mznPts);
       const offsetLines = [];
       for (let i = 0; i < n; i++) {
@@ -4672,8 +4278,6 @@ if (mznEquipamiento[i]) {
           bx: b.x + nx * off, by: b.y + ny * off
         });
       }
-
-      // 3. Intersectar líneas offset consecutivas → vértices del polígono vereda
       const corners = [];
       for (let i = 0; i < n; i++) {
         const l1 = offsetLines[i];
@@ -4702,9 +4306,6 @@ if (mznEquipamiento[i]) {
       ctx.stroke();
     }
 
-
-
-    // ─── ELIMINAR PARCELA ──────────────────────────────────────────────────────
     function deleteParcela() {
       if (!polyClosed && polyPts.length === 0) {
         alert('No hay parcela dibujada.'); return;
@@ -4729,26 +4330,22 @@ if (mznEquipamiento[i]) {
       document.getElementById('modeLabel').textContent = 'MODO: PARCELA';
       document.getElementById('hintLabel').textContent = '';
       document.getElementById('editPanel').style.display = 'none';
-
       mznSegments = {}; mznMethods = {}; mznEquipamiento = {}; pickingSegForMzn = -1;
       sliceMznIdx = -1; sliceLots = [];
       sliceSubPhase = 'none'; sliceSelectingFrente = null; sliceSelectingAux = null;
       sliceAdjacentSegs = []; sliceSubMzn = null;
       slicePickingSeg = false; sliceCutDirX = null; sliceCutDirY = null;
       sliceFrenteMidX = null; sliceFrenteMidY = null;
-
       document.getElementById('slicePanel').style.display = 'none';
       document.getElementById('segHint').style.display = 'none';
       document.getElementById('lpDir').value = 'auto';
       document.getElementById('lotsPanel').innerHTML = '';
       document.getElementById('streetsPanel').innerHTML = '';
       document.getElementById('totalArea').textContent = '';
-
       canvas.style.cursor = 'crosshair';
       updateInstr(); updateLpCalc(); updateStatsPanel(); render();
     }
 
-    // ─── RESET ─────────────────────────────────────────────────────────────────
     function resetAll() {
       if (!confirm('¿Reiniciar todo?')) return;
       polyPts = []; polyClosed = false; streetStart = null; streets = [];
@@ -4780,7 +4377,6 @@ if (mznEquipamiento[i]) {
       updateInstr(); render();
     }
 
-    // ─── EXPORT DXF ────────────────────────────────────────────────────────────
     function exportDXF() {
       _requireLicense(() => _exportDXFInternal());
     }
@@ -4795,9 +4391,7 @@ if (mznEquipamiento[i]) {
             (window['@tarikjabiri/dxf'] && window['@tarikjabiri/dxf'].default);
 
           if (typeof DxfWriter !== 'function') throw new Error('DxfWriter no disponible');
-
           const dxf = new DxfWriter();
-
           dxf.addLayer('MANZANOS', 5, 'CONTINUOUS');
           dxf.addLayer('LOTES', 3, 'CONTINUOUS');
           dxf.addLayer('LOTES-REM', 30, 'CONTINUOUS');
@@ -4806,27 +4400,20 @@ if (mznEquipamiento[i]) {
           dxf.addLayer('VEREDAS', 6, 'CONTINUOUS');
           dxf.addLayer('EJES-MZN', 2, 'CONTINUOUS');
           dxf.addLayer('TEXTO', 7, 'CONTINUOUS');
-
-          // ── Manzanos + lotes ──────────────────────────────────────────────
           for (let i = 0; i < manzanos.length; i++) {
             const l = manzanos[i];
             const pts_m = l.pts.map(p => ({ x: wm(p.x), y: -wm(p.y) }));
             dxf.setCurrentLayerName('MANZANOS');
             dxf.addLWPolyline(pts_m, { flags: 1 });
-
             const cen = centroid(l.pts);
             dxf.setCurrentLayerName('TEXTO');
             dxf.addText(`Mzo. ${i + 1}`, { x: wm(cen.x), y: -wm(cen.y) + 1.0 }, 1.0);
             dxf.addText(`${polyAreaM2(l.pts).toFixed(1)} m2`, { x: wm(cen.x), y: -wm(cen.y) - 0.3 }, 0.6);
-
-            // Vereda
             const swPts = buildSidewalkWorldPts(l.pts);
             if (swPts && swPts.length >= 3) {
               dxf.setCurrentLayerName('VEREDAS');
               dxf.addLWPolyline(swPts.map(p => ({ x: wm(p.x), y: -wm(p.y) })), { flags: 1 });
             }
-
-            // Segmento de eje si existe
             if (mznSegments[i]) {
               const seg = mznSegments[i];
               dxf.setCurrentLayerName('EJES-MZN');
@@ -4836,7 +4423,6 @@ if (mznEquipamiento[i]) {
               ], { flags: 0 });
             }
 
-            // Lista unificada de lotes (automáticos + slice)
             const unifiedExport = [];
             const subExp = lotSubdivisions.find(s => s.mznIdx === i);
             if (subExp) subExp.lots.forEach(lt => unifiedExport.push(lt));
@@ -4857,7 +4443,6 @@ if (mznEquipamiento[i]) {
             });
           }
 
-          // ── Calles + ejes ─────────────────────────────────────────────────
           for (let i = 0; i < streets.length; i++) {
             const s = streets[i];
             const rect = streetRect(s);
@@ -4866,14 +4451,11 @@ if (mznEquipamiento[i]) {
             const pts_m = rect.map(p => ({ x: wm(p.x), y: -wm(p.y) }));
             dxf.setCurrentLayerName('CALLES');
             dxf.addLWPolyline(pts_m, { flags: 1 });
-
-            // Eje central de la calle
             dxf.setCurrentLayerName('EJES-CALLE');
             dxf.addLWPolyline([
               { x: wm(s.start.x), y: -wm(s.start.y) },
               { x: wm(s.end.x), y: -wm(s.end.y) }
             ], { flags: 0 });
-
             const mx = wm((s.start.x + s.end.x) / 2);
             const my = -wm((s.start.y + s.end.y) / 2);
             dxf.setCurrentLayerName('TEXTO');
@@ -4896,7 +4478,6 @@ if (mznEquipamiento[i]) {
         }
       }
 
-      // Si la librería ya está cargada y disponible, usarla directamente
       const libReady = typeof window.DxfWriter === 'function' ||
         (window['@tarikjabiri/dxf'] && (
           typeof window['@tarikjabiri/dxf'].DxfWriter === 'function' ||
@@ -4904,13 +4485,9 @@ if (mznEquipamiento[i]) {
         ));
 
       if (libReady) { tryExport(); return; }
-
-      // Si no está cargada, cargar el script una sola vez
       const CDN = 'https://cdn.jsdelivr.net/npm/@tarikjabiri/dxf@1.0.8/dist/dxf.umd.js';
-      // Remover tag anterior fallido si existe
       const old = document.querySelector('script[data-dxflib]');
       if (old) old.remove();
-
       const s = document.createElement('script');
       s.setAttribute('data-dxflib', '1');
       s.src = CDN;
@@ -4924,10 +4501,8 @@ if (mznEquipamiento[i]) {
 
     function exportDXF_R12() {
       const L = [];
-
       function sec(name) { L.push('  0\nSECTION', '  2\n' + name); }
       function endsec() { L.push('  0\nENDSEC'); }
-
       sec('HEADER');
       L.push(
         '  9\n$ACADVER\n  1\nAC1009',
@@ -4938,18 +4513,14 @@ if (mznEquipamiento[i]) {
         '  9\n$LIMMAX\n 10\n5000.0\n 20\n5000.0'
       );
       endsec();
-
       sec('TABLES');
-
       L.push('  0\nTABLE\n  2\nVPORT\n 70\n1');
       L.push('  0\nVPORT\n  2\n*ACTIVE\n 70\n0\n 10\n0.0\n 20\n0.0\n 11\n1.0\n 21\n1.0\n 12\n0.0\n 22\n0.0\n 13\n0.0\n 23\n0.0\n 14\n1.0\n 24\n1.0\n 15\n0.0\n 25\n0.0\n 16\n0.0\n 26\n0.0\n 36\n1.0\n 17\n0.0\n 27\n0.0\n 37\n0.0\n 40\n1.0\n 41\n1.0\n 42\n50.0\n 43\n0.0\n 44\n0.0\n 50\n0.0\n 51\n0.0\n 71\n0\n 72\n1000\n 73\n1\n 74\n3\n 75\n0\n 76\n0\n 77\n0\n 78\n0');
       L.push('  0\nENDTAB');
-
       L.push('  0\nTABLE\n  2\nLTYPE\n 70\n2');
       L.push('  0\nLTYPE\n  2\nCONTINUOUS\n 70\n0\n  3\nSolid line\n 72\n65\n 73\n0\n 40\n0.0');
       L.push('  0\nLTYPE\n  2\nDASHED\n 70\n0\n  3\nDashed\n 72\n65\n 73\n2\n 40\n0.75\n 49\n0.5\n 49\n-0.25');
       L.push('  0\nENDTAB');
-
       const layers = [
         { name: '0', color: 7, ltype: 'CONTINUOUS' },
         { name: 'MANZANOS', color: 5, ltype: 'CONTINUOUS' },
@@ -4966,18 +4537,13 @@ if (mznEquipamiento[i]) {
         L.push(`  0\nLAYER\n  2\n${lay.name}\n 70\n0\n 62\n${lay.color}\n  6\n${lay.ltype}`);
       }
       L.push('  0\nENDTAB');
-
       L.push('  0\nTABLE\n  2\nSTYLE\n 70\n1');
       L.push('  0\nSTYLE\n  2\nSTANDARD\n 70\n0\n 40\n0.0\n 41\n1.0\n 50\n0.0\n 71\n0\n 42\n0.2\n  3\ntxt\n  4\n');
       L.push('  0\nENDTAB');
-
       endsec();
-
       sec('BLOCKS');
       endsec();
-
       sec('ENTITIES');
-
       function polyline(pts_m, layer, closed) {
         const flag = closed ? 1 : 0;
         L.push(`  0\nPOLYLINE\n  8\n${layer}\n 66\n1\n 70\n${flag}\n 10\n0.0\n 20\n0.0`);
@@ -4990,22 +4556,16 @@ if (mznEquipamiento[i]) {
       function texto(x, y, h, txt, layer) {
         L.push(`  0\nTEXT\n  8\n${layer}\n 10\n${x.toFixed(4)}\n 20\n${y.toFixed(4)}\n 30\n0.0\n 40\n${h.toFixed(4)}\n  1\n${txt}\n 72\n1\n 11\n${x.toFixed(4)}\n 21\n${y.toFixed(4)}\n 31\n0.0`);
       }
-
-      // ── Manzanos ────────────────────────────────────────────────────────────
       for (let i = 0; i < manzanos.length; i++) {
         const l = manzanos[i];
         polyline(l.pts.map(p => ({ x: wm(p.x), y: -wm(p.y) })), 'MANZANOS', true);
         const cen = centroid(l.pts);
         texto(wm(cen.x), -wm(cen.y) + 1.0, 1.0, `Mzo. ${i + 1}`, 'TEXTO');
         texto(wm(cen.x), -wm(cen.y) - 0.3, 0.6, `${polyAreaM2(l.pts).toFixed(1)} m2`, 'TEXTO');
-
-        // Vereda (polígono offset calculado en unidades mundo → metros)
         const swPts = buildSidewalkWorldPts(l.pts);
         if (swPts && swPts.length >= 3) {
           polyline(swPts.map(p => ({ x: wm(p.x), y: -wm(p.y) })), 'VEREDAS', true);
         }
-
-        // Segmento de eje de manzano definido por el usuario
         if (mznSegments[i]) {
           const seg = mznSegments[i];
           polyline([
@@ -5013,8 +4573,6 @@ if (mznEquipamiento[i]) {
             { x: wm(seg.p2.x), y: -wm(seg.p2.y) }
           ], 'EJES-MZN', false);
         }
-
-        // Lista unificada de lotes (automáticos + slice), numeración continua
         const unifiedExport = [];
         const subExp = lotSubdivisions.find(s => s.mznIdx === i);
         if (subExp) subExp.lots.forEach(lt => unifiedExport.push(lt));
@@ -5035,22 +4593,16 @@ if (mznEquipamiento[i]) {
         });
       }
 
-      // ── Calles + ejes centrales ──────────────────────────────────────────────
       for (let i = 0; i < streets.length; i++) {
         const s = streets[i];
         const rect = streetRect(s);
         if (!rect) continue;
         const streetIdx = i + 1;
-
-        // Rectángulo de calzada
         polyline(rect.map(p => ({ x: wm(p.x), y: -wm(p.y) })), 'CALLES', true);
-
-        // Eje central (línea punteada)
         polyline([
           { x: wm(s.start.x), y: -wm(s.start.y) },
           { x: wm(s.end.x), y: -wm(s.end.y) }
         ], 'EJES-CALLE', false);
-
         const mx = wm((s.start.x + s.end.x) / 2);
         const my = -wm((s.start.y + s.end.y) / 2);
         texto(mx, my, 0.7,
@@ -5062,7 +4614,6 @@ if (mznEquipamiento[i]) {
 
       endsec();
       L.push('  0\nEOF');
-
       const content = L.join('\n');
       const blob = new Blob([content], { type: 'application/dxf' });
       const a = document.createElement('a');
@@ -5071,13 +4622,6 @@ if (mznEquipamiento[i]) {
       a.click();
     }
 
-
-
-    // ═══════════════════════════════════════════════════════════════════════════
-    // ─── MOTOR DE SUBDIVISIÓN MANUAL (SLICE) ───────────────────────────────────
-    // ═══════════════════════════════════════════════════════════════════════════
-
-    // ── Geometría auxiliar ────────────────────────────────────────────────────
     function slicePtInPoly(x, y, poly) {
       let inside = false, n = poly.length;
       for (let i = 0, j = n - 1; i < n; j = i++) {
@@ -5153,7 +4697,6 @@ if (mznEquipamiento[i]) {
       return { poly1: p1, poly2: p2, cutA: { x: hA.x, y: hA.y }, cutB: { x: hB.x, y: hB.y } };
     }
 
-    // ── Bisección de sub-manzano (igual al script original) ───────────────────
     function sliceBuildCutAndSlice(wp, t, selSeg, auxS) {
       const ax = auxS.b.x - auxS.a.x, ay = auxS.b.y - auxS.a.y;
       const len = Math.hypot(ax, ay); if (len < 1e-10) return null;
@@ -5210,8 +4753,6 @@ if (mznEquipamiento[i]) {
     function sliceBisectManzano(wp, targetAreaM2, selSeg, auxS) {
       const TOL_M2 = 1e-6;
       const totalArea = polyAreaM2(wp);
-
-      // ── Dirección de corte: PERPENDICULAR al segmento auxiliar ──────────────
       const auxDx = auxS.b.x - auxS.a.x;
       const auxDy = auxS.b.y - auxS.a.y;
       const auxLen = Math.hypot(auxDx, auxDy);
@@ -5220,19 +4761,13 @@ if (mznEquipamiento[i]) {
       const advY = auxDy / auxLen;
       const cutX = -auxDy / auxLen;
       const cutY = auxDx / auxLen;
-
-      // ── Centroide para anclar el origen del corte ────────────────────────────
       const cen = centroid(wp);
       const cenAdvProj = cen.x * advX + cen.y * advY;
-
-      // ── Rango de avance proyectando TODOS los vértices ───────────────────────
       const projs = wp.map(p => p.x * advX + p.y * advY);
       const projMin = Math.min(...projs);
       const projMax = Math.max(...projs);
       const projRange = projMax - projMin;
       if (projRange < 1e-9) return null;
-
-      // ── Puntos de muestreo sobre el segmento FRENTE ──────────────────────────
       const N_FRENTE = 11;
       const frentePoints = [];
       for (let k = 0; k <= N_FRENTE; k++) {
@@ -5242,14 +4777,9 @@ if (mznEquipamiento[i]) {
         });
       }
 
-      // Proyecciones del frente sobre advDir
       const frenteAdvProjs = frentePoints.map(p => p.x * advX + p.y * advY);
       const frenteProjMed = (Math.min(...frenteAdvProjs) + Math.max(...frenteAdvProjs)) / 2;
-
-      // ── Determinar sentido: frenteEsMin significa que el frente está en projMin ─
       const frenteEsMin = Math.abs(frenteProjMed - projMin) <= Math.abs(frenteProjMed - projMax);
-
-      // ── Verificar qué fragmento contiene el frente ───────────────────────────
       function fragmentContainsFronte(poly) {
         let cnt = 0;
         for (const p of frentePoints) {
@@ -5258,21 +4788,15 @@ if (mznEquipamiento[i]) {
         return cnt >= Math.ceil(frentePoints.length * 0.5);
       }
 
-      // ── Función de corte en t ∈ (0,1) ────────────────────────────────────────
-      // t=0 → línea pegada al borde del frente → front ≈ 0 m²
-      // t=1 → línea en el extremo opuesto     → front ≈ totalArea m²
       function evalT(t) {
         const proj = frenteEsMin
           ? projMin + t * projRange
           : projMax - t * projRange;
-
         const ox = cen.x + (proj - cenAdvProj) * advX;
         const oy = cen.y + (proj - cenAdvProj) * advY;
-
         const FAR = 1e7;
         const rA = { x: ox + cutX * FAR, y: oy + cutY * FAR };
         const rB = { x: ox - cutX * FAR, y: oy - cutY * FAR };
-
         const n = wp.length;
         const rawHits = [];
         for (let i = 0; i < n; i++) {
@@ -5294,15 +4818,12 @@ if (mznEquipamiento[i]) {
             hits.push(rawHits[i]);
         }
         if (hits.length < 2) return null;
-
-        // Probar TODOS los pares y elegir el que produce el fragmento con el frente
         for (let i = 0; i < hits.length - 1; i++) {
           const hA = hits[i], hB = hits[i + 1];
           const mx = (hA.x + hB.x) / 2, my = (hA.y + hB.y) / 2;
           if (!slicePtInPoly(mx, my, wp)) continue;
           const sl = sliceBuildPolys(wp, hA, hB);
           if (!sl || sl.poly1.length < 3 || sl.poly2.length < 3) continue;
-
           const p1HasF = fragmentContainsFronte(sl.poly1);
           const p2HasF = fragmentContainsFronte(sl.poly2);
           let front, rest;
@@ -5321,8 +4842,6 @@ if (mznEquipamiento[i]) {
         return null;
       }
 
-      // ── MUESTREO DENSO: 50 puntos para mapear área vs t ──────────────────────
-      // Más puntos = menor chance de perder el cruce correcto
       const N_SAMPLES = 50;
       const samples = [];
       for (let k = 1; k < N_SAMPLES; k++) {
@@ -5332,8 +4851,6 @@ if (mznEquipamiento[i]) {
       }
       if (samples.length === 0) return null;
 
-      // ── BUSCAR TODOS LOS CRUCES del área objetivo ─────────────────────────────
-      // Un cruce ocurre cuando dos muestras consecutivas encierran targetAreaM2
       const crosses = [];
       for (let i = 0; i < samples.length - 1; i++) {
         const s0 = samples[i], s1 = samples[i + 1];
@@ -5348,9 +4865,7 @@ if (mznEquipamiento[i]) {
       }
 
       let bestLo, bestHi;
-
       if (crosses.length === 0) {
-        // Sin cruce: retornar la muestra más cercana al objetivo
         let bestSample = samples[0], bestErr2 = Infinity;
         for (const s of samples) {
           const e = Math.abs(s.areaM2 - targetAreaM2);
@@ -5363,19 +4878,12 @@ if (mznEquipamiento[i]) {
         bestLo = crosses[0].lo;
         bestHi = crosses[0].hi;
       } else {
-        // MÚLTIPLES CRUCES: elegir el cruce donde el área en el PUNTO MEDIO
-        // es más cercana al objetivo Y está más al centro del rango (t ≈ 0.5)
-        // Esto evita que se elija el cruce espúreo inicial (t muy pequeño)
-        // o el cruce al final (t muy grande).
-        //
-        // Puntuación: combinamos error relativo + penalización por estar lejos de t=0.5
         let bestScore = Infinity;
         for (const cr of crosses) {
           const tMid = (cr.lo + cr.hi) / 2;
           const evMid = evalT(tMid);
           if (!evMid) continue;
           const relErr = Math.abs(evMid.areaM2 - targetAreaM2) / totalArea;
-          // Penalización suave por estar lejos de t=0.5 (no dominante)
           const tPenalty = Math.abs(tMid - 0.5) * 0.05;
           const score = relErr + tPenalty;
           if (score < bestScore) {
@@ -5390,19 +4898,15 @@ if (mznEquipamiento[i]) {
         }
       }
 
-      // ── BISECCIÓN DE ALTA PRECISIÓN en [bestLo, bestHi] ──────────────────────
       const evLo0 = evalT(bestLo);
       if (!evLo0) return evalT((bestLo + bestHi) / 2);
       const increasing = evLo0.areaM2 < targetAreaM2;
-
       let lo = bestLo, hi = bestHi;
       let best = null, bestErr = Infinity;
-
       for (let iter = 0; iter < 200; iter++) {
         const mid = (lo + hi) / 2;
         const ev = evalT(mid);
         if (!ev) {
-          // La línea no cruza el polígono en este t exacto: probar cuartos
           const evQ1 = evalT(lo + (mid - lo) * 0.5);
           const evQ2 = evalT(mid + (hi - mid) * 0.5);
           if (evQ1 && Math.abs(evQ1.areaM2 - targetAreaM2) < bestErr) {
@@ -5418,7 +4922,6 @@ if (mznEquipamiento[i]) {
         const err = Math.abs(ev.areaM2 - targetAreaM2);
         if (err < bestErr) { bestErr = err; best = ev; }
         if (err <= TOL_M2) break;
-
         const errSigned = ev.areaM2 - targetAreaM2;
         if (increasing ? errSigned < 0 : errSigned > 0) lo = mid; else hi = mid;
       }
@@ -5427,36 +4930,23 @@ if (mznEquipamiento[i]) {
     }
 
 
-
-    // ── Bisección de lotes dentro del sub-manzano ─────────────────────────────
     function sliceBisectLote(wp, targetAreaM2, cutDirX, cutDirY, frenteMidX, frenteMidY) {
       const TOL_M2 = 1e-6;
-
-      // Dirección perpendicular al corte (dirección de avance entre lotes)
       const perpX = -cutDirY, perpY = cutDirX;
-
-      // Proyectar todos los vértices sobre la dirección de avance
       const projs = wp.map(p => p.x * perpX + p.y * perpY);
       const pMin = Math.min(...projs), pMax = Math.max(...projs);
       const pRange = pMax - pMin;
       if (pRange < 1e-9) return null;
-
-      // Centroide para anclar el origen del corte
       const cen = centroid(wp);
       const cenPerpProj = cen.x * perpX + cen.y * perpY;
-
-      // Determinar desde qué extremo avanzar (el que contiene el frente)
       const fProj = frenteMidX * perpX + frenteMidY * perpY;
       const frenteEsMin = Math.abs(fProj - pMin) <= Math.abs(fProj - pMax);
-
-      // Puntos de muestreo a lo largo del "borde frente" del polígono
-      // para identificar qué fragmento lo contiene
       const bordeFrenteProj = frenteEsMin ? pMin : pMax;
       const tol = pRange * 0.15;
       const frenteVerts = wp.filter(p =>
         Math.abs((p.x * perpX + p.y * perpY) - bordeFrenteProj) < tol
       );
-      // Si no hay vértices en el borde, usar el punto frente dado
+
       const frenteRefPts = frenteVerts.length >= 2 ? frenteVerts :
         [{ x: frenteMidX, y: frenteMidY }];
 
@@ -5473,15 +4963,11 @@ if (mznEquipamiento[i]) {
           ? pMin + t * pRange
           : pMax - t * pRange;
 
-        // Origen anclado al centroide
         const ox = cen.x + (proj - cenPerpProj) * perpX;
         const oy = cen.y + (proj - cenPerpProj) * perpY;
-
-        // Corte con la línea en dirección cutDirX,cutDirY
         const FAR = 1e7;
         const rA = { x: ox + cutDirX * FAR, y: oy + cutDirY * FAR };
         const rB = { x: ox - cutDirX * FAR, y: oy - cutDirY * FAR };
-
         const n = wp.length;
         const rawHits = [];
         for (let i = 0; i < n; i++) {
@@ -5497,7 +4983,6 @@ if (mznEquipamiento[i]) {
         }
         if (rawHits.length < 2) return null;
         rawHits.sort((a, b) => a.tCut - b.tCut);
-
         const hits = [rawHits[0]];
         for (let i = 1; i < rawHits.length; i++) {
           if (Math.hypot(rawHits[i].x - hits[hits.length - 1].x,
@@ -5506,19 +4991,14 @@ if (mznEquipamiento[i]) {
           }
         }
         if (hits.length < 2) return null;
-
-        // Probar todos los pares válidos
         for (let i = 0; i < hits.length - 1; i++) {
           const hA = hits[i], hB = hits[i + 1];
           const mx = (hA.x + hB.x) / 2, my = (hA.y + hB.y) / 2;
           if (!slicePtInPoly(mx, my, wp)) continue;
-
           const sl = sliceBuildPolys(wp, hA, hB);
           if (!sl || sl.poly1.length < 3 || sl.poly2.length < 3) continue;
-
           const p1HasFronte = fragmentContainsFronte(sl.poly1);
           const p2HasFronte = fragmentContainsFronte(sl.poly2);
-
           let front, rest;
           if (p1HasFronte && !p2HasFronte) {
             front = sl.poly1; rest = sl.poly2;
@@ -5536,7 +5016,6 @@ if (mznEquipamiento[i]) {
         return null;
       }
 
-      // Muestrear el rango completo para encontrar el intervalo con el cruce
       const samples = [];
       for (let k = 1; k <= 24; k++) {
         const t = k / 25;
@@ -5544,8 +5023,6 @@ if (mznEquipamiento[i]) {
         if (ev) samples.push({ t, areaM2: ev.areaM2 });
       }
       if (samples.length === 0) return null;
-
-      // Buscar el par de muestras que encierra targetAreaM2
       let bestLo = null, bestHi = null;
       for (let i = 0; i < samples.length - 1; i++) {
         const s0 = samples[i], s1 = samples[i + 1];
@@ -5594,7 +5071,6 @@ if (mznEquipamiento[i]) {
       return wm(Math.max(...projs) - Math.min(...projs));
     }
 
-    // ── UI del modo slice ─────────────────────────────────────────────────────
     function populateSliceMznSel() {
       const sel = document.getElementById('sliceMznSel');
       sel.innerHTML = '';
@@ -5606,7 +5082,6 @@ if (mznEquipamiento[i]) {
       });
       if (sliceMznIdx < 0 || sliceMznIdx >= manzanos.length) sliceMznIdx = 0;
       sel.value = sliceMznIdx;
-      // Área objetivo por defecto = 50% del manzano seleccionado
       const mzn = manzanos[sliceMznIdx];
       if (mzn) document.getElementById('sliceTargetArea').value = Math.round(polyAreaM2(mzn.pts) * 0.5);
       updateSliceCalc();
@@ -5739,7 +5214,6 @@ if (mznEquipamiento[i]) {
       render();
     }
 
-    // Volver a Fase A para crear otro sub-manzano sin borrar los ya existentes
     function sliceNewSubManzano() {
       sliceSubMzn = null;
       sliceSubPhase = 'none';
@@ -5752,21 +5226,17 @@ if (mznEquipamiento[i]) {
       document.getElementById('slicePhaseD').style.display = 'none';
       document.getElementById('sliceSegHint').style.display = 'none';
       document.getElementById('sliceSegInfo').style.display = 'none';
-      // Actualizar selector por si cambiaron los manzanos
       populateSliceMznSel();
       render();
     }
 
-    // ── Ejecución de la subdivisión en lotes ──────────────────────────────────
     async function runSliceSubdivision() {
       if (!sliceSubMzn) { alert('Primero creá el sub-manzano (Paso 1).'); return; }
       if (sliceCutDirX === null) { alert('Primero definí la dirección de corte (Paso 2).'); return; }
       _snapshot();
-
       const modeV = document.getElementById('sliceMode').value;
       const frenteMinM = parseFloat(document.getElementById('sliceFrente').value) || 6;
       const totalM2 = polyAreaM2(sliceSubMzn.pts);
-
       let areas = [];
       if (modeV === 'equal') {
         const n = parseInt(document.getElementById('sliceN').value) || 4;
@@ -5776,7 +5246,6 @@ if (mznEquipamiento[i]) {
         const raw = document.getElementById('sliceAreas').value;
         const parts = raw.split(',').map(s => parseFloat(s.trim())).filter(v => !isNaN(v) && v > 0);
         if (!parts.length) { alert('Ingrese al menos un área válida.'); return; }
-
         if (parts.length === 1) {
           // Un solo valor: repetir ese área hasta cubrir el sub-manzano
           const areaLote = parts[0];
@@ -5788,7 +5257,6 @@ if (mznEquipamiento[i]) {
           if (nLotes < 1) { alert('No cabe ningún lote con ese área.'); return; }
           areas = Array(nLotes).fill(areaLote);
         } else {
-          // Múltiples valores: usar cada uno como área individual
           const sumaAreas = parts.reduce((a, b) => a + b, 0);
           if (sumaAreas > totalM2 * 1.001) {
             alert(`Suma de áreas (${sumaAreas.toFixed(1)} m²) supera el sub-manzano (${totalM2.toFixed(1)} m²).`);
@@ -5802,9 +5270,7 @@ if (mznEquipamiento[i]) {
 
       const lots = [];
       let remaining = sliceSubMzn.pts.map(p => ({ ...p }));
-      // Guardar referencia original del frente para recálculo geométrico estable
       const origFMX = sliceFrenteMidX, origFMY = sliceFrenteMidY;
-
       for (let i = 0; i < areas.length - 1; i++) {
         if (!remaining || remaining.length < 3) break;
         const remArea = polyAreaM2(remaining);
@@ -5819,14 +5285,8 @@ if (mznEquipamiento[i]) {
           break;
         }
 
-        // Recalcular frenteMid usando proyección geométrica sobre el polígono residual
-        // currentFMX/currentFMY: punto de referencia del frente en el polígono residual
-        // Se usa el punto original del frente — sliceBisectLote ya usa sampling
-        // robusto para identificar el fragmento correcto, no depende de este punto
-        // solo como distancia, así que mantenerlo estable es suficiente.
         const currentFMX = origFMX;
         const currentFMY = origFMY;
-
         const result = sliceBisectLote(remaining, targetArea, sliceCutDirX, sliceCutDirY, currentFMX, currentFMY);
         if (!result) {
           console.warn(`sliceBisectLote falló en lote ${i + 1}`);
@@ -5846,7 +5306,6 @@ if (mznEquipamiento[i]) {
         await new Promise(r => setTimeout(r, 60));
       }
 
-      // Lote residual final
       if (remaining && remaining.length >= 3) {
         const remArea = polyAreaM2(remaining);
         if (remArea > 0.1) lots.push({
@@ -5856,21 +5315,14 @@ if (mznEquipamiento[i]) {
         });
       }
 
-      // Eliminar entrada previa del mismo sub-manzano si existe,
-      // para que re-ejecutar con diferente N de lotes reemplace en vez de superponer.
-      // Identificamos el sub-manzano por proximidad geométrica de su centroide.
       const subCen = centroid(sliceSubMzn.pts);
       sliceLots = sliceLots.filter(sd => {
         if (sd.mznIdx !== sliceMznIdx) return true;
         if (!sd.subMznPts || sd.subMznPts.length < 3) return true;
         const c = centroid(sd.subMznPts);
-        // Si el centroide está a menos de 1 unidad mundo (~0.1m), es el mismo sub-manzano
         return Math.hypot(c.x - subCen.x, c.y - subCen.y) > 1;
       });
       sliceLots.push({ mznIdx: sliceMznIdx, subMznPts: sliceSubMzn.pts, lots });
-
-      // Regenerar lotes automáticos del mismo manzano para que se ajusten
-      // al área residual (excluyendo el sub-manzano slice recién creado)
       const existingAuto = lotSubdivisions.find(s => s.mznIdx === sliceMznIdx);
       if (existingAuto) {
         const targetArea = parseFloat(document.getElementById('lpArea').value) || 250;
@@ -5890,9 +5342,6 @@ if (mznEquipamiento[i]) {
       render();
     }
 
-
-
-    // ─── EQUIPAMIENTO ──────────────────────────────────────────────────────────
     function getEquipamientoInfo(areaM2) {
       if (areaM2 < 200) {
         return { icon: '🌿', label: 'Área Verde / Jardín', type: 'jardin' };
@@ -5925,8 +5374,6 @@ if (mznEquipamiento[i]) {
       render();
     }
 
-
-    // ─── PANEL DE ESTADÍSTICAS ─────────────────────────────────────────────────
     function updateStatsPanel() {
       const body = document.getElementById('statsBody');
       if (!body) return;
@@ -5940,8 +5387,6 @@ if (mznEquipamiento[i]) {
       }
 
       const parcelaTotal = polyAreaM2(polyPts);
-
-      // Área de vías
       let viaArea = 0;
       for (const s of streets) {
         const rect = streetRect(s);
@@ -5950,7 +5395,6 @@ if (mznEquipamiento[i]) {
         if (clipped && clipped.length >= 3) viaArea += polyAreaM2(clipped);
       }
 
-      // Área de equipamiento
       let equipArea = 0, equipCount = 0;
       for (let i = 0; i < manzanos.length; i++) {
         if (mznEquipamiento[i]) {
@@ -5959,7 +5403,6 @@ if (mznEquipamiento[i]) {
         }
       }
 
-      // Área neta de manzanos (excluyendo equipamiento)
       let mznArea = 0, mznCount = 0;
       for (let i = 0; i < manzanos.length; i++) {
         if (!mznEquipamiento[i]) {
@@ -5968,7 +5411,6 @@ if (mznEquipamiento[i]) {
         }
       }
 
-      // Lotes
       let lotCount = 0, lotArea = 0;
       for (const sub of lotSubdivisions) {
         const mznIdx = sub.mznIdx;
@@ -5992,7 +5434,6 @@ if (mznEquipamiento[i]) {
       const pctLots = Math.min(100, (lotArea / pTotal) * 100);
       const pctEquip = Math.min(100, (equipArea / pTotal) * 100);
       const nCalles = streets.length;
-
       function fmt(n) { return n.toLocaleString('es-BO', { minimumFractionDigits: 2, maximumFractionDigits: 2 }); }
       function fmtP(n) { return n.toFixed(2) + ' %'; }
 
@@ -6042,7 +5483,6 @@ if (mznEquipamiento[i]) {
       </tr>`;
 
       body.innerHTML = html;
-
       const mznSinLotes = Math.max(0, pctMzn - pctLots);
       document.getElementById('sbLots').style.width = pctLots.toFixed(2) + '%';
       document.getElementById('sbMzn').style.width = mznSinLotes.toFixed(2) + '%';
@@ -6051,14 +5491,10 @@ if (mznEquipamiento[i]) {
 
     render();
 
-    // ── Verificar licencia guardada al iniciar ─────────────────────────────
     _initLicense();
-
-    // ─── IMPORTAR DXF ──────────────────────────────────────────────────────XXXXXXX
 
     const DXF_CURVE_RESOLUTION = 48; // puntos por círculo/arco completo
     let _importPendingPts = null;     // puntos en espera de confirmación
-
     function triggerImportDXF() {
       _importPendingPts = null;
       imSetStatus('', '');
@@ -6138,19 +5574,12 @@ if (mznEquipamiento[i]) {
     function executeImportDXF() {
       if (!_importPendingPts || _importPendingPts.length < 3) return;
       _snapshot();
-
-      // Leer zona UTM del modal
       const utmZone = parseInt(document.getElementById('imUtmZone').value) || 19;
       const utmHemi = document.getElementById('imUtmHemi').value;
-
-      // El DXF viene en UTM absoluto (metros reales).
-      // Calcular el origen como el centroide de los puntos importados.
       let sumX = 0, sumY = 0;
       for (const p of _importPendingPts) { sumX += p.x; sumY += p.y; }
       const originUTM_X = sumX / _importPendingPts.length;
       const originUTM_Y = sumY / _importPendingPts.length;
-
-      // Guardar origen geográfico
       const originLatLng = _utmToLatLng(originUTM_X, originUTM_Y, utmZone, utmHemi);
       _geoOrigin = {
         utmX: originUTM_X,
@@ -6161,15 +5590,11 @@ if (mznEquipamiento[i]) {
         lng: originLatLng.lng
       };
 
-      // Convertir puntos UTM → coordenadas mundo relativas al origen
-      // x_mundo = (utmX - originX) / MPP
-      // y_mundo = -(utmY - originY) / MPP  (Y invertida)
       const worldPts = _importPendingPts.map(p => ({
         x: mw(p.x - originUTM_X),
         y: -mw(p.y - originUTM_Y)
       }));
 
-      // Resetear estado completo
       polyPts = worldPts;
       polyClosed = false;
       streets = [];
@@ -6185,19 +5610,11 @@ if (mznEquipamiento[i]) {
       mznSegments = {};
       pickingSegForMzn = -1;
       streetIdCtr = 0;
-
-      // Cerrar la parcela
       closePolygon();
-
-      // Ajustar vista al contenido importado
       zoomToFitPoly(worldPts);
-
       closeImportModal();
       document.getElementById('hintLabel').textContent = 'Parcela importada desde DXF';
       setTimeout(() => { document.getElementById('hintLabel').textContent = ''; }, 3000);
-
-
-      // Si el satélite está activo, sincronizar la vista
       if (_satVisible && _geoOrigin) {
         if (!_satMap) _initSatMap();
         setTimeout(() => {
@@ -6207,7 +5624,6 @@ if (mznEquipamiento[i]) {
       }
     }
 
-    // Ajustar pan+zoom para que la parcela importada llene el 80% del canvas
     function zoomToFitPoly(pts) {
       if (!pts || pts.length === 0) return;
       let minX = Infinity, maxX = -Infinity, minY = Infinity, maxY = -Infinity;
@@ -6224,23 +5640,17 @@ if (mznEquipamiento[i]) {
       render();
     }
 
-    // ─── PARSER DXF ────────────────────────────────────────────────────────────
-    // Devuelve el primer polígono válido encontrado en el DXF (coordenadas en metros).
-    // Soporta: LWPOLYLINE, POLYLINE/VERTEX, LINE (acumula segmentos), ARC, CIRCLE, SPLINE.
     function parseDXFToPoly(text) {
       const raw = text.split('\n');
       const lines = raw.map(l => l.trim());
       const n = lines.length;
-
-      // Avanzar hasta sección ENTITIES
       let i = 0;
       while (i < n - 1) {
         if (lines[i] === '2' && lines[i + 1].toUpperCase() === 'ENTITIES') { i += 2; break; }
         i++;
       }
 
-      const candidates = []; // lista de arrays de puntos (metros)
-
+      const candidates = []; 
       while (i < n) {
         if (lines[i] === '0') {
           const etype = (lines[i + 1] || '').toUpperCase();
@@ -6277,14 +5687,12 @@ if (mznEquipamiento[i]) {
             i = r.next;
 
           } else {
-            // Saltar entidad desconocida
             while (i < n && lines[i] !== '0') i += 2;
           }
         } else {
           i++;
         }
       }
-      // Ensamblar segmentos LINE sueltos (2 puntos cada uno) en polígono
       const lineSegs = candidates.filter(c => c.length === 2);
       const otherPolys = candidates.filter(c => c.length !== 2);
       if (lineSegs.length >= 3) {
@@ -6293,7 +5701,6 @@ if (mznEquipamiento[i]) {
       }
       const allCandidates = otherPolys;
       if (allCandidates.length === 0) return null;
-
       let best = null, bestArea = -1;
       for (const c of allCandidates) {
         if (c.length < 3) continue;
@@ -6304,7 +5711,6 @@ if (mznEquipamiento[i]) {
 
     }
 
-    // Área de shoelace en metros²
     function dxfPolyArea(pts) {
       let a = 0; const n = pts.length;
       for (let i = 0; i < n; i++) {
@@ -6314,14 +5720,13 @@ if (mznEquipamiento[i]) {
       return Math.abs(a) / 2;
     }
 
-    // Eliminar duplicados y punto de cierre redundante
     function dxfCleanPoly(pts) {
       const out = [pts[0]];
       for (let i = 1; i < pts.length; i++) {
         const prev = out[out.length - 1], cur = pts[i];
         if (Math.hypot(cur.x - prev.x, cur.y - prev.y) > 1e-9) out.push(cur);
       }
-      // Quitar cierre explícito si el primero y último coinciden
+
       if (out.length > 1) {
         const f = out[0], l = out[out.length - 1];
         if (Math.hypot(f.x - l.x, f.y - l.y) < 1e-9) out.pop();
@@ -6329,7 +5734,6 @@ if (mznEquipamiento[i]) {
       return out;
     }
 
-    // ── LWPOLYLINE parser ──────────────────────────────────────────────────────
     function dxfParseLWPolyline(lines, start) {
       const pts = [], bulges = [];
       let i = start, isClosed = false;
@@ -6347,7 +5751,6 @@ if (mznEquipamiento[i]) {
       return { pts: dxfExpandBulges(pts, bulges, isClosed), next: i };
     }
 
-    // ── POLYLINE/VERTEX parser ─────────────────────────────────────────────────
     function dxfParsePolyline(lines, start) {
       let i = start, isClosed = false;
       while (i < lines.length && !(lines[i] === '0' && (lines[i + 1] || '').toUpperCase() === 'VERTEX') &&
@@ -6374,7 +5777,6 @@ if (mznEquipamiento[i]) {
       return { pts: dxfExpandBulges(pts, bulges, isClosed), next: i };
     }
 
-    // ── Expandir bulges (arcos) en segmentos lineales ─────────────────────────
     function dxfExpandBulges(pts, bulges, isClosed) {
       if (pts.length === 0) return [];
       const out = [];
@@ -6418,7 +5820,6 @@ if (mznEquipamiento[i]) {
       return out;
     }
 
-    // ── ARC parser ────────────────────────────────────────────────────────────
     function dxfParseArc(lines, start) {
       let i = start, cx = 0, cy = 0, r = 0, a0 = 0, a1 = 360;
       while (i < lines.length && lines[i] !== '0') {
@@ -6439,7 +5840,6 @@ if (mznEquipamiento[i]) {
       return { pts, next: i };
     }
 
-    // ── CIRCLE parser ─────────────────────────────────────────────────────────
     function dxfParseCircle(lines, start) {
       let i = start, cx = 0, cy = 0, r = 0;
       while (i < lines.length && lines[i] !== '0') {
@@ -6456,7 +5856,6 @@ if (mznEquipamiento[i]) {
       return { pts, next: i };
     }
 
-    // ── SPLINE parser ─────────────────────────────────────────────────────────
     function dxfParseSpline(lines, start) {
       let i = start;
       const ctrl = [], fit = [];
@@ -6480,7 +5879,7 @@ if (mznEquipamiento[i]) {
       }
       return { pts, next: i };
     }
-    // ── LINE parser ───────────────────────────────────────────────────────────
+
     function dxfParseLine(lines, start) {
       let i = start, x1 = 0, y1 = 0, x2 = 0, y2 = 0;
       while (i < lines.length && lines[i] !== '0') {
@@ -6493,17 +5892,12 @@ if (mznEquipamiento[i]) {
       return { pts: [{ x: x1, y: y1 }, { x: x2, y: y2 }], next: i };
     }
 
-    // ── Ensamblar segmentos LINE sueltos en polígono ───────────────────────────
-    // Toma todos los candidatos de 2 puntos (segmentos LINE) y los encadena
-    // formando el polígono cerrado más grande posible.
     function assembleLinesIntoPoly(segments) {
       if (!segments || segments.length === 0) return null;
       const EPS = 1e-6;
       const segs = segments.map(s => ({ a: s[0], b: s[1], used: false }));
 
       function nearPt(p, q) { return Math.hypot(p.x - q.x, p.y - q.y) < EPS; }
-
-      // Buscar el segmento inicial (el más largo)
       let startIdx = 0, maxLen = -1;
       for (let i = 0; i < segs.length; i++) {
         const l = Math.hypot(segs[i].b.x - segs[i].a.x, segs[i].b.y - segs[i].a.y);
@@ -6537,7 +5931,6 @@ if (mznEquipamiento[i]) {
       return poly.length >= 3 ? poly : null;
     }
 
-    // ─── CALCULADORA FLOTANTE ───────────────────────────────────────────────────
     let _calcVal = '0';       // valor en pantalla
     let _calcPrev = null;     // operando previo
     let _calcOp = null;       // operador pendiente
@@ -6550,10 +5943,8 @@ if (mznEquipamiento[i]) {
     }
 
     function _calcRefresh() {
-      // Acortar display si es muy largo
       const disp = document.getElementById('calcDisplay');
       const raw = parseFloat(_calcVal);
-      // Mostrar hasta 10 dígitos significativos para evitar overflow
       let txt = isFinite(raw) ? String(parseFloat(raw.toPrecision(10))) : _calcVal;
       disp.textContent = txt;
       document.getElementById('calcExpr').textContent = _calcExpr;
@@ -6633,9 +6024,7 @@ if (mznEquipamiento[i]) {
     }
 
 
-    // ─── TECLADO PARA CALCULADORA ──────────────────────────────────────────────
     document.addEventListener('keydown', function (e) {
-      // ── Ctrl+Z global: deshacer ─────────────────────────────────────────────
       if ((e.ctrlKey || e.metaKey) && e.key === 'z' && !e.shiftKey) {
         const tag = document.activeElement ? document.activeElement.tagName : '';
         if (tag !== 'INPUT' && tag !== 'SELECT' && tag !== 'TEXTAREA') {
@@ -6647,8 +6036,6 @@ if (mznEquipamiento[i]) {
 
       const panel = document.getElementById('calcPanel');
       if (!panel || panel.style.display === 'none') return;
-
-      // Si el foco está en un input o select del sidebar, no interceptar
       const tag = document.activeElement ? document.activeElement.tagName : '';
       if (tag === 'INPUT' || tag === 'SELECT' || tag === 'TEXTAREA') return;
 
@@ -6671,8 +6058,7 @@ if (mznEquipamiento[i]) {
         case '/': case 'Divide': calcOp('/'); break;
         case 'Enter': case '=': calcEq(); break;
         case 'Backspace':
-          // Borrar último dígito
-          if (_calcVal.length > 1) {
+           if (_calcVal.length > 1) {
             _calcVal = _calcVal.slice(0, -1);
             if (_calcVal === '-') _calcVal = '0';
           } else {
@@ -6691,12 +6077,9 @@ if (mznEquipamiento[i]) {
       }
     });
 
-
-    // ── Drag para mover la calculadora ────────────────────────────────────────
     (function () {
       let dragging = false, ox = 0, oy = 0;
       document.addEventListener('DOMContentLoaded', () => { });
-      // Usamos delegación para que funcione aunque el panel no exista aún
       document.addEventListener('mousedown', function (e) {
         const hdr = document.getElementById('calcHeader');
         if (!hdr || !hdr.contains(e.target)) return;
@@ -6718,7 +6101,6 @@ if (mznEquipamiento[i]) {
       document.addEventListener('mouseup', function () { dragging = false; });
     })();
 
-    // ─── SATÉLITE + GEOREFERENCIACIÓN UTM ─────────────────────────────────────
     function toggleSatellite(on) {
       _satVisible = on;
       const mapDiv = document.getElementById('satelliteMap');
@@ -6745,7 +6127,6 @@ if (mznEquipamiento[i]) {
 
     function _initSatMap() {
       const mapDiv = document.getElementById('satelliteMap');
-      // El mapa no recibe eventos: el canvas los maneja y nosotros movemos Leaflet
       mapDiv.style.pointerEvents = 'none';
 
       _satMap = L.map('satelliteMap', {
@@ -6771,11 +6152,8 @@ if (mznEquipamiento[i]) {
         keepBuffer: 4
       }).addTo(_satMap);
 
-      // Leaflet no es el maestro — el canvas lo mueve programáticamente
-      // No necesitamos escuchar eventos de Leaflet
     }
 
-    // Convierte coordenadas UTM → LatLng usando proj4
     function _utmToLatLng(x, y, zone, hemi) {
       const proj = hemi === 'south'
         ? `+proj=utm +zone=${zone} +south +datum=WGS84 +units=m +no_defs`
@@ -6785,15 +6163,9 @@ if (mznEquipamiento[i]) {
       return { lat: res[1], lng: res[0] };
     }
 
-    // Calcula metros por pixel en el mapa Leaflet en la latitud dada y zoom
     function _metersPerPixelLeaflet(lat, zoom) {
       return (156543.03392 * Math.cos(lat * Math.PI / 180)) / Math.pow(2, zoom);
     }
-
-    // ─── SINCRONIZACIÓN LEAFLET ↔ CANVAS ──────────────────────────────────────
-    // CANVAS sigue siendo el maestro de interacción (recibe eventos).
-    // Leaflet solo renderiza tiles. La sincronización es unidireccional:
-    // canvas → Leaflet (mover tiles) → leer proyección real → actualizar canvas.
 
     function _worldToLatLng(wx, wy) {
       const mX = wx * MPP;
@@ -6810,31 +6182,20 @@ if (mznEquipamiento[i]) {
       return Math.log2(156543.03392 * Math.cos(lat * Math.PI / 180) / mpp);
     }
 
-    // Lee la proyección actual de Leaflet y actualiza pan/zoom del canvas.
-    // Es la única función que escribe zoom y pan cuando el sat está activo.
     function _readLeafletAndUpdateCanvas() {
       if (!_satMap || !_geoOrigin) return;
-
-      // Origen geográfico: donde Leaflet lo proyecta en píxeles de pantalla
       const pxA = _satMap.latLngToContainerPoint([_geoOrigin.lat, _geoOrigin.lng]);
-
-      // Segundo punto: 1000 unidades mundo al este = 100 metros
       const refLL = _worldToLatLng(1000, 0);
       const pxB = _satMap.latLngToContainerPoint([refLL.lat, refLL.lng]);
-
       const leafletPPU = Math.hypot(pxB.x - pxA.x, pxB.y - pxA.y) / 1000;
       if (leafletPPU < 1e-10) return;
-
       zoom = leafletPPU;
       pan.x = pxA.x;
       pan.y = pxA.y;
-
       document.getElementById('satelliteMap').style.transform = '';
       render();
     }
 
-    // Mueve Leaflet para que coincida con el estado actual del canvas,
-    // luego lee la proyección real y actualiza canvas.
     let _alignPending = false;
     function _alignLeafletToCanvas() {
       if (!_satMap || !_geoOrigin) return;
@@ -6842,17 +6203,12 @@ if (mznEquipamiento[i]) {
       _alignPending = true;
 
       const W = canvas.width, H = canvas.height;
-
-      // Centro del canvas en coordenadas mundo
       const worldCX = (W / 2 - pan.x) / zoom;
       const worldCY = (H / 2 - pan.y) / zoom;
       const centerLL = _worldToLatLng(worldCX, worldCY);
-
-      // Zoom de Leaflet equivalente a la escala actual del canvas
       const mppCanvas = MPP / zoom;
       const zExact = _mppToLeafletZoom(centerLL.lat, mppCanvas);
       const zLeaflet = Math.max(2, Math.min(22, zExact));
-
       _satMap.stop();
       _satMap.setView([centerLL.lat, centerLL.lng], zLeaflet, {
         animate: false, duration: 0, noMoveStart: true
@@ -6865,12 +6221,6 @@ if (mznEquipamiento[i]) {
         });
       });
     }
-    // ─── FIN SATÉLITE ──────────────────────────────────────────────────────────
-
-
-
-
-    // ─── GUARDAR / CARGAR PROYECTO (.lsai) ────────────────────────────────────
     const PROJECT_VERSION = 2;
 
     function saveProject() {
@@ -6963,7 +6313,6 @@ if (mznEquipamiento[i]) {
         alert('El proyecto no contiene una parcela válida.'); return;
       }
 
-      // ── Resetear estado completo antes de cargar ───────────────────────────
       _history = [];
       _historyPaused = true;
 
@@ -6978,8 +6327,6 @@ if (mznEquipamiento[i]) {
       lotSubdivisions = JSON.parse(JSON.stringify(data.lotSubdivisions || []));
       sliceLots = JSON.parse(JSON.stringify(data.sliceLots || []));
       _geoOrigin = data.geoOrigin ? JSON.parse(JSON.stringify(data.geoOrigin)) : null;
-
-      // ── Restaurar UI ───────────────────────────────────────────────────────
       const ui = data.uiState || {};
       if (ui.lpArea !== undefined) document.getElementById('lpArea').value = ui.lpArea;
       if (ui.lpFront !== undefined) document.getElementById('lpFront').value = ui.lpFront;
@@ -7002,8 +6349,6 @@ if (mznEquipamiento[i]) {
       } else if (polyPts.length > 0) {
         zoomToFitPoly(polyPts);
       }
-
-      // ── Sincronizar botones de modo ────────────────────────────────────────
       selStreetId = null;
       dragHandle = null;
       streetStart = null;
@@ -7017,7 +6362,6 @@ if (mznEquipamiento[i]) {
       sliceCutDirX = null; sliceCutDirY = null;
       sliceFrenteMidX = null; sliceFrenteMidY = null;
       pickingSegForMzn = -1;
-
       mode = 'polygon';
       document.getElementById('btnPolygon').classList.add('active');
       document.getElementById('btnStreet').classList.remove('active');
@@ -7037,13 +6381,10 @@ if (mznEquipamiento[i]) {
       document.getElementById('slicePhaseD').style.display = 'none';
       document.getElementById('sliceSegHint').style.display = 'none';
       document.getElementById('sliceSegInfo').style.display = 'none';
-
       canvas.style.cursor = 'crosshair';
-
       _historyPaused = false;
       _updateUndoBtn();
 
-      // ── Si hay manzanos pero no lotSubdivisions, reconstruir entradas vacías ─
       if (manzanos.length > 0 && lotSubdivisions.length === 0) {
         for (let i = 0; i < manzanos.length; i++) {
           lotSubdivisions.push({ mznIdx: i, lots: [] });
@@ -7059,7 +6400,6 @@ if (mznEquipamiento[i]) {
       document.getElementById('hintLabel').textContent = '✓ Proyecto cargado correctamente';
       setTimeout(() => { document.getElementById('hintLabel').textContent = ''; }, 3000);
     }
-    // ─── FIN GUARDAR / CARGAR ──────────────────────────────────────────────────
 
     function dxfBezier(cp, t) {
       let pts = cp.map(p => ({ ...p }));
