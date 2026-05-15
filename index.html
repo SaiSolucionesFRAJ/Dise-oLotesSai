@@ -759,7 +759,7 @@
 <body>
 
   <header>
-    <h1>&#9632; Lotes Sai</h1>
+    <h1>&#9632; Lotes Sai v15.05</h1>
     <div class="toolbar">
       <button class="btn active" id="btnPolygon" onclick="setMode('polygon')">&#9650; Parcela</button>
       <button class="btn" id="btnStreet" onclick="setMode('street')" disabled>&#9135; Trazar Calle</button>
@@ -789,7 +789,6 @@
         title="Cargar proyecto">&#128193; Cargar</button>
       <input type="file" id="projectFileInput" accept=".lsai" style="display:none"
         onchange="handleProjectFileSelected(this)">
-
     </div>
   </header>
 
@@ -914,6 +913,30 @@
       </div>
 
 
+      <button onclick="centerOnDrawing()" title="Centrar vista en el dibujo" style="
+        position:absolute;
+        top:12px;
+        right:12px;
+        z-index:20;
+        width:34px;
+        height:34px;
+        border-radius:4px;
+        border:1px solid #a5d6ff55;
+        background:rgba(13,17,23,0.88);
+        color:#a5d6ff;
+        cursor:pointer;
+        font-size:18px;
+        display:flex;
+        align-items:center;
+        justify-content:center;
+        backdrop-filter:blur(4px);
+        transition:all 0.12s;
+        pointer-events:auto;
+      " onmouseover="this.style.background='rgba(31,111,235,0.18)';this.style.borderColor='#a5d6ff'"
+         onmouseout="this.style.background='rgba(13,17,23,0.88)';this.style.borderColor='#a5d6ff55'">
+        &#x2316;
+      </button>
+
       <div id="statsPanel">
         <div class="sp-title">&#9632; Estadísticas del Proyecto</div>
         <table>
@@ -943,6 +966,30 @@
         <div class="s"><b>PASO 1:</b> Clic para vértices de la parcela.</div>
         <div class="s" style="color:#8b949e">Doble clic o "Cerrar" para finalizar.</div>
       </div>
+      <a href="https://www.youtube.com/watch?v=xeeSmVgF2o0" target="_blank" style="
+        display:flex;
+        align-items:center;
+        gap:7px;
+        background:#1a1a2e;
+        border:1px solid #ff000055;
+        border-radius:4px;
+        padding:6px 10px;
+        margin-bottom:7px;
+        text-decoration:none;
+        color:#ff4444;
+        font-size:11px;
+        font-family:'Courier New',monospace;
+        font-weight:600;
+        transition:background 0.15s, border-color 0.15s;
+      "
+      onmouseover="this.style.background='#2a0a0a';this.style.borderColor='#ff0000aa';"
+      onmouseout="this.style.background='#1a1a2e';this.style.borderColor='#ff000055';">
+        <svg width="18" height="18" viewBox="0 0 24 24" fill="#ff4444">
+          <path d="M23.5 6.2a3 3 0 0 0-2.1-2.1C19.5 3.5 12 3.5 12 3.5s-7.5 0-9.4.6A3 3 0 0 0 .5 6.2 31 31 0 0 0 0 12a31 31 0 0 0 .5 5.8 3 3 0 0 0 2.1 2.1c1.9.6 9.4.6 9.4.6s7.5 0 9.4-.6a3 3 0 0 0 2.1-2.1A31 31 0 0 0 24 12a31 31 0 0 0-.5-5.8z"/>
+          <polygon points="9.75,15.02 15.5,12 9.75,8.98 9.75,15.02" fill="white"/>
+        </svg>
+        ▶ Ver Tutorial en YouTube
+      </a>
 
       <div class="lot-params">
         <div class="lp-title">&#9632; Parámetros de Lotes</div>
@@ -4318,7 +4365,19 @@ if (mznEquipamiento[i]) {
       polyPts = []; polyClosed = false; streetStart = null; streets = [];
       manzanos = []; lotSubdivisions = []; selStreetId = null; dragHandle = null;
       mode = 'polygon';
-      _geoOrigin = null;
+      if (_geoOrigin) {
+        pan.x = canvas.width / 2;
+        pan.y = canvas.height / 2;
+        zoom = 2;
+        if (_satVisible && _satMap) {
+          setTimeout(() => {
+            _satMap.invalidateSize();
+            _alignLeafletToCanvas();
+          }, 80);
+        }
+      } else {
+        _geoOrigin = null;
+      }
 
       document.getElementById('btnPolygon').classList.add('active');
       document.getElementById('btnStreet').classList.remove('active');
@@ -5493,6 +5552,81 @@ if (mznEquipamiento[i]) {
 
     _initLicense();
 
+    function _latLngToUtm(lat, lng) {
+      const zone = Math.floor((lng + 180) / 6) + 1;
+      const hemi = lat >= 0 ? 'north' : 'south';
+      const proj = hemi === 'south'
+        ? `+proj=utm +zone=${zone} +south +datum=WGS84 +units=m +no_defs`
+        : `+proj=utm +zone=${zone} +datum=WGS84 +units=m +no_defs`;
+      const wgs84 = '+proj=longlat +datum=WGS84 +no_defs';
+      const res = proj4(wgs84, proj, [lng, lat]);
+      return { x: res[0], y: res[1], zone, hemi };
+    }
+
+   (function _autoLocate() {
+      if (polyPts.length > 0 || polyClosed) return;
+
+      const LOCATION_KEY = 'lsai_last_location_v1';
+
+      function applyLocation(lat, lng) {
+        const utmPt = _latLngToUtm(lat, lng);
+        _geoOrigin = {
+          utmX: utmPt.x,
+          utmY: utmPt.y,
+          zone: utmPt.zone,
+          hemi: utmPt.hemi,
+          lat: lat,
+          lng: lng
+        };
+        pan.x = canvas.width / 2;
+        pan.y = canvas.height / 2;
+        zoom = 2;
+        render();
+      }
+
+      // Intentar usar ubicación guardada primero (sin pedir permiso)
+      try {
+        const stored = localStorage.getItem(LOCATION_KEY);
+        if (stored) {
+          const loc = JSON.parse(stored);
+          if (loc && loc.lat && loc.lng) {
+            applyLocation(loc.lat, loc.lng);
+            // Mostrar mensaje discreto
+            document.getElementById('hintLabel').textContent =
+              `✓ Ubicación previa cargada · Zona UTM ${_geoOrigin.zone}${_geoOrigin.hemi === 'south' ? 'S' : 'N'}`;
+            setTimeout(() => {
+              document.getElementById('hintLabel').textContent = '';
+            }, 3000);
+          }
+        }
+      } catch(e) {}
+
+      // En segundo plano, actualizar la ubicación real si el permiso ya fue concedido
+      if (!navigator.geolocation) return;
+      navigator.geolocation.getCurrentPosition(
+        function(pos) {
+          if (polyPts.length > 0 || polyClosed) return;
+          const lat = pos.coords.latitude;
+          const lng = pos.coords.longitude;
+
+          // Guardar para la próxima vez
+          try {
+            localStorage.setItem(LOCATION_KEY, JSON.stringify({ lat, lng }));
+          } catch(e) {}
+
+          applyLocation(lat, lng);
+
+          document.getElementById('hintLabel').textContent =
+            `✓ Ubicación actualizada · Zona UTM ${_geoOrigin.zone}${_geoOrigin.hemi === 'south' ? 'S' : 'N'}`;
+          setTimeout(() => {
+            document.getElementById('hintLabel').textContent = '';
+          }, 3000);
+        },
+        function() { /* silencioso si niega el permiso */ },
+        { enableHighAccuracy: false, timeout: 8000, maximumAge: 300000 }
+      );
+    })();
+
     const DXF_CURVE_RESOLUTION = 48; // puntos por círculo/arco completo
     let _importPendingPts = null;     // puntos en espera de confirmación
     function triggerImportDXF() {
@@ -6410,6 +6544,103 @@ if (mznEquipamiento[i]) {
         pts = nxt;
       }
       return pts[0] || { x: 0, y: 0 };
+    }
+
+    function _latLngToUtm(lat, lng) {
+      const zone = Math.floor((lng + 180) / 6) + 1;
+      const hemi = lat >= 0 ? 'north' : 'south';
+      const proj = hemi === 'south'
+        ? `+proj=utm +zone=${zone} +south +datum=WGS84 +units=m +no_defs`
+        : `+proj=utm +zone=${zone} +datum=WGS84 +units=m +no_defs`;
+      const wgs84 = '+proj=longlat +datum=WGS84 +no_defs';
+      const res = proj4(wgs84, proj, [lng, lat]);
+      return { x: res[0], y: res[1], zone, hemi };
+    }
+
+    function goToMyLocation() {
+      const btn = document.getElementById('btnMyLocation');
+      if (!navigator.geolocation) {
+        alert('Tu navegador no soporta geolocalización.'); return;
+      }
+      btn.textContent = '⏳ Localizando...';
+      btn.disabled = true;
+      btn.style.opacity = '0.6';
+
+      navigator.geolocation.getCurrentPosition(
+        function(pos) {
+          btn.textContent = '⯇ Mi Ubicación';
+          btn.disabled = false;
+          btn.style.opacity = '1';
+
+          const lat = pos.coords.latitude;
+          const lng = pos.coords.longitude;
+          const utmPt = _latLngToUtm(lat, lng);
+
+          // Establecer el origen geográfico en la ubicación actual
+          _geoOrigin = {
+            utmX: utmPt.x,
+            utmY: utmPt.y,
+            zone: utmPt.zone,
+            hemi: utmPt.hemi,
+            lat: lat,
+            lng: lng
+          };
+
+          // Centrar el canvas en el origen (coordenadas mundo 0,0)
+          pan.x = canvas.width / 2;
+          pan.y = canvas.height / 2;
+          zoom = 2;
+
+          // Si el satélite no está activado, activarlo automáticamente
+          const satChk = document.getElementById('satChk');
+          if (!_satVisible) {
+            satChk.checked = true;
+            toggleSatellite(true);
+          } else {
+            if (!_satMap) _initSatMap();
+            setTimeout(() => {
+              _satMap.invalidateSize();
+              _alignLeafletToCanvas();
+            }, 100);
+          }
+
+          document.getElementById('hintLabel').textContent =
+            `✓ Ubicación: ${lat.toFixed(6)}, ${lng.toFixed(6)} · Zona UTM ${utmPt.zone}${utmPt.hemi === 'south' ? 'S' : 'N'}`;
+          setTimeout(() => {
+            document.getElementById('hintLabel').textContent = '';
+          }, 5000);
+
+          render();
+        },
+        function(err) {
+          btn.textContent = '⯇ Mi Ubicación';
+          btn.disabled = false;
+          btn.style.opacity = '1';
+          const msgs = {
+            1: 'Permiso de ubicación denegado. Habilitá la ubicación en tu navegador.',
+            2: 'No se pudo obtener la ubicación. Verificá tu conexión o GPS.',
+            3: 'Tiempo de espera agotado. Intentá de nuevo.'
+          };
+          alert(msgs[err.code] || 'Error de geolocalización.');
+        },
+        { enableHighAccuracy: true, timeout: 12000, maximumAge: 0 }
+      );
+    }
+
+    function centerOnDrawing() {
+      const pts = polyClosed ? polyPts : polyPts;
+      if (!pts || pts.length === 0) {
+        document.getElementById('hintLabel').textContent = 'No hay dibujo para centrar.';
+        setTimeout(() => { document.getElementById('hintLabel').textContent = ''; }, 2000);
+        return;
+      }
+      zoomToFitPoly(pts);
+      if (_satVisible && _geoOrigin && _satMap) {
+        setTimeout(() => {
+          _satMap.invalidateSize();
+          _alignLeafletToCanvas();
+        }, 80);
+      }
     }
   </script>
 </body>
