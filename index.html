@@ -476,6 +476,7 @@
     #editPanel button.del:hover {
       background: #3d1f1e;
     }
+
     #statsPanel {
       position: absolute;
       bottom: 12px;
@@ -933,7 +934,7 @@
         transition:all 0.12s;
         pointer-events:auto;
       " onmouseover="this.style.background='rgba(31,111,235,0.18)';this.style.borderColor='#a5d6ff'"
-         onmouseout="this.style.background='rgba(13,17,23,0.88)';this.style.borderColor='#a5d6ff55'">
+        onmouseout="this.style.background='rgba(13,17,23,0.88)';this.style.borderColor='#a5d6ff55'">
         &#x2316;
       </button>
 
@@ -981,12 +982,12 @@
         font-family:'Courier New',monospace;
         font-weight:600;
         transition:background 0.15s, border-color 0.15s;
-      "
-      onmouseover="this.style.background='#2a0a0a';this.style.borderColor='#ff0000aa';"
-      onmouseout="this.style.background='#1a1a2e';this.style.borderColor='#ff000055';">
+      " onmouseover="this.style.background='#2a0a0a';this.style.borderColor='#ff0000aa';"
+        onmouseout="this.style.background='#1a1a2e';this.style.borderColor='#ff000055';">
         <svg width="18" height="18" viewBox="0 0 24 24" fill="#ff4444">
-          <path d="M23.5 6.2a3 3 0 0 0-2.1-2.1C19.5 3.5 12 3.5 12 3.5s-7.5 0-9.4.6A3 3 0 0 0 .5 6.2 31 31 0 0 0 0 12a31 31 0 0 0 .5 5.8 3 3 0 0 0 2.1 2.1c1.9.6 9.4.6 9.4.6s7.5 0 9.4-.6a3 3 0 0 0 2.1-2.1A31 31 0 0 0 24 12a31 31 0 0 0-.5-5.8z"/>
-          <polygon points="9.75,15.02 15.5,12 9.75,8.98 9.75,15.02" fill="white"/>
+          <path
+            d="M23.5 6.2a3 3 0 0 0-2.1-2.1C19.5 3.5 12 3.5 12 3.5s-7.5 0-9.4.6A3 3 0 0 0 .5 6.2 31 31 0 0 0 0 12a31 31 0 0 0 .5 5.8 3 3 0 0 0 2.1 2.1c1.9.6 9.4.6 9.4.6s7.5 0 9.4-.6a3 3 0 0 0 2.1-2.1A31 31 0 0 0 24 12a31 31 0 0 0-.5-5.8z" />
+          <polygon points="9.75,15.02 15.5,12 9.75,8.98 9.75,15.02" fill="white" />
         </svg>
         ▶ Ver Tutorial en YouTube
       </a>
@@ -2453,12 +2454,12 @@
           }
         }
 
-        if (bestNewIdx < 0) continue; 
+        if (bestNewIdx < 0) continue;
         const clipped = clipPolyToManzano(sd.subMznPts, manzanos[bestNewIdx].pts);
         if (!clipped || clipped.length < 3) continue;
 
         const clippedAreaM2 = polyAreaM2(clipped);
-        if (clippedAreaM2 < 1) continue; 
+        if (clippedAreaM2 < 1) continue;
         const reclippedLots = [];
         for (const lt of sd.lots) {
           const ltClipped = clipPolyToManzano(lt.pts, manzanos[bestNewIdx].pts);
@@ -2665,7 +2666,7 @@
         if (colProbe && colProbe.length >= 3) {
           const eP = projectExtents(colProbe, sx, sy);
           const d = wm(eP.max - eP.min);
-          if (d > 0.5) depthLocal = d; 
+          if (d > 0.5) depthLocal = d;
         }
         const nomFrontM = Math.max(frontMinM, targetAreaM2 / depthLocal);
         const nomFrontW = mw(nomFrontM);
@@ -2697,7 +2698,7 @@
             bestErr = err;
             bestF = mid;
           }
-          if (Math.abs(err) <= 1e-6) break; 
+          if (Math.abs(err) <= 1e-6) break;
           if (err < 0) lo = mid; else hi = mid;
         }
 
@@ -2871,7 +2872,7 @@
             bestErr = err;
             bestF = mid;
           }
-          if (Math.abs(err) <= 1e-6) break; 
+          if (Math.abs(err) <= 1e-6) break;
           if (err < 0) lo = mid; else hi = mid;
         }
 
@@ -3795,38 +3796,38 @@ ${segBtnHtml}
           }
         }
 
-const cen = centroid(l.pts), cc = toC(cen.x, cen.y);
-const fs = Math.max(11, Math.min(17, 11.5 * zoom));     // Principal
+        const cen = centroid(l.pts), cc = toC(cen.x, cen.y);
+        const fs = Math.max(11, Math.min(17, 11.5 * zoom));     // Principal
 
-if (mznEquipamiento[i]) {
-  const { icon, label } = getEquipamientoInfo(polyAreaM2(l.pts));
-  
-  ctx.fillStyle = '#e3b341';
-  ctx.font = `bold ${fs}px Courier New`;
-  ctx.textAlign = 'center'; 
-  ctx.textBaseline = 'middle';
-  ctx.fillText(`Mzo.${i + 1} ★`, cc.x, cc.y - fs * 0.75);
-  if (zoom > 0.18) {
-    ctx.font = `${Math.max(10, Math.min(14.5, 11.3 * zoom))}px Courier New`;
-    ctx.fillText('Área de Equipamiento', cc.x, cc.y + fs * 0.15);
-    ctx.fillStyle = '#e3b34199';
-    ctx.font = `${Math.max(10, Math.min(12.5, 10.3 * zoom))}px Courier New`;
-    ctx.fillText(label, cc.x, cc.y + fs * 1.35);
-    ctx.fillText(`${polyAreaM2(l.pts).toFixed(0)}m²`, cc.x, cc.y + fs * 2.25);
-  }
-} else {
-  ctx.fillStyle = c;
-  ctx.font = `bold ${fs}px Courier New`;
-  ctx.textAlign = 'center'; 
-  ctx.textBaseline = 'middle';
-  ctx.fillText(`Mzo.${i + 1}`, cc.x, cc.y);
-  
-  if (zoom > 0.28) {
-    ctx.font = `${Math.max(11, Math.min(15.5, 12 * zoom))}px Courier New`;
-    ctx.fillStyle = '#8b949e';
-    ctx.fillText(`${polyAreaM2(l.pts).toFixed(0)}m²`, cc.x, cc.y + fs * 1.55);
-  }
-}
+        if (mznEquipamiento[i]) {
+          const { icon, label } = getEquipamientoInfo(polyAreaM2(l.pts));
+
+          ctx.fillStyle = '#e3b341';
+          ctx.font = `bold ${fs}px Courier New`;
+          ctx.textAlign = 'center';
+          ctx.textBaseline = 'middle';
+          ctx.fillText(`Mzo.${i + 1} ★`, cc.x, cc.y - fs * 0.75);
+          if (zoom > 0.18) {
+            ctx.font = `${Math.max(10, Math.min(14.5, 11.3 * zoom))}px Courier New`;
+            ctx.fillText('Área de Equipamiento', cc.x, cc.y + fs * 0.15);
+            ctx.fillStyle = '#e3b34199';
+            ctx.font = `${Math.max(10, Math.min(12.5, 10.3 * zoom))}px Courier New`;
+            ctx.fillText(label, cc.x, cc.y + fs * 1.35);
+            ctx.fillText(`${polyAreaM2(l.pts).toFixed(0)}m²`, cc.x, cc.y + fs * 2.25);
+          }
+        } else {
+          ctx.fillStyle = c;
+          ctx.font = `bold ${fs}px Courier New`;
+          ctx.textAlign = 'center';
+          ctx.textBaseline = 'middle';
+          ctx.fillText(`Mzo.${i + 1}`, cc.x, cc.y);
+
+          if (zoom > 0.28) {
+            ctx.font = `${Math.max(11, Math.min(15.5, 12 * zoom))}px Courier New`;
+            ctx.fillStyle = '#8b949e';
+            ctx.fillText(`${polyAreaM2(l.pts).toFixed(0)}m²`, cc.x, cc.y + fs * 1.55);
+          }
+        }
       }
 
       if (sliceSubMzn && sliceSubMzn.pts) {
@@ -5585,7 +5586,7 @@ if (mznEquipamiento[i]) {
       return { x: res[0], y: res[1], zone, hemi };
     }
 
-   (function _autoLocate() {
+    (function _autoLocate() {
       if (polyPts.length > 0 || polyClosed) return;
 
       const LOCATION_KEY = 'lsai_last_location_v1';
@@ -5621,12 +5622,12 @@ if (mznEquipamiento[i]) {
             }, 3000);
           }
         }
-      } catch(e) {}
+      } catch (e) { }
 
       // En segundo plano, actualizar la ubicación real si el permiso ya fue concedido
       if (!navigator.geolocation) return;
       navigator.geolocation.getCurrentPosition(
-        function(pos) {
+        function (pos) {
           if (polyPts.length > 0 || polyClosed) return;
           const lat = pos.coords.latitude;
           const lng = pos.coords.longitude;
@@ -5634,7 +5635,7 @@ if (mznEquipamiento[i]) {
           // Guardar para la próxima vez
           try {
             localStorage.setItem(LOCATION_KEY, JSON.stringify({ lat, lng }));
-          } catch(e) {}
+          } catch (e) { }
 
           applyLocation(lat, lng);
 
@@ -5644,7 +5645,7 @@ if (mznEquipamiento[i]) {
             document.getElementById('hintLabel').textContent = '';
           }, 3000);
         },
-        function() { /* silencioso si niega el permiso */ },
+        function () { /* silencioso si niega el permiso */ },
         { enableHighAccuracy: false, timeout: 8000, maximumAge: 300000 }
       );
     })();
@@ -5806,7 +5807,7 @@ if (mznEquipamiento[i]) {
         i++;
       }
 
-      const candidates = []; 
+      const candidates = [];
       while (i < n) {
         if (lines[i] === '0') {
           const etype = (lines[i + 1] || '').toUpperCase();
@@ -6214,7 +6215,7 @@ if (mznEquipamiento[i]) {
         case '/': case 'Divide': calcOp('/'); break;
         case 'Enter': case '=': calcEq(); break;
         case 'Backspace':
-           if (_calcVal.length > 1) {
+          if (_calcVal.length > 1) {
             _calcVal = _calcVal.slice(0, -1);
             if (_calcVal === '-') _calcVal = '0';
           } else {
@@ -6589,7 +6590,7 @@ if (mznEquipamiento[i]) {
       btn.style.opacity = '0.6';
 
       navigator.geolocation.getCurrentPosition(
-        function(pos) {
+        function (pos) {
           btn.textContent = '⯇ Mi Ubicación';
           btn.disabled = false;
           btn.style.opacity = '1';
@@ -6634,7 +6635,7 @@ if (mznEquipamiento[i]) {
 
           render();
         },
-        function(err) {
+        function (err) {
           btn.textContent = '⯇ Mi Ubicación';
           btn.disabled = false;
           btn.style.opacity = '1';
@@ -6664,6 +6665,305 @@ if (mznEquipamiento[i]) {
         }, 80);
       }
     }
+
+    (function _showSaiUpdateNotice() {
+      if (sessionStorage.getItem('sai_notice_seen')) return;
+
+      const modal = document.createElement('div');
+      modal.id = 'saiNoticeModal';
+      modal.style.cssText = `
+    position: fixed;
+    inset: 0;
+    z-index: 99999;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background: rgba(13,17,23,0.82);
+    backdrop-filter: blur(4px);
+    font-family: 'Courier New', monospace;
+    animation: saiNoticeFadeIn 0.28s ease;
+  `;
+
+      modal.innerHTML = `
+    <style>
+      @keyframes saiNoticeFadeIn {
+        from { opacity: 0; transform: scale(0.96); }
+        to   { opacity: 1; transform: scale(1); }
+      }
+      #saiNoticeBox {
+        background: #161b22;
+        border: 1px solid #30363d;
+        border-radius: 14px;
+        padding: 26px 26px 20px;
+        width: 400px;
+        max-width: 94vw;
+        box-shadow: 0 12px 56px #000d;
+        position: relative;
+      }
+      #saiNoticeBox .sn-top {
+        display: flex;
+        align-items: center;
+        gap: 10px;
+        margin-bottom: 16px;
+      }
+      #saiNoticeBox .sn-logo {
+        width: 36px; height: 36px;
+        background: linear-gradient(135deg,#4ade80,#22c55e);
+        border-radius: 8px;
+        display: flex; align-items: center; justify-content: center;
+        font-size: 18px; flex-shrink: 0;
+      }
+      #saiNoticeBox .sn-brand {
+        font-size: 10px;
+        font-weight: 700;
+        letter-spacing: 1.2px;
+        text-transform: uppercase;
+        color: #4ade80;
+        line-height: 1.3;
+      }
+      #saiNoticeBox .sn-brand span {
+        display: block;
+        color: #8b949e;
+        font-weight: 400;
+        font-size: 9px;
+        letter-spacing: 0.5px;
+      }
+      #saiNoticeBox .sn-divider {
+        height: 1px;
+        background: #21262d;
+        margin: 0 0 16px;
+      }
+      #saiNoticeBox .sn-badge {
+        display: inline-flex;
+        align-items: center;
+        gap: 6px;
+        background: rgba(74,222,128,0.12);
+        border: 1px solid rgba(74,222,128,0.25);
+        color: #4ade80;
+        font-size: 10px;
+        font-weight: 700;
+        letter-spacing: 1px;
+        text-transform: uppercase;
+        padding: 3px 10px;
+        border-radius: 20px;
+        margin-bottom: 10px;
+      }
+      #saiNoticeBox .sn-dot {
+        width: 6px; height: 6px;
+        background: #4ade80;
+        border-radius: 50%;
+        animation: saiDotPulse 1.8s infinite;
+      }
+      @keyframes saiDotPulse {
+        0%,100% { opacity:1; transform:scale(1); }
+        50%      { opacity:.35; transform:scale(1.6); }
+      }
+      #saiNoticeBox h3 {
+        color: #e6edf3;
+        font-size: 15px;
+        font-weight: 700;
+        margin: 0 0 10px;
+        line-height: 1.4;
+        font-family: 'Courier New', monospace;
+      }
+      #saiNoticeBox .sn-list {
+        list-style: none;
+        padding: 0; margin: 0 0 18px;
+        display: flex;
+        flex-direction: column;
+        gap: 5px;
+      }
+      #saiNoticeBox .sn-list li {
+        font-size: 11.5px;
+        color: #8b949e;
+        display: flex;
+        align-items: center;
+        gap: 7px;
+        line-height: 1.5;
+      }
+      #saiNoticeBox .sn-list li::before {
+        content: '✓';
+        color: #4ade80;
+        font-weight: 700;
+        flex-shrink: 0;
+      }
+      #saiNoticeBox .sn-key {
+        background: #0d1117;
+        border: 1px solid rgba(74,222,128,0.2);
+        border-radius: 6px;
+        padding: 8px 12px;
+        font-size: 11px;
+        color: #86efac;
+        margin-bottom: 16px;
+        line-height: 1.5;
+      }
+
+      #saiNoticeBtnDl {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        gap: 10px;
+        width: 100%;
+        padding: 15px 0;
+        border-radius: 10px;
+        background: linear-gradient(135deg, #4ade80 0%, #22c55e 50%, #16a34a 100%);
+        border: none;
+        color: #052e16;
+        font-family: 'Courier New', monospace;
+        font-size: 14px;
+        font-weight: 900;
+        cursor: pointer;
+        letter-spacing: 0.8px;
+        text-transform: uppercase;
+        margin-bottom: 9px;
+        position: relative;
+        overflow: hidden;
+        box-shadow:
+          0 0 0 3px rgba(74,222,128,0.25),
+          0 6px 24px rgba(74,222,128,0.45),
+          0 2px 8px rgba(0,0,0,0.4);
+        transition: all 0.2s;
+        animation: saiPulseBtn 2.2s ease-in-out infinite;
+      }
+      #saiNoticeBtnDl::before {
+        content: '';
+        position: absolute;
+        top: 0; left: -100%;
+        width: 60%;
+        height: 100%;
+        background: linear-gradient(
+          120deg,
+          transparent 0%,
+          rgba(255,255,255,0.35) 50%,
+          transparent 100%
+        );
+        animation: saiShine 2.5s ease-in-out infinite;
+      }
+      @keyframes saiShine {
+        0%   { left: -100%; }
+        40%  { left: 140%; }
+        100% { left: 140%; }
+      }
+      @keyframes saiPulseBtn {
+        0%, 100% {
+          box-shadow:
+            0 0 0 3px rgba(74,222,128,0.25),
+            0 6px 24px rgba(74,222,128,0.45),
+            0 2px 8px rgba(0,0,0,0.4);
+        }
+        50% {
+          box-shadow:
+            0 0 0 6px rgba(74,222,128,0.15),
+            0 8px 32px rgba(74,222,128,0.65),
+            0 2px 8px rgba(0,0,0,0.4);
+        }
+      }
+      #saiNoticeBtnDl:hover {
+        transform: translateY(-2px) scale(1.02);
+        background: linear-gradient(135deg, #6ee7a0 0%, #4ade80 50%, #22c55e 100%);
+        box-shadow:
+          0 0 0 4px rgba(74,222,128,0.3),
+          0 12px 36px rgba(74,222,128,0.6),
+          0 2px 8px rgba(0,0,0,0.4);
+      }
+      #saiNoticeBtnDl:active {
+        transform: scale(0.98);
+      }
+
+
+      #saiNoticeBtnDl:hover { opacity: 0.88; transform: translateY(-1px); }
+      #saiNoticeBtnClose {
+        display: block;
+        width: 100%;
+        padding: 8px 0;
+        border-radius: 8px;
+        background: transparent;
+        border: 1px solid #30363d;
+        color: #8b949e;
+        font-family: 'Courier New', monospace;
+        font-size: 11px;
+        cursor: pointer;
+        transition: background 0.12s, color 0.12s;
+      }
+      #saiNoticeBtnClose:hover { background: #21262d; color: #e6edf3; }
+    </style>
+
+    <div id="saiNoticeBox">
+      <div class="sn-top">
+        <div class="sn-logo">🏗️</div>
+        <div class="sn-brand">
+          SAI Soluciones
+          <span>Lotes SAI — Software de Urbanización</span>
+        </div>
+      </div>
+
+      <div class="sn-divider"></div>
+
+      <div class="sn-badge">
+        <div class="sn-dot"></div>
+        Nueva versión disponible
+      </div>
+
+      <h3>Hay mejoras importantes esperándote</h3>
+
+      <ul class="sn-list">
+        <li>Vista satelital sin límite de zoom</li>
+        <li>Exportar DXF con coordenadas UTM reales</li>
+        <li>Importar KML y KMZ desde Google Earth</li>
+        <li>Plano técnico A0 en PDF y PNG</li>
+        <li>Dimensiones de lotes dinámicas con zoom</li>
+        <li>Guías DXF visibles + copia de calles Ctrl+C/V</li>
+      </ul>
+
+      <div class="sn-key">
+        🔑 <strong style="color:#4ade80">Tu clave actual sigue siendo válida</strong> —
+        instalá la versión completa sin costo adicional.
+      </div>
+
+      <button id="saiNoticeBtnDl">
+        <span style="font-size:18px;">⬇</span>
+        VER NOVEDADES Y DESCARGAR
+        <span style="
+          background: rgba(5,46,22,0.35);
+          font-size: 9px;
+          padding: 2px 7px;
+          border-radius: 20px;
+          letter-spacing: 0.5px;
+          font-weight: 700;
+          white-space: nowrap;
+        ">GRATIS</span>
+      </button>
+      <button id="saiNoticeBtnClose">Continuar con la versión actual</button>
+    </div>
+  `;
+
+      document.body.appendChild(modal);
+
+      function cerrar() {
+        sessionStorage.setItem('sai_notice_seen', '1');
+        modal.style.opacity = '0';
+        modal.style.transition = 'opacity 0.2s';
+        setTimeout(() => modal.remove(), 200);
+      }
+
+      // Ir a update.html en la misma pestaña
+      document.getElementById('saiNoticeBtnDl').addEventListener('click', () => {
+        sessionStorage.setItem('sai_notice_seen', '1');
+        window.location.href = 'update.html';
+      });
+
+      // Cerrar sin ir a ningún lado
+      document.getElementById('saiNoticeBtnClose').addEventListener('click', cerrar);
+
+      // Cerrar con Escape
+      function onEscNotice(e) {
+        if (e.key === 'Escape') {
+          cerrar();
+          document.removeEventListener('keydown', onEscNotice);
+        }
+      }
+      document.addEventListener('keydown', onEscNotice);
+    })();
   </script>
 </body>
 
