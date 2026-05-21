@@ -1,0 +1,1029 @@
+<!DOCTYPE html>
+<html lang="es">
+
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Novedades – Lotes SAI Versión Completa</title>
+  <link
+    href="https://fonts.googleapis.com/css2?family=Sora:wght@400;500;600;700;800&family=Inter:wght@400;500&display=swap"
+    rel="stylesheet" />
+
+  <style>
+    *,
+    *::before,
+    *::after {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0
+    }
+
+    html {
+      scroll-behavior: smooth
+    }
+
+    body {
+      font-family: 'Inter', sans-serif;
+      background: #0c1220;
+      color: #fff;
+      min-height: 100vh;
+      overflow-x: hidden
+    }
+
+    /* ── HEADER ── */
+    header {
+      background: linear-gradient(150deg, #0f2744 0%, #0a3d2b 100%);
+      padding: 52px 24px 60px;
+      text-align: center;
+      position: relative;
+      overflow: hidden
+    }
+
+    header::before {
+      content: '';
+      position: absolute;
+      inset: 0;
+      background-image: radial-gradient(rgba(255, 255, 255, .04) 1px, transparent 1px);
+      background-size: 28px 28px
+    }
+
+    .h-inner {
+      position: relative;
+      z-index: 1;
+      max-width: 680px;
+      margin: 0 auto
+    }
+
+    .chip {
+      display: inline-flex;
+      align-items: center;
+      gap: 7px;
+      background: rgba(255, 255, 255, .12);
+      border: 1px solid rgba(255, 255, 255, .22);
+      color: #a7f3d0;
+      font-family: 'Sora', sans-serif;
+      font-size: 11px;
+      font-weight: 600;
+      letter-spacing: .08em;
+      text-transform: uppercase;
+      padding: 5px 14px 5px 10px;
+      border-radius: 20px;
+      margin-bottom: 20px
+    }
+
+    .dot {
+      width: 7px;
+      height: 7px;
+      background: #4ade80;
+      border-radius: 50%;
+      animation: p 1.8s infinite
+    }
+
+    @keyframes p {
+
+      0%,
+      100% {
+        opacity: 1;
+        transform: scale(1)
+      }
+
+      50% {
+        opacity: .4;
+        transform: scale(1.5)
+      }
+    }
+
+    header h1 {
+      font-family: 'Sora', sans-serif;
+      font-size: clamp(26px, 5vw, 44px);
+      font-weight: 800;
+      line-height: 1.2;
+      color: #fff;
+      margin-bottom: 14px
+    }
+
+    header h1 span {
+      color: #4ade80
+    }
+
+    header p.sub {
+      font-size: 15px;
+      color: rgba(255, 255, 255, .62);
+      line-height: 1.65;
+      max-width: 520px;
+      margin: 0 auto 32px
+    }
+
+    .btn-dl {
+      display: inline-flex;
+      align-items: center;
+      gap: 10px;
+      background: linear-gradient(135deg, #4ade80, #22c55e);
+      color: #14532d;
+      font-family: 'Sora', sans-serif;
+      font-size: 15px;
+      font-weight: 700;
+      padding: 15px 30px;
+      border-radius: 12px;
+      text-decoration: none;
+      transition: transform .2s, box-shadow .2s;
+      box-shadow: 0 6px 24px rgba(74, 222, 128, .35)
+    }
+
+    .btn-dl:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 10px 32px rgba(74, 222, 128, .5)
+    }
+
+    .btn-dl:active {
+      transform: scale(.97)
+    }
+
+    .btn-dl svg {
+      width: 18px;
+      height: 18px
+    }
+
+    /* ── CLAVE BANNER ── */
+    .key-bar {
+      background: #132d1f;
+      border-top: 1px solid rgba(74, 222, 128, .2);
+      border-bottom: 1px solid rgba(74, 222, 128, .2);
+      padding: 18px 24px;
+      text-align: center
+    }
+
+    .key-bar p {
+      font-size: 14px;
+      color: #86efac;
+      line-height: 1.5
+    }
+
+    .key-bar strong {
+      color: #4ade80;
+      font-weight: 600
+    }
+
+    /* ── COMPARATIVA ── */
+    .sec {
+      max-width: 980px;
+      margin: 0 auto;
+      padding: 60px 24px
+    }
+
+    .sec-label {
+      font-family: 'Sora', sans-serif;
+      font-size: 11px;
+      font-weight: 600;
+      letter-spacing: .1em;
+      text-transform: uppercase;
+      color: #4ade80;
+      margin-bottom: 8px
+    }
+
+    .sec-title {
+      font-family: 'Sora', sans-serif;
+      font-size: clamp(22px, 3vw, 32px);
+      font-weight: 700;
+      color: #fff;
+      margin-bottom: 10px;
+      line-height: 1.25
+    }
+
+    .sec-desc {
+      font-size: 14.5px;
+      color: rgba(255, 255, 255, .5);
+      margin-bottom: 36px;
+      line-height: 1.65;
+      max-width: 580px
+    }
+
+    /* tabla comparativa */
+    .comp-table {
+      width: 100%;
+      border-collapse: collapse;
+      font-size: 13.5px
+    }
+
+    .comp-table thead tr th {
+      padding: 10px 14px;
+      font-family: 'Sora', sans-serif;
+      font-size: 12px;
+      font-weight: 600;
+      letter-spacing: .06em;
+      text-transform: uppercase;
+      border-bottom: 1px solid rgba(255, 255, 255, .1)
+    }
+
+    .comp-table thead th:first-child {
+      text-align: left;
+      color: rgba(255, 255, 255, .5);
+      width: 32%
+    }
+
+    .comp-table thead th:nth-child(2) {
+      color: #f87171;
+      background: rgba(239, 68, 68, .08);
+      border-radius: 8px 0 0 0;
+      text-align: center;
+      width: 34%
+    }
+
+    .comp-table thead th:nth-child(3) {
+      color: #4ade80;
+      background: rgba(74, 222, 128, .08);
+      border-radius: 0 8px 0 0;
+      text-align: center;
+      width: 34%
+    }
+
+    .comp-table tbody tr {
+      border-bottom: 1px solid rgba(255, 255, 255, .05)
+    }
+
+    .comp-table tbody tr:hover {
+      background: rgba(255, 255, 255, .03)
+    }
+
+    .comp-table tbody td {
+      padding: 13px 14px;
+      vertical-align: middle;
+      line-height: 1.5
+    }
+
+    .comp-table tbody td:first-child {
+      color: rgba(255, 255, 255, .7);
+      font-weight: 500
+    }
+
+    .comp-table tbody td:nth-child(2) {
+      background: rgba(239, 68, 68, .05);
+      text-align: center;
+      color: #fca5a5;
+      font-size: 13px
+    }
+
+    .comp-table tbody td:nth-child(3) {
+      background: rgba(74, 222, 128, .06);
+      text-align: center;
+      color: #86efac;
+      font-size: 13px
+    }
+
+    .tag-no {
+      display: inline-flex;
+      align-items: center;
+      gap: 5px;
+      background: rgba(239, 68, 68, .15);
+      color: #f87171;
+      font-size: 12px;
+      font-weight: 600;
+      padding: 3px 10px;
+      border-radius: 20px
+    }
+
+    .tag-si {
+      display: inline-flex;
+      align-items: center;
+      gap: 5px;
+      background: rgba(74, 222, 128, .15);
+      color: #4ade80;
+      font-size: 12px;
+      font-weight: 600;
+      padding: 3px 10px;
+      border-radius: 20px
+    }
+
+    /* ── CARRUSEL ── */
+    .car-wrap {
+      position: relative
+    }
+
+    .car-outer {
+      border-radius: 16px;
+      overflow: hidden;
+      background: #161d2e;
+      position: relative
+    }
+
+    .slides {
+      display: flex;
+      transition: transform .45s cubic-bezier(.4, 0, .2, 1)
+    }
+
+    .slide {
+      min-width: 100%;
+      position: relative
+    }
+
+    .slide-img {
+      width: 100%;
+      aspect-ratio: 16/9;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      flex-direction: column;
+      gap: 14px;
+      background: #1a2535;
+      position: relative;
+      overflow: hidden
+    }
+
+    .slide-img img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      display: block
+    }
+
+    .img-ph {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      width: 100%;
+      height: 100%;
+      gap: 14px;
+      color: rgba(255, 255, 255, .25);
+      font-size: 13px;
+      user-select: none
+    }
+
+    .img-ph svg {
+      width: 48px;
+      height: 48px;
+      opacity: .2
+    }
+
+    .img-ph span {
+      max-width: 320px;
+      text-align: center;
+      line-height: 1.5
+    }
+
+    /* Número de mejora sobre la imagen */
+    .slide-num {
+      position: absolute;
+      top: 16px;
+      left: 16px;
+      background: rgba(15, 39, 68, .75);
+      backdrop-filter: blur(8px);
+      border: 1px solid rgba(255, 255, 255, .15);
+      color: #4ade80;
+      font-family: 'Sora', sans-serif;
+      font-size: 11px;
+      font-weight: 700;
+      letter-spacing: .08em;
+      padding: 4px 12px;
+      border-radius: 20px;
+      z-index: 2
+    }
+
+    .slide-cap {
+      position: absolute;
+      bottom: 0;
+      left: 0;
+      right: 0;
+      background: linear-gradient(to top, rgba(0, 0, 0, .88) 0%, transparent 100%);
+      padding: 52px 24px 22px
+    }
+
+    .slide-cap h3 {
+      font-family: 'Sora', sans-serif;
+      font-size: 17px;
+      font-weight: 700;
+      color: #fff;
+      margin-bottom: 5px
+    }
+
+    .slide-cap .before {
+      font-size: 12px;
+      color: #fca5a5;
+      margin-bottom: 3px
+    }
+
+    .slide-cap .after {
+      font-size: 13px;
+      color: #86efac;
+      line-height: 1.45
+    }
+
+    .arrow {
+      position: absolute;
+      top: 50%;
+      transform: translateY(-50%);
+      width: 44px;
+      height: 44px;
+      border-radius: 50%;
+      background: rgba(0, 0, 0, .55);
+      border: 1px solid rgba(255, 255, 255, .18);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      cursor: pointer;
+      z-index: 10;
+      transition: background .2s;
+      backdrop-filter: blur(8px)
+    }
+
+    .arrow:hover {
+      background: rgba(0, 0, 0, .8)
+    }
+
+    .arrow svg {
+      width: 18px;
+      height: 18px;
+      color: #fff
+    }
+
+    .arrow-prev {
+      left: 14px
+    }
+
+    .arrow-next {
+      right: 14px
+    }
+
+    .dots {
+      display: flex;
+      justify-content: center;
+      gap: 7px;
+      margin-top: 16px
+    }
+
+    .dot2 {
+      width: 8px;
+      height: 8px;
+      border-radius: 50%;
+      background: rgba(255, 255, 255, .2);
+      cursor: pointer;
+      transition: background .25s, transform .25s;
+      border: none
+    }
+
+    .dot2.active {
+      background: #4ade80;
+      transform: scale(1.3)
+    }
+
+    .thumbs {
+      display: flex;
+      gap: 10px;
+      margin-top: 14px;
+      overflow-x: auto;
+      padding-bottom: 4px;
+      scrollbar-width: thin;
+      scrollbar-color: rgba(255, 255, 255, .2) transparent
+    }
+
+    .thumb {
+      min-width: 80px;
+      height: 52px;
+      border-radius: 8px;
+      overflow: hidden;
+      cursor: pointer;
+      border: 2px solid transparent;
+      transition: border-color .2s, transform .2s;
+      background: #161d2e;
+      flex-shrink: 0;
+      display: flex;
+      align-items: center;
+      justify-content: center
+    }
+
+    .thumb img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover
+    }
+
+    .thumb.active {
+      border-color: #4ade80;
+      transform: scale(1.06)
+    }
+
+    .thumb-ph {
+      font-size: 10px;
+      color: rgba(255, 255, 255, .25);
+      text-align: center;
+      padding: 4px;
+      line-height: 1.3
+    }
+
+    /* ── FOOTER CTA ── */
+    .footer-cta {
+      background: linear-gradient(150deg, #0f2744, #0a3d2b);
+      text-align: center;
+      padding: 64px 24px;
+      border-top: 1px solid rgba(255, 255, 255, .07)
+    }
+
+    .footer-cta h2 {
+      font-family: 'Sora', sans-serif;
+      font-size: clamp(22px, 3.5vw, 34px);
+      font-weight: 800;
+      color: #fff;
+      margin-bottom: 12px
+    }
+
+    .footer-cta p {
+      font-size: 15px;
+      color: rgba(255, 255, 255, .55);
+      margin-bottom: 10px;
+      max-width: 480px;
+      margin-left: auto;
+      margin-right: auto
+    }
+
+    .footer-cta .key-note {
+      font-size: 13px;
+      color: #86efac;
+      margin-bottom: 28px
+    }
+
+    footer {
+      background: #070c16;
+      text-align: center;
+      padding: 18px;
+      font-size: 12px;
+      color: rgba(255, 255, 255, .22);
+      letter-spacing: .04em
+    }
+
+    /* ── BOTÓN VOLVER FLOTANTE ── */
+    .btn-back {
+      position: fixed;
+      /* Flotante sobre todo el contenido */
+      top: 25px;
+      right: 30px;
+      display: inline-flex;
+      align-items: center;
+      gap: 7px;
+      color: rgba(255, 255, 255, 0.85);
+      background: rgba(15, 39, 68, 0.85);
+      backdrop-filter: blur(10px);
+      text-decoration: none;
+      font-family: 'Sora', sans-serif;
+      font-size: 14.5px;
+      font-weight: 600;
+      padding: 10px 18px;
+      border-radius: 50px;
+      border: 1px solid rgba(255, 255, 255, 0.1);
+      box-shadow: 0 4px 15px rgba(0, 0, 0, 0.3);
+      z-index: 1000;
+      transition: all 0.25s ease;
+    }
+
+    .btn-back:hover {
+      color: #fff;
+      background: rgba(74, 222, 128, 0.15);
+      border-color: rgba(74, 222, 128, 0.4);
+      transform: translateY(-2px);
+      box-shadow: 0 8px 20px rgba(74, 222, 128, 0.25);
+    }
+
+    .btn-back svg {
+      width: 19px;
+      height: 19px;
+    }
+  </style>
+</head>
+
+<body>
+
+  <!-- ══ HEADER ══ -->
+  <header>
+    <div class="h-inner">
+
+      <!-- BOTÓN VOLVER (flotante superior derecha) -->
+      <a href="index.html" class="btn-back">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round"
+          stroke-linejoin="round">
+          <path d="M19 12H5M12 19l-7-7 7-7" />
+        </svg>
+        Volver
+      </a>
+
+      <div class="chip">
+        <div class="dot"></div>Versión Completa Disponible
+      </div>
+      <h1>Lotes SAI — <span>Versión Completa</span></h1>
+      <p class="sub">La versión de demostración tiene limitaciones importantes. La versión completa se instala
+        directamente en tu computadora con todas las herramientas desbloqueadas.</p>
+
+      <a href="https://drive.google.com/uc?export=download&id=15-Yv-FZZUrqQwX0aNEWfgW4kg809dNVk&confirm=t" class="btn-dl"
+        download>
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round"
+          stroke-linejoin="round">
+          <path d="M12 3v13M6 12l6 6 6-6" />
+          <path d="M3 19h18" />
+        </svg>
+        Descargar Versión Completa
+      </a>
+    </div>
+  </header>
+
+  <!-- ══ CLAVE ══ -->
+  <div class="key-bar">
+    <p>🔑 <strong>Tu clave de activación se mantiene.</strong> Instalá la versión completa y activá con la misma clave
+      que ya tenés — sin costo adicional.</p>
+  </div>
+
+  <!-- ══ TABLA COMPARATIVA ══ -->
+  <div class="sec">
+    <p class="sec-label">Comparación de versiones</p>
+    <h2 class="sec-title">Demo vs. Versión Completa</h2>
+    <p class="sec-desc">Estas son todas las limitaciones de la versión de demostración que se eliminan al instalar la
+      versión completa.</p>
+
+    <table class="comp-table">
+      <thead>
+        <tr>
+          <th>Función</th>
+          <th>⚠ Versión Demo</th>
+          <th>✓ Versión Completa</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td>Vista satelital</td>
+          <td>Limitada — muchas regiones sin detalle</td>
+          <td>Zoom libre en todas las regiones sin restricción</td>
+        </tr>
+        <tr>
+          <td>Exportar DXF</td>
+          <td>Pierde las coordenadas originales</td>
+          <td>Exporta con coordenadas UTM originales (geolocalización real)</td>
+        </tr>
+        <tr>
+          <td>Copiar calles</td>
+          <td><span class="tag-no">✗ No disponible</span></td>
+          <td><span class="tag-si">✓ Ctrl+C / Ctrl+V</span></td>
+        </tr>
+        <tr>
+          <td>Cerrar polígono</td>
+          <td>Solo con el botón "Cerrar"</td>
+          <td>Con botón Cerrar o presionando <strong>Enter</strong></td>
+        </tr>
+        <tr>
+          <td>Importar archivos</td>
+          <td>Solo DXF (AutoCAD)</td>
+          <td>DXF + KML + KMZ (Google Earth / GPS)</td>
+        </tr>
+        <tr>
+          <td>Plano de impresión</td>
+          <td><span class="tag-no">✗ No disponible</span></td>
+          <td><span class="tag-si">✓ Plano A0 en PDF + imagen PNG para compartir</span></td>
+        </tr>
+        <tr>
+          <td>Guías DXF visibles</td>
+          <td><span class="tag-no">✗ No disponible</span></td>
+          <td><span class="tag-si">✓ Líneas y polilíneas de referencia visibles en canvas</span></td>
+        </tr>
+        <tr>
+          <td>Dimensiones de lotes</td>
+          <td><span class="tag-no">✗ No se muestran</span></td>
+          <td><span class="tag-si">✓ Dinámicas — se actualizan con el zoom</span></td>
+        </tr>
+        <tr>
+          <td>Al cerrar el programa</td>
+          <td>Se cierra sin avisar (se pierde el trabajo)</td>
+          <td>Pregunta si deseas guardar antes de salir</td>
+        </tr>
+        <tr>
+          <td>Barra de escala</td>
+          <td><span class="tag-no">✗ No disponible</span></td>
+          <td><span class="tag-si">✓ Barra de escala gráfica dinámica según el zoom</span></td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+
+  <!-- ══ CARRUSEL ══ -->
+  <div class="sec" style="padding-top:0">
+    <p class="sec-label">Capturas de pantalla</p>
+    <h2 class="sec-title">Mirá las mejoras en acción</h2>
+    <p class="sec-desc">Deslizá para ver cada función nueva. Agregá tus fotos reales en cada slide.</p>
+
+    <div class="car-wrap">
+      <div class="car-outer">
+        <div class="slides" id="slides">
+
+
+
+
+          <!-- SLIDE 1 -->
+          <div class="slide">
+            <div class="slide-img">
+              <span class="slide-num">Mejora 1 / 10</span>
+              <img src="satelital.jpg" alt="Zoom satelital sin límite" />
+              <div class="img-ph">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5">
+                  <circle cx="12" cy="12" r="10" />
+                  <path d="M2 12h20M12 2a15 15 0 0 1 0 20M12 2a15 15 0 0 0 0 20" />
+                </svg>
+                <span>📍 Colocá aquí la foto del zoom satelital completo</span>
+              </div>
+            </div>
+            <div class="slide-cap">
+              <h3>Vista satelital sin límite</h3>
+              <p class="before">⚠ Demo: Vista limitada — varias regiones sin detalle</p>
+              <p class="after">✓ Completa: Zoom libre en todas las regiones con imagen satelital completa</p>
+            </div>
+          </div>
+
+
+
+
+          <!-- SLIDE 2 -->
+          <div class="slide">
+            <div class="slide-img">
+              <span class="slide-num">Mejora 2 / 10</span>
+              <img src="exportardxf.jpg" alt="Zoom satelital sin límite" />
+              <div class="img-ph">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5">
+                  <path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z" />
+                  <polyline points="14 2 14 8 20 8" />
+                  <line x1="12" y1="18" x2="12" y2="12" />
+                  <line x1="9" y1="15" x2="15" y2="15" />
+                </svg>
+                <span>📍 Colocá aquí la foto de la exportación DXF con coordenadas</span>
+              </div>
+            </div>
+            <div class="slide-cap">
+              <h3>Exportación DXF con geolocalización real</h3>
+              <p class="before">⚠ Demo: Exporta sin las coordenadas UTM originales</p>
+              <p class="after">✓ Completa: Conserva las coordenadas UTM originales — compatible con GIS y AutoCAD</p>
+            </div>
+          </div>
+
+
+
+
+          <!-- SLIDE 3 -->
+          <div class="slide">
+            <div class="slide-img">
+              <span class="slide-num">Mejora 3 / 10</span>
+              <img src="copiar.jpg" alt="Copiar y pegar calles" />
+              <div class="img-ph">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5">
+                  <rect x="9" y="9" width="13" height="13" rx="2" />
+                  <path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1" />
+                </svg>
+                <span>📍 Colocá aquí la foto de copiar y pegar calles (Ctrl+C / Ctrl+V)</span>
+              </div>
+            </div>
+            <div class="slide-cap">
+              <h3>Copiar y pegar calles — Ctrl+C / Ctrl+V</h3>
+              <p class="before">⚠ Demo: No se pueden copiar calles</p>
+              <p class="after">✓ Completa: Copiá una calle y pegala desplazada 5m — ideal para calles paralelas</p>
+            </div>
+          </div>
+
+
+
+          <!-- SLIDE 4 -->
+          <div class="slide">
+            <div class="slide-img">
+              <span class="slide-num">Mejora 4 / 10</span>
+              <img src="enter.jpg" alt="Cerrar polígono con Enter" />
+              <div class="img-ph">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5">
+                  <polyline points="9 11 12 14 22 4" />
+                  <path d="M21 12v7a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h11" />
+                </svg>
+                <span>📍 Colocá aquí la foto del cierre de polígono con Enter</span>
+              </div>
+            </div>
+            <div class="slide-cap">
+              <h3>Cerrar polígono con Enter</h3>
+              <p class="before">⚠ Demo: Solo se puede cerrar usando el botón "Cerrar"</p>
+              <p class="after">✓ Completa: Cerrá la parcela con el botón o simplemente presionando Enter</p>
+            </div>
+          </div>
+
+          <!-- SLIDE 5 -->
+          <div class="slide">
+            <div class="slide-img">
+              <span class="slide-num">Mejora 5 / 10</span>
+              <img src="importar_kmz.jpg" alt="Importar KML y KMZ" />
+              <div class="img-ph">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5">
+                  <circle cx="12" cy="10" r="3" />
+                  <path
+                    d="M12 2a8 8 0 0 0-8 8c0 5.4 7.05 11.5 7.7 12.06a.5.5 0 0 0 .6 0C12.95 21.5 20 15.4 20 10a8 8 0 0 0-8-8z" />
+                </svg>
+                <span>📍 Colocá aquí la foto de importar KML/KMZ desde Google Earth</span>
+              </div>
+            </div>
+            <div class="slide-cap">
+              <h3>Importar DXF, KML y KMZ</h3>
+              <p class="before">⚠ Demo: Solo permite importar archivos DXF</p>
+              <p class="after">✓ Completa: Importá desde AutoCAD (DXF), Google Earth (KMZ) o GPS (KML) — detección
+                automática de zona UTM</p>
+            </div>
+          </div>
+
+          <!-- SLIDE 6 -->
+          <div class="slide">
+            <div class="slide-img">
+              <span class="slide-num">Mejora 6 / 10</span>
+              <img src="plano_a0.jpg" alt="Plano A0 PDF y PNG" />
+              <div class="img-ph">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5">
+                  <path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z" />
+                  <polyline points="14 2 14 8 20 8" />
+                  <line x1="16" y1="13" x2="8" y2="13" />
+                  <line x1="16" y1="17" x2="8" y2="17" />
+                  <polyline points="10 9 9 9 8 9" />
+                </svg>
+                <span>📍 Colocá aquí la foto del plano A0 generado</span>
+              </div>
+            </div>
+            <div class="slide-cap">
+              <h3>Plano técnico A0 — PDF y PNG</h3>
+              <p class="before">⚠ Demo: No genera plano de visualización</p>
+              <p class="after">✓ Completa: Plano profesional A0 (1189×841mm) con cajetón técnico, tabla de áreas y
+                escala — descargable en PDF o PNG para compartir con clientes</p>
+            </div>
+          </div>
+
+          <!-- SLIDE 7 -->
+          <div class="slide">
+            <div class="slide-img">
+              <span class="slide-num">Mejora 7 / 10</span>
+              <img src="guias_dxf.jpg" alt="Guías DXF visibles" />
+              <div class="img-ph">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5">
+                  <line x1="3" y1="12" x2="21" y2="12" />
+                  <line x1="3" y1="6" x2="21" y2="6" />
+                  <line x1="3" y1="18" x2="21" y2="18" />
+                </svg>
+                <span>📍 Colocá aquí la foto de las guías DXF visibles en el canvas</span>
+              </div>
+            </div>
+            <div class="slide-cap">
+              <h3>Guías DXF visibles en el canvas</h3>
+              <p class="before">⚠ Demo: Las líneas del DXF que no son polígono no se muestran</p>
+              <p class="after">✓ Completa: Las líneas y polilíneas del DXF se muestran como guías de referencia y sirven
+                de snap al trazar calles</p>
+            </div>
+          </div>
+
+          <!-- SLIDE 8 -->
+          <div class="slide">
+            <div class="slide-img">
+              <span class="slide-num">Mejora 8 / 10</span>
+              <img src="dimensiones_lotes.jpg" alt="Dimensiones de lotes dinámicas" />
+              <div class="img-ph">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5">
+                  <rect x="3" y="3" width="18" height="18" rx="1" />
+                  <line x1="3" y1="9" x2="21" y2="9" />
+                  <line x1="3" y1="15" x2="21" y2="15" />
+                  <line x1="9" y1="3" x2="9" y2="21" />
+                  <line x1="15" y1="3" x2="15" y2="21" />
+                </svg>
+                <span>📍 Colocá aquí la foto de las dimensiones de lotes visibles con zoom</span>
+              </div>
+            </div>
+            <div class="slide-cap">
+              <h3>Dimensiones de lotes dinámicas</h3>
+              <p class="before">⚠ Demo: No muestra las dimensiones de los lotes</p>
+              <p class="after">✓ Completa: Cada lado de cada lote muestra su medida en metros — se actualizan
+                dinámicamente al hacer zoom</p>
+            </div>
+          </div>
+
+          <!-- SLIDE 9 -->
+          <div class="slide">
+            <div class="slide-img">
+              <span class="slide-num">Mejora 9 / 10</span>
+              <img src="salir.jpg" alt="Guardar antes de cerrar" />
+              <div class="img-ph">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5">
+                  <path d="M19 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h11l5 5v11a2 2 0 0 1-2 2z" />
+                  <polyline points="17 21 17 13 7 13 7 21" />
+                  <polyline points="7 3 7 8 15 8" />
+                </svg>
+                <span>📍 Colocá aquí la foto del diálogo "¿Guardar antes de salir?"</span>
+              </div>
+            </div>
+            <div class="slide-cap">
+              <h3>Aviso antes de cerrar el programa</h3>
+              <p class="before">⚠ Demo: El programa se cierra sin avisar — se pierde el trabajo no guardado</p>
+              <p class="after">✓ Completa: Pregunta si deseas guardar el proyecto antes de cerrar la ventana</p>
+            </div>
+          </div>
+
+          <!-- SLIDE 10 -->
+          <div class="slide">
+            <div class="slide-img">
+              <span class="slide-num">Mejora 10 / 10</span>
+              <img src="barra_escala.jpg" alt="Barra de escala gráfica" />
+              <div class="img-ph">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5">
+                  <line x1="3" y1="12" x2="21" y2="12" />
+                  <line x1="3" y1="8" x2="3" y2="16" />
+                  <line x1="21" y1="8" x2="21" y2="16" />
+                  <line x1="12" y1="9" x2="12" y2="15" />
+                </svg>
+                <span>📍 Colocá aquí la foto de la barra de escala gráfica en el canvas</span>
+              </div>
+            </div>
+            <div class="slide-cap">
+              <h3>Barra de escala gráfica dinámica</h3>
+              <p class="before">⚠ Demo: No tiene barra de escala</p>
+              <p class="after">✓ Completa: Barra de escala en la esquina del canvas que se recalcula en tiempo real con
+                cada cambio de zoom (1m, 5m, 10m, 50m, 100m...)</p>
+            </div>
+          </div>
+
+        </div><!-- /slides -->
+
+        <button class="arrow arrow-prev" id="prev" aria-label="Anterior">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round">
+            <path d="M15 18l-6-6 6-6" />
+          </svg>
+        </button>
+        <button class="arrow arrow-next" id="next" aria-label="Siguiente">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round">
+            <path d="M9 18l6-6-6-6" />
+          </svg>
+        </button>
+      </div>
+
+      <div class="dots" id="dots"></div>
+      <div class="thumbs" id="thumbs"></div>
+    </div>
+  </div>
+
+  <!-- ══ FOOTER CTA ══ -->
+  <div class="footer-cta">
+    <h2>¿Listo para la versión completa?</h2>
+    <p>Sin limitaciones, instalada directamente en tu computadora.</p>
+    <p class="key-note">🔑 Tu clave de activación actual sigue siendo válida.</p>
+
+    <a href="https://drive.google.com/uc?export=download&id=15-Yv-FZZUrqQwX0aNEWfgW4kg809dNVk&confirm=t" class="btn-dl" download>
+
+      
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round"
+        stroke-linejoin="round">
+        <path d="M12 3v13M6 12l6 6 6-6" />
+        <path d="M3 19h18" />
+      </svg>
+      Descargar Versión Completa
+    </a>
+  </div>
+
+  <footer>Lotes SAI — SAI Soluciones &nbsp;|&nbsp; +591 7332-4084 &nbsp;|&nbsp; Todos los derechos reservados</footer>
+
+  <script>
+    const slides = document.getElementById('slides');
+    const dotsW = document.getElementById('dots');
+    const thumbW = document.getElementById('thumbs');
+    const slist = Array.from(slides.querySelectorAll('.slide'));
+    const total = slist.length;
+    let cur = 0, timer;
+
+    const tLabels = ['Satelital', 'Exportar DXF', 'Copiar calles', 'Cerrar c/Enter', 'KML y KMZ', 'Plano A0', 'Guías DXF', 'Dimensiones', 'Guardar/salir', 'Barra escala'];
+
+    slist.forEach((_, i) => {
+      const b = document.createElement('button');
+      b.className = 'dot2' + (i === 0 ? ' active' : '');
+      b.setAttribute('aria-label', 'Ir a slide ' + (i + 1));
+      b.addEventListener('click', () => goTo(i));
+      dotsW.appendChild(b);
+
+      const t = document.createElement('div');
+      t.className = 'thumb' + (i === 0 ? ' active' : '');
+      const img = slist[i].querySelector('img');
+      if (img) { const ti = document.createElement('img'); ti.src = img.src; ti.alt = ''; t.appendChild(ti); }
+      else { const p = document.createElement('div'); p.className = 'thumb-ph'; p.textContent = tLabels[i] || 'Slide ' + (i + 1); t.appendChild(p); }
+      t.addEventListener('click', () => goTo(i));
+      thumbW.appendChild(t);
+    });
+
+    function goTo(n) {
+      cur = (n + total) % total;
+      slides.style.transform = 'translateX(-' + (cur * 100) + '%)';
+      document.querySelectorAll('.dot2').forEach((d, i) => d.classList.toggle('active', i === cur));
+      document.querySelectorAll('.thumb').forEach((t, i) => t.classList.toggle('active', i === cur));
+      resetAuto();
+    }
+
+    document.getElementById('prev').addEventListener('click', () => goTo(cur - 1));
+    document.getElementById('next').addEventListener('click', () => goTo(cur + 1));
+
+    let sx = 0;
+    slides.addEventListener('touchstart', e => { sx = e.changedTouches[0].clientX; }, { passive: true });
+    slides.addEventListener('touchend', e => { const dx = e.changedTouches[0].clientX - sx; if (Math.abs(dx) > 40) goTo(dx < 0 ? cur + 1 : cur - 1); });
+
+    function startAuto() { timer = setInterval(() => goTo(cur + 1), 5500); }
+    function resetAuto() { clearInterval(timer); startAuto(); }
+    startAuto();
+    document.querySelector('.car-outer').addEventListener('mouseenter', () => clearInterval(timer));
+    document.querySelector('.car-outer').addEventListener('mouseleave', startAuto);
+  </script>
+</body>
+
+</html>
